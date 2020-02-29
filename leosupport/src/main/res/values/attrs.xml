@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="ProportionView">
+        <attr name="x" format="integer" />
+        <attr name="y" format="integer" />
+        <attr name="maxHeight" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="TopBar">
+        <attr name="background" format="reference" />
+        <attr name="hasShowBreak" format="boolean" />
+        <attr name="BreakIma" format="reference" />
+        <attr name="Title" format="string" />
+        <attr name="TitleSize" format="dimension" />
+        <attr name="TitleColor" format="color" />
+        <attr name="hasShowMenu" format="boolean" />
+        <attr name="MenuText" format="string" />
+        <attr name="MenuTextColor" format="color" />
+        <attr name="MenuTextSize" format="dimension" />
+        <attr name="MenuIma" format="reference" />
+
+    </declare-styleable>
+
+    <declare-styleable name="StatusView">
+        <attr name="btn_bg" format="reference" />
+        <attr name="status_nullcontent" format="reference" />
+        <attr name="status_nullnetwork" format="reference" />
+        <attr name="isShowBtn" format="boolean" />
+
+    </declare-styleable>
+</resources>

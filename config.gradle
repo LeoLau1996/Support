@@ -1,0 +1,58 @@
+ext{
+    android = [
+            compileSdkVersion       : 28,
+            buildToolsVersion       : "28.0.0",
+            minSdkVersion           : 19,
+            targetSdkVersion        : 28,
+            versionCode             : 10006,
+            versionName             : "1.0.6"
+    ]
+
+    version = [
+            supportLibraryVersion   : "28.0.0",
+            butterknifeVersion      : "8.8.1"
+    ]
+
+    dependencies = [
+            //base
+            "appcompat-v7"                   :"com.android.support:appcompat-v7:${version["supportLibraryVersion"]}",
+            "support-v4"                     :"com.android.support:support-v4:${version["supportLibraryVersion"]}",
+            "design"                         :"com.android.support:design:${version["supportLibraryVersion"]}",
+            "recyclerview-v7"                :"com.android.support:recyclerview-v7:${version["supportLibraryVersion"]}",
+            "gridlayout-v7"                  :"com.android.support:gridlayout-v7:${version["supportLibraryVersion"]}",
+            "constraint-layout"              :"com.android.support.constraint:constraint-layout:1.1.3",
+            "cardview-v7"                    :"com.android.support:cardview-v7:${version[ "supportLibraryVersion"]}",
+
+            //ui
+            "android-shapeLoadingView"       :"com.github.zzz40500:android-shapeLoadingView:1.0.3.2",
+            "pulltorefresh"                  :"com.jwenfeng.pulltorefresh:library:1.2.7",
+            "banner"                         :"com.youth.banner:banner:1.4.10",
+            "indicatorseekbar"               :"com.github.warkiz.widget:indicatorseekbar:2.1.2",
+            "flowlayout"                     :"com.hyman:flowlayout-lib:1.1.2",
+
+            //net
+            "okhttp3"                        :"com.squareup.okhttp3:okhttp:3.10.0",
+            "gson"                           :"com.google.code.gson:gson:2.8.2",
+            "okhttp3-integration"            :"com.github.bumptech.glide:okhttp3-integration:1.4.0@aar",
+            "glide"                          :"com.github.bumptech.glide:glide:3.7.0",
+            "okhttputils"                    :"com.zhy:okhttputils:2.6.2",
+            "matisse"                        :"com.zhihu.android:matisse:0.5.0-alpha4",
+
+            //butterknife
+            "butterknife"                    :"com.jakewharton:butterknife:${version["butterknifeVersion"]}",
+            "butterknife-compiler"           :"com.jakewharton:butterknife-compiler:${version["butterknifeVersion"]}",
+
+            //EventBus
+            "eventbus"                       :"org.greenrobot:eventbus:3.1.1",
+
+            ////视频
+            "gsyVideoPlayer-java"            :"com.shuyu:gsyVideoPlayer-java:6.0.3",
+            "gsyVideoPlayer-armv7a"          :"com.shuyu:gsyVideoPlayer-armv7a:6.0.3",
+
+            //微信SDK接入
+            "wechat-sdk-android-with-mta"    :"com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.3.1",
+
+            //二维码
+            "zxing"                          :"com.google.zxing:core:3.3.0"
+    ]
+}

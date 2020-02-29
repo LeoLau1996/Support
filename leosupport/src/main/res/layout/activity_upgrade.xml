@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/size16">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/size16"
+            android:paddingRight="@dimen/size16"
+            android:text="版本更新"
+            android:textColor="@color/textBlack" />
+
+        <TextView
+            android:id="@+id/tv_Detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size8"
+            android:lineSpacingExtra="4dp"
+            android:paddingLeft="@dimen/size16"
+            android:paddingRight="@dimen/size16"
+            android:textColor="@color/textBlack" />
+
+        <ProgressBar
+            android:id="@+id/mProgressbar"
+            style="@style/mprogressbar"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="@dimen/size16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size16"
+            android:paddingRight="@dimen/size16">
+
+            <TextView
+                android:id="@+id/tv_Cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size16"
+                android:text="取消"
+                android:textColor="@color/textBlack" />
+
+            <TextView
+                android:id="@+id/tv_Success"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size16"
+                android:text="确定"
+                android:textColor="@color/textBlack" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
