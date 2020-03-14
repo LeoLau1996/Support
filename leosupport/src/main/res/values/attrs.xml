@@ -27,11 +27,5 @@
 
     </declare-styleable>
 
-    <declare-styleable name="StatusView">
-        <attr name="btn_bg" format="reference" />
-        <attr name="status_nullcontent" format="reference" />
-        <attr name="status_nullnetwork" format="reference" />
-        <attr name="isShowBtn" format="boolean" />
 
-    </declare-styleable>
 </resources>

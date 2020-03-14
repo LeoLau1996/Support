@@ -409,4 +409,14 @@ public class Get extends BaseUtil {
         return null;
     }
 
+    //获取系统语言
+    public static Locale getLanguage() {
+        Locale locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            locale = Resources.getSystem().getConfiguration().getLocales().get(0);
+        } else {
+            locale = Resources.getSystem().getConfiguration().locale;
+        }
+        return locale;
+    }
 }

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
-import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,22 +69,6 @@ public class LeoSupport extends BaseUtil {
             nowData.clear();
         }
         nowData.addAll(newData);
-    }
-
-    public static void loadMoreOver(final String loadType, final PullToRefreshLayout mPullToRefreshLayout) {
-        if (loadType.equals("")) {
-            return;
-        }
-        new ThreadSupport().handel(new Runnable() {
-            @Override
-            public void run() {
-                if (loadType.equals(RefreshInfo.TYPE_Refresh)) {
-                    mPullToRefreshLayout.finishRefresh();
-                } else if (loadType.equals(RefreshInfo.TYPE_LoadMore)) {
-                    mPullToRefreshLayout.finishLoadMore();
-                }
-            }
-        }, 0);
     }
 
     //设置沉浸式状态栏

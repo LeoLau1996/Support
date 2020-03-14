@@ -168,7 +168,7 @@ public class DateSupport {
         return ret;
     }
 
-    //获取每个月的月数
+    //获取某年的12个月 各有几天
     public static int[] getMonthCount(int year) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);//指定年份
@@ -176,6 +176,14 @@ public class DateSupport {
         int twoCount = calendar.getActualMaximum(Calendar.DATE);
         int[] MonthCount = {31, twoCount, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         return MonthCount;
+    }
+
+    //获取某年某月有几个天
+    public static int getDaysOfMonth(int year, int month) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);//指定年份
+        calendar.set(Calendar.MONTH, month -1);//指定月份 Java月份从0开始算
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
     //通过年月日获取今天星期几

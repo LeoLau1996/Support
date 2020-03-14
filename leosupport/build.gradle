@@ -51,25 +51,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //V4和V7
-    compile rootProject.ext.dependencies["appcompat-v7"]
-    compile rootProject.ext.dependencies["recyclerview-v7"]
-    compile rootProject.ext.dependencies["support-v4"]
-    //图片显示
-    compile rootProject.ext.dependencies["glide"]
+    implementation rootProject.ext.dependencies["appcompat-v7"]
+    implementation rootProject.ext.dependencies["recyclerview-v7"]
+    implementation rootProject.ext.dependencies["support-v4"]
     //网络
-    compile rootProject.ext.dependencies["okhttp3"]
-    //Http工具
-    compile rootProject.ext.dependencies["okhttputils"]
-    //加载动画
-    //compile rootProject.ext.dependencies["android-shapeLoadingView"]
-    //Gson
-    compile rootProject.ext.dependencies["gson"]
-    //上下拉刷新
-    compile rootProject.ext.dependencies["pulltorefresh"]
-    //EventBus
-    compile rootProject.ext.dependencies["eventbus"]
-
-    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.2@aar'
+    implementation rootProject.ext.dependencies["okhttp3"]
     //解析BASE64_JAR包
     implementation files('libs/BASE64Encoder.jar')
 

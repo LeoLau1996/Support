@@ -132,7 +132,7 @@ public class TopBar extends RelativeLayout {
             /**
              * 图形Menu
              */
-            iv_Menu.setPadding(A2BSupport.dp2px(11), A2BSupport.dp2px(11), A2BSupport.dp2px(11), A2BSupport.dp2px(11));
+            iv_Menu.setPadding(A2BSupport.dp2px(14), A2BSupport.dp2px(14), A2BSupport.dp2px(14), A2BSupport.dp2px(14));
             iv_Menu.setImageDrawable(getResources().getDrawable(menuIma));
             LayoutParams layte4 = new LayoutParams(A2BSupport.dp2px(44), A2BSupport.dp2px(44));
             layte4.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
