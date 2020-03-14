@@ -25,7 +25,6 @@ public abstract class BaseApplication extends Application {
     public static BaseApplication application = null;
     public static ApplicationInfo applicationInfo = null;
     public static boolean isDebug;
-    public static int isOpen = 0;//1开启  2关闭
     private static ToastLayoutModel toastLayoutModel;
 
 
@@ -34,6 +33,7 @@ public abstract class BaseApplication extends Application {
         super.onCreate();
         if (Get.getCurrentProcessName().equals(getPackageName())) {
             isDebug = Is.isDebuggable();
+            application = this;
             applicationInfo = setInfo();
             TopBarInfo topBarInfo = setTopBarInfo();
             if (topBarInfo != null) {

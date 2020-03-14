@@ -9,8 +9,6 @@ import android.view.View;
 
 import leo.work.support.Base.Application.BaseApplication;
 import leo.work.support.Support.Common.LogUtil;
-import leo.work.support.UpGrade.UpGradeActivity;
-import leo.work.support.UpGrade.UpGradeModel;
 
 
 public abstract class BaseActivity extends Activity {
@@ -35,12 +33,6 @@ public abstract class BaseActivity extends Activity {
         loadData();
 
         initListener();
-
-        if (BaseApplication.isOpen == 1) {
-            Intent intent = new Intent(context, UpGradeActivity.class);
-            intent.putExtra("upGradeModel", new UpGradeModel(1));
-            startActivity(intent);
-        }
     }
 
 

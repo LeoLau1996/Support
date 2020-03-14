@@ -12,8 +12,6 @@ import android.view.View;
 
 import leo.work.support.Base.Application.BaseApplication;
 import leo.work.support.Support.Common.LogUtil;
-import leo.work.support.UpGrade.UpGradeActivity;
-import leo.work.support.UpGrade.UpGradeModel;
 
 
 public abstract class ProFragmentActivity extends FragmentActivity {
@@ -42,11 +40,6 @@ public abstract class ProFragmentActivity extends FragmentActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
         loadData(true, false);
         initListener();
-        if (BaseApplication.isOpen == 1) {
-            Intent intent = new Intent(context, UpGradeActivity.class);
-            intent.putExtra("upGradeModel", new UpGradeModel(1));
-            startActivity(intent);
-        }
     }
 
     protected abstract int setLayout();

@@ -10,8 +10,6 @@ import android.support.v4.app.FragmentManager;
 
 import leo.work.support.Base.Application.BaseApplication;
 import leo.work.support.Support.MVPSupport;
-import leo.work.support.UpGrade.UpGradeActivity;
-import leo.work.support.UpGrade.UpGradeModel;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -54,12 +52,6 @@ public abstract class BaseMVPFragmentActivity<T extends BaseView> extends Fragme
         mView.initView();
         mView.initListener();
         loadData(true, false);
-
-        if (BaseApplication.isOpen == 1) {
-            Intent intent = new Intent(context, UpGradeActivity.class);
-            intent.putExtra("upGradeModel", new UpGradeModel(1));
-            startActivity(intent);
-        }
     }
 
     protected abstract void initData();
