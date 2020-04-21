@@ -114,9 +114,4 @@ public abstract class ProFragmentActivity extends FragmentActivity {
         }
     }
 
-    //页面跳转工具
-    public void jumpToActivity(Class mClass) {
-        Intent intent = new Intent(this, mClass);
-        startActivity(intent);
-    }
 }

@@ -80,12 +80,6 @@ public abstract class BaseActivity extends Activity {
     }
 
 
-    //页面跳转
-    public void jumpToActivity(Class mClass) {
-        Intent intent = new Intent(this, mClass);
-        startActivity(intent);
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

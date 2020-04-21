@@ -104,12 +104,6 @@ public abstract class BaseFragment extends Fragment {
             this.hasFront = false;
     }
 
-    //页面跳转工具
-    public void jumpToActivity(Class mClass) {
-        Intent intent = new Intent(context, mClass);
-        startActivity(intent);
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

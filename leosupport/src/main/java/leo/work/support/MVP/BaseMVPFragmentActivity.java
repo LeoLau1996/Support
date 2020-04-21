@@ -77,13 +77,6 @@ public abstract class BaseMVPFragmentActivity<T extends BaseView> extends Fragme
     }
 
 
-    //页面跳转
-    public void jumpToActivity(Class mClass) {
-        Intent intent = new Intent(this, mClass);
-        startActivity(intent);
-    }
-
-
     public Class<T> getViewClass() {
         return MVPSupport.getViewClass(getClass());
     }

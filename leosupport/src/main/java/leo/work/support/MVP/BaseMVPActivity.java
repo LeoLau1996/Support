@@ -67,13 +67,6 @@ public abstract class BaseMVPActivity<T extends BaseView> extends Activity imple
         hasFront = false;
     }
 
-
-    //页面跳转
-    public void jumpToActivity(Class mClass) {
-        Intent intent = new Intent(this, mClass);
-        startActivity(intent);
-    }
-
     public Class<T> getViewClass() {
         return MVPSupport.getViewClass(getClass());
     }

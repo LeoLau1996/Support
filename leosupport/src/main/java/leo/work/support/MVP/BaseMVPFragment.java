@@ -95,10 +95,4 @@ public abstract class BaseMVPFragment<T extends BaseView> extends Fragment imple
             this.hasFront = false;
     }
 
-    //页面跳转工具
-    public void jumpToActivity(Class mClass) {
-        Intent intent = new Intent(context, mClass);
-        startActivity(intent);
-    }
-
 }
