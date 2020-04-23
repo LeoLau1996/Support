@@ -8,9 +8,6 @@
 
     <application>
 
-        <activity
-            android:name=".UpGrade.UpGradeActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/Theme.Light.DialogFalse" />
+
     </application>
 </manifest>
