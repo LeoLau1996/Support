@@ -3,11 +3,15 @@ package leo.work.support.Base.Activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.Window;
 
 import leo.work.support.Base.Application.BaseApplication;
+import leo.work.support.Support.Common.Has;
 import leo.work.support.Support.Common.LogUtil;
 
 
@@ -21,8 +25,14 @@ public abstract class BaseActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //支持转场动画
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         super.onCreate(savedInstanceState);
         LogUtil.e("=======================>" + this.getClass().getName());
+        //竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(setLayout());
         context = this;
         activity = this;
@@ -79,9 +89,26 @@ public abstract class BaseActivity extends Activity {
         hasFront = false;
     }
 
+    @Override
+    protected void onStart() {
+        hideBottomNavigationBar();
+        super.onStart();
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
+
+    //隐藏底部按钮
+    private void hideBottomNavigationBar() {
+        int flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        if (Build.VERSION.SDK_INT < 19 || !Has.hasDeviceHasNavigationBar(activity)) {
+            return;
+        }
+        // 获取属性
+        getWindow().getDecorView().setSystemUiVisibility(flag);
+    }
+
 }

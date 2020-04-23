@@ -20,6 +20,9 @@ import android.os.StatFs;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.format.Formatter;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -78,12 +81,12 @@ public class Get extends BaseUtil {
             //因此，把此数乘以100之后再取余
             size = size * 100;
             return String.valueOf((size / 100)) + "."
-                + String.valueOf((size % 100)) + "MB";
+                    + String.valueOf((size % 100)) + "MB";
         } else {
             //否则如果要以GB为单位的，先除于1024再作同样的处理
             size = size * 100 / 1024;
             return String.valueOf((size / 100)) + "."
-                + String.valueOf((size % 100)) + "GB";
+                    + String.valueOf((size % 100)) + "GB";
         }
     }
 
@@ -265,7 +268,7 @@ public class Get extends BaseUtil {
     public static int getProgress(DownloadManager mDownloadManager, long downloadId) {
         //查询进度
         DownloadManager.Query query = new DownloadManager.Query()
-            .setFilterById(downloadId);
+                .setFilterById(downloadId);
         Cursor cursor = null;
         int progress = 0;
         try {
@@ -389,12 +392,12 @@ public class Get extends BaseUtil {
         Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {
-            column
+                column
         };
 
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                null);
+                    null);
             if (cursor != null && cursor.moveToFirst()) {
                 final int column_index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(column_index);
@@ -418,5 +421,27 @@ public class Get extends BaseUtil {
             locale = Resources.getSystem().getConfiguration().locale;
         }
         return locale;
+    }
+
+
+    //淡入淡出动画
+    public static Fade getFadeAnimation() {
+        Fade fade = new Fade();
+        fade.setDuration(300L);
+        return fade;
+    }
+
+    //滑动动画
+    public static Slide getSlideAnimation() {
+        Slide slide = new Slide();
+        slide.setDuration(300L);
+        return slide;
+    }
+
+    //分解动画
+    public static Explode getExplodeAnimation() {
+        Explode explode = new Explode();
+        explode.setDuration(300L);
+        return explode;
     }
 }

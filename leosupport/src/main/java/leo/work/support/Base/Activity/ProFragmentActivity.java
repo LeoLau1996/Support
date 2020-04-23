@@ -4,13 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.Window;
 
 import leo.work.support.Base.Application.BaseApplication;
+import leo.work.support.R;
+import leo.work.support.Support.Common.Has;
 import leo.work.support.Support.Common.LogUtil;
 
 
@@ -24,11 +29,17 @@ public abstract class ProFragmentActivity extends FragmentActivity {
     //数据
     public boolean isLoading = false;//是否正在加载
     public boolean hasFront = false;//当前页面是否在前台
+    public String mFragmentTAG = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //支持转场动画
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         super.onCreate(savedInstanceState);
         LogUtil.e("=======================>" + this.getClass().getName());
+        //竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(setLayout());
         context = this;
@@ -66,6 +77,39 @@ public abstract class ProFragmentActivity extends FragmentActivity {
      */
     protected abstract void initListener();
 
+    //1.持有碎片的MainActivity异常崩溃 2.App进入后台,系统内存不足被回收
+    //避免碎片布局重叠
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (outState != null && !mFragmentTAG.equals("")) {
+            if (mFragment != null) {
+                //隐藏当前的fragment,避免重叠
+                mFragmentManager.beginTransaction().hide(mFragment).commitAllowingStateLoss();
+                mFragment = null;
+            }
+            outState.putString("currentTab", mFragmentTAG);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    //只有在activity确实是被系统回收，重新创建activity的情况下才会被调用。
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (!mFragmentTAG.equals("")) {
+            if (savedInstanceState != null) {
+                //隐藏碎片 避免重叠
+                if (mFragment != null) {
+                    //隐藏当前的fragment
+                    mFragmentManager.beginTransaction().hide(mFragment).commitAllowingStateLoss();
+                    mFragment = null;
+                }
+                recoveryFragmet(savedInstanceState.getString("currentTab"));
+            }
+        }
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+
     /**
      * 使用时应该写在这上面
      * ....
@@ -88,30 +132,103 @@ public abstract class ProFragmentActivity extends FragmentActivity {
      * fragment切换逻辑
      *
      * @param fragment
-     * @param tag
+     * @param index
      */
-    public void selectFragment(int id, Fragment fragment, String tag) {
-        if (mFragment != fragment) {
-            //没有被添加  没有显示   没有删除
-            if (!fragment.isAdded() && !fragment.isVisible() && !fragment.isRemoving()) {
-                if (mFragment != null) {
-                    mFragmentManager.beginTransaction().hide(mFragment).commitAllowingStateLoss();
-                }
-                // 隐藏当前的fragment，add下一个到Activity中
-                mFragmentManager.beginTransaction()
-                        .add(id, fragment, tag)
-                        .commitAllowingStateLoss();
-            } else {
-                if (mFragment != null) {
-                    mFragmentManager.beginTransaction().hide(mFragment)
-                            .commitAllowingStateLoss();
-                }
-                // 隐藏当前的fragment，显示下一个
-                mFragmentManager.beginTransaction().show(fragment)
-                        .commitAllowingStateLoss();
-            }
-            mFragment = fragment;
+    public void selectFragment(int id, Fragment fragment, int index) {
+        //如果相同
+        if (mFragment == fragment) {
+            return;
         }
+
+        //隐藏当前的fragment
+        if (mFragment != null) {
+            mFragmentManager.beginTransaction()
+                    //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    .hide(mFragment).commitAllowingStateLoss();
+        }
+        //没有被添加  没有显示   没有删除 ---->   添加新的Fragment
+        if (!fragment.isAdded() && !fragment.isVisible() && !fragment.isRemoving()) {
+            //添加fragment到Activity
+            mFragmentManager.beginTransaction()
+                    //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .add(id, fragment, String.valueOf(index)).commitAllowingStateLoss();
+        }
+        //显示fragment
+        else {
+            mFragmentManager.beginTransaction()
+                    //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .show(fragment).commitAllowingStateLoss();
+        }
+        mFragment = fragment;
+        mFragmentTAG = String.valueOf(index);
     }
 
+    public void selectFragmentAnimation(int id, Fragment fragment, int index) {
+        //如果相同
+        if (mFragment == fragment) {
+            return;
+        }
+        int var1, var2;
+        int var3, var4;
+        if (index > Integer.valueOf(mFragmentTAG)) {
+            var1 = R.anim.from_right;
+            var2 = R.anim.out_left;
+
+
+            var3 = R.anim.from_left;
+            var4 = R.anim.out_right;
+        } else {
+            var1 = R.anim.from_left;
+            var2 = R.anim.out_right;
+
+
+            var3 = R.anim.from_right;
+            var4 = R.anim.out_left;
+        }
+
+
+        //隐藏当前的fragment
+        if (mFragment != null) {
+            mFragmentManager.beginTransaction()
+                    .setCustomAnimations(var1, var2)
+                    .hide(mFragment).commitAllowingStateLoss();
+        }
+        //没有被添加  没有显示   没有删除 ---->   添加新的Fragment
+        if (!fragment.isAdded() && !fragment.isVisible() && !fragment.isRemoving()) {
+            //添加fragment到Activity
+            mFragmentManager.beginTransaction()
+                    .setCustomAnimations(var3, var4)
+                    .add(id, fragment, String.valueOf(index)).commitAllowingStateLoss();
+        }
+        //显示fragment
+        else {
+            mFragmentManager.beginTransaction()
+                    .setCustomAnimations(var3, var4)
+                    .show(fragment).commitAllowingStateLoss();
+        }
+        mFragment = fragment;
+        mFragmentTAG = String.valueOf(index);
+    }
+
+    @Override
+    protected void onStart() {
+        hideBottomNavigationBar();
+        super.onStart();
+    }
+
+    //恢复Fragmen
+    public void recoveryFragmet(String fragmentTAG) {
+
+    }
+
+
+    //隐藏底部按钮
+    private void hideBottomNavigationBar() {
+        int flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        if (Build.VERSION.SDK_INT < 19 || !Has.hasDeviceHasNavigationBar(activity)) {
+            return;
+        }
+        // 获取属性
+        getWindow().getDecorView().setSystemUiVisibility(flag);
+    }
 }

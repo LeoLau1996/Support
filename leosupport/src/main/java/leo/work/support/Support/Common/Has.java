@@ -1,10 +1,13 @@
 package leo.work.support.Support.Common;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import java.io.File;
+import java.lang.reflect.Method;
 
 import leo.work.support.Base.Util.BaseUtil;
 
@@ -59,4 +62,27 @@ public class Has extends BaseUtil {
         return b;
     }
 
+
+    //判断是否存在虚拟按键
+    public static boolean hasDeviceHasNavigationBar(Activity activity) {
+        boolean hasNavigationBar = false;
+        Resources rs = activity.getResources();
+        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
+        if (id > 0) {
+            hasNavigationBar = rs.getBoolean(id);
+        }
+        try {
+            Class<?> systemPropertiesClass = Class.forName("android.os.SystemProperties");
+            Method m = systemPropertiesClass.getMethod("get", String.class);
+            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
+            if ("1".equals(navBarOverride)) {
+                hasNavigationBar = false;
+            } else if ("0".equals(navBarOverride)) {
+                hasNavigationBar = true;
+            }
+        } catch (Exception e) {
+
+        }
+        return hasNavigationBar;
+    }
 }

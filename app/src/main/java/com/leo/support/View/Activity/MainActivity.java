@@ -38,7 +38,7 @@ public class MainActivity extends BaseMVPFragmentActivity<MainView> implements M
         c = new CFragment();
         d = new DFragment();
 
-        selectFragment(R.id.mFrameLayout, a, "a");
+        selectFragmentAnimation(R.id.mFrameLayout, a, 1);
     }
 
     @Override
@@ -49,12 +49,7 @@ public class MainActivity extends BaseMVPFragmentActivity<MainView> implements M
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.tv1) {
-            if (PermissionsSupport.hasPermissions(context, PermissionsSupport.READ_EXTERNAL_STORAGE, PermissionsSupport.WRITE_EXTERNAL_STORAGE)) {
-                LogUtil.e("liu1209", FileSupport.getPrjFileDir());
-            } else {
-                LogUtil.e("liu1209", "缺少权限，请申请");
-                PermissionsSupport.getPermissions(activity, 1001, PermissionsSupport.READ_EXTERNAL_STORAGE, PermissionsSupport.WRITE_EXTERNAL_STORAGE);
-            }
+            presenter.select1();
         } else if (v.getId() == R.id.tv2) {
             presenter.select2();
         } else if (v.getId() == R.id.tv3) {
@@ -67,25 +62,25 @@ public class MainActivity extends BaseMVPFragmentActivity<MainView> implements M
 
     @Override
     public void onSelectA() {
-        selectFragment(R.id.mFrameLayout, a, "a");
+        selectFragmentAnimation(R.id.mFrameLayout, a, 1);
         Talk.showToast("a");
     }
 
     @Override
     public void onSelectB() {
-        selectFragment(R.id.mFrameLayout, b, "b");
+        selectFragmentAnimation(R.id.mFrameLayout, b, 2);
         Talk.showToast("b");
     }
 
     @Override
     public void onSelectC() {
-        selectFragment(R.id.mFrameLayout, c, "c");
+        selectFragmentAnimation(R.id.mFrameLayout, c, 3);
         Talk.showToast("c");
     }
 
     @Override
     public void onSelectD() {
-        selectFragment(R.id.mFrameLayout, d, "d");
+        selectFragmentAnimation(R.id.mFrameLayout, d, 4);
         Talk.showToast("d");
     }
 
