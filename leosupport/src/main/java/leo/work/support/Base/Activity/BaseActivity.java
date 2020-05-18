@@ -95,4 +95,25 @@ public abstract class BaseActivity extends Activity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        hideBottomMenu();
+    }
+
+    protected void hideBottomMenu() {
+        //隐藏虚拟按键
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            View v = this.getWindow().getDecorView();
+            if (v != null) {
+                v.setSystemUiVisibility(View.GONE);
+            }
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY/* | View.SYSTEM_UI_FLAG_FULLSCREEN*/;
+            if (decorView != null) {
+                decorView.setSystemUiVisibility(uiOptions);
+            }
+        }
+    }
 }
