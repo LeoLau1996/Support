@@ -85,40 +85,40 @@ public class JumpUtil {
      */
     //不带参数  不返回
     public static void goByOnly(Activity activity, Class mClass) {
-        go(activity, mClass, null, null, false);
+        goByOnly(activity, mClass, null, null, false);
     }
 
 
     //不带参数  返  回
     public static void goByOnly(Activity activity, Class mClass, Integer requestCode) {
-        go(activity, mClass, null, requestCode, false);
+        goByOnly(activity, mClass, null, requestCode, false);
     }
 
     //带参数  不返回
     public static void goByOnly(Activity activity, Class mClass, Bundle bundle) {
-        go(activity, mClass, bundle, null, false);
+        goByOnly(activity, mClass, bundle, null, false);
     }
 
     //带参数  返回
     public static void goByOnly(Activity activity, Class mClass, Bundle bundle, Integer requestCode) {
-        go(activity, mClass, bundle, requestCode, false);
+        goByOnly(activity, mClass, bundle, requestCode, false);
     }
 
 
     //不带参数  不返回
     public static void goByOnly(Activity activity, Class mClass, boolean isAnimation) {
-        go(activity, mClass, null, null, isAnimation);
+        goByOnly(activity, mClass, null, null, isAnimation);
     }
 
 
     //不带参数  返  回
     public static void goByOnly(Activity activity, Class mClass, Integer requestCode, boolean isAnimation) {
-        go(activity, mClass, null, requestCode, isAnimation);
+        goByOnly(activity, mClass, null, requestCode, isAnimation);
     }
 
     //带参数  不返回
     public static void goByOnly(Activity activity, Class mClass, Bundle bundle, boolean isAnimation) {
-        go(activity, mClass, bundle, null, isAnimation);
+        goByOnly(activity, mClass, bundle, null, isAnimation);
     }
 
     //带参数  返回
