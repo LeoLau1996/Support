@@ -210,25 +210,8 @@ public abstract class ProFragmentActivity extends FragmentActivity {
         mFragmentTAG = String.valueOf(index);
     }
 
-    @Override
-    protected void onStart() {
-        hideBottomNavigationBar();
-        super.onStart();
-    }
-
     //恢复Fragmen
     public void recoveryFragmet(String fragmentTAG) {
 
-    }
-
-
-    //隐藏底部按钮
-    private void hideBottomNavigationBar() {
-        int flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-        if (Build.VERSION.SDK_INT < 19 || !Has.hasDeviceHasNavigationBar(activity)) {
-            return;
-        }
-        // 获取属性
-        getWindow().getDecorView().setSystemUiVisibility(flag);
     }
 }
