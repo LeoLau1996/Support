@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 
@@ -59,6 +60,11 @@ public class PermissionsSupport {
     //请求权限（兼容低版本）
     public static void getPermissions(Activity activity, int requestCode, String... permissions) {
         ActivityCompat.requestPermissions(activity, permissions, requestCode);
+    }
+
+    //请求权限（兼容低版本）
+    public static void getPermissions(Fragment fragment, int requestCode, String... permissions) {
+        fragment.requestPermissions(permissions, requestCode);
     }
 
     //进入手机设置---权限页面
