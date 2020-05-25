@@ -26,7 +26,7 @@ public abstract class ProActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //支持转场动画
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         }
         super.onCreate(savedInstanceState);
@@ -87,10 +87,17 @@ public abstract class ProActivity extends Activity {
         super.onPause();
         hasFront = false;
     }
+
     @Override
     protected void onStart() {
         super.onStart();
         hideBottomMenu();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        BaseApplication.onRestoreBiz();
     }
 
     protected void hideBottomMenu() {

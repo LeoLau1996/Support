@@ -101,4 +101,9 @@ public abstract class BaseApplication extends Application {
             this.y = y;
         }
     }
+
+    //当Activity
+    public static void onRestoreBiz() {
+
+    }
 }

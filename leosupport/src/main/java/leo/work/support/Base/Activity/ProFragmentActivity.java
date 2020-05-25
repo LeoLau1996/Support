@@ -106,6 +106,7 @@ public abstract class ProFragmentActivity extends FragmentActivity {
                 recoveryFragmet(savedInstanceState.getString("currentTab"));
             }
         }
+        BaseApplication.onRestoreBiz();
         super.onRestoreInstanceState(savedInstanceState);
     }
 
