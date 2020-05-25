@@ -120,7 +120,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
                 recoveryFragmet(savedInstanceState.getString("currentTab"));
             }
         }
-        BaseApplication.onRestoreBiz();
+        BaseApplication.getApplication().onRestoreBiz();
         super.onRestoreInstanceState(savedInstanceState);
     }
 

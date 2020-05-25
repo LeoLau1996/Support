@@ -103,7 +103,7 @@ public abstract class BaseApplication extends Application {
     }
 
     //当Activity
-    public static void onRestoreBiz() {
+    public void onRestoreBiz() {
 
     }
 }

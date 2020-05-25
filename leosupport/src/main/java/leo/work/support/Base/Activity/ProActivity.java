@@ -97,7 +97,7 @@ public abstract class ProActivity extends Activity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        BaseApplication.onRestoreBiz();
+        BaseApplication.getApplication().onRestoreBiz();
     }
 
     protected void hideBottomMenu() {

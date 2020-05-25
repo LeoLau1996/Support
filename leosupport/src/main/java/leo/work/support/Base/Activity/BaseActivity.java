@@ -92,7 +92,7 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        BaseApplication.onRestoreBiz();
+        BaseApplication.getApplication().onRestoreBiz();
     }
 
     @Override
