@@ -20,7 +20,13 @@ import android.view.View;
  * ---------------------------------------------------------------------------------------------
  **/
 public class CircularHornImageView extends AppCompatImageView {
-    float width, height;
+    private float width, height;
+    //圆角
+    private int leftTop = 12;
+    private int leftBottom = 12;
+    private int rightTop = 12;
+    private int rightBottom = 12;
+
 
     public CircularHornImageView(Context context) {
         this(context, null);
@@ -54,24 +60,51 @@ public class CircularHornImageView extends AppCompatImageView {
     protected void onDraw(Canvas canvas) {
         if (width >= 12 && height > 12) {
             Path path = new Path();
-            //四个圆角
-            path.moveTo(12, 0);
+            //右上角
+            {
+                path.moveTo(rightTop, 0);
+                path.lineTo(width - rightTop, 0);
+                path.quadTo(width, 0, width, rightTop);
+            }
 
-            path.lineTo(width - 12, 0);
+            //右下角
+            {
+                path.lineTo(width, height - rightBottom);
+                path.quadTo(width, height, width - rightBottom, height);
+            }
 
-            path.quadTo(width, 0, width, 12);
-            path.lineTo(width, height - 12);
 
-            path.quadTo(width, height, width - 12, height);
-            path.lineTo(12, height);
+            //左下角
+            {
+                path.lineTo(leftBottom, height);
+                path.quadTo(0, height, 0, height - leftBottom);
+            }
 
-            path.quadTo(0, height, 0, height - 12);
-            path.lineTo(0, 12);
-            path.quadTo(0, 0, 12, 0);
 
+            //左上角
+            {
+                path.lineTo(0, leftTop);
+                path.quadTo(0, 0, leftTop, 0);
+            }
+
+
+            //绘制
             canvas.clipPath(path);
         }
         super.onDraw(canvas);
     }
 
+    public void setFillet(int fillet) {
+        leftTop = fillet;
+        leftBottom = fillet;
+        rightTop = fillet;
+        rightBottom = fillet;
+    }
+
+    public void setFillet(int leftTop, int leftBottom, int rightTop, int rightBottom) {
+        this.leftTop = leftTop;
+        this.leftBottom = leftBottom;
+        this.rightTop = rightTop;
+        this.rightBottom = rightBottom;
+    }
 }
