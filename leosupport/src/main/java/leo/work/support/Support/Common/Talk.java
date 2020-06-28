@@ -30,11 +30,17 @@ public class Talk extends BaseUtil {
     private static Toast mToast;
 
     public static void talkShort(String detail) {
+        if (Is.isEmpty(detail)) {
+            return;
+        }
         Toast.makeText(getContext(), detail, Toast.LENGTH_SHORT).show();
     }
 
     public static void talkLong(String detail) {
-        Toast.makeText(getContext(), detail, Toast.LENGTH_SHORT).show();
+        if (Is.isEmpty(detail)) {
+            return;
+        }
+        Toast.makeText(getContext(), detail, Toast.LENGTH_LONG).show();
     }
 
     public static void showToast(final CharSequence text) {
