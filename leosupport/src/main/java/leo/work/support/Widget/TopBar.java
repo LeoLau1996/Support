@@ -110,35 +110,33 @@ public class TopBar extends RelativeLayout {
         layte2.addRule(RelativeLayout.CENTER_VERTICAL);
         tv_Title.setLayoutParams(layte2);
 
+        /**
+         * 文字Menu
+         */
+        tv_Menu.setText(menuText);
+        tv_Menu.setTextColor(menuTextColor);
+        tv_Menu.setTextSize(menuTextSize);
+        tv_Menu.setGravity(Gravity.CENTER);
+        tv_Menu.setPadding(A2BSupport.dp2px( 20), 0, A2BSupport.dp2px( 20), 0);
+        LayoutParams layte3 = new LayoutParams(LayoutParams.WRAP_CONTENT, A2BSupport.dp2px( 44));
+        layte3.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        layte3.addRule(RelativeLayout.CENTER_VERTICAL);
+        tv_Menu.setLayoutParams(layte3);
+        /**
+         * 图形Menu
+         */
+        iv_Menu.setPadding(A2BSupport.dp2px(14), A2BSupport.dp2px(14), A2BSupport.dp2px(14), A2BSupport.dp2px(14));
+        iv_Menu.setImageDrawable(getResources().getDrawable(menuIma));
+        LayoutParams layte4 = new LayoutParams(A2BSupport.dp2px(44), A2BSupport.dp2px(44));
+        layte4.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        layte4.addRule(RelativeLayout.CENTER_VERTICAL);
+        iv_Menu.setLayoutParams(layte4);
 
         //优先显示文字
         if (menuText != null && !menuText.equals("")) {
-            /**
-             * 文字Menu
-             */
-            tv_Menu.setText(menuText);
-            tv_Menu.setTextColor(menuTextColor);
-            tv_Menu.setTextSize(menuTextSize);
-            tv_Menu.setGravity(Gravity.CENTER);
-            tv_Menu.setPadding(A2BSupport.dp2px( 20), 0, A2BSupport.dp2px( 20), 0);
-            LayoutParams layte3 = new LayoutParams(LayoutParams.WRAP_CONTENT, A2BSupport.dp2px( 44));
-            layte3.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            layte3.addRule(RelativeLayout.CENTER_VERTICAL);
-            tv_Menu.setLayoutParams(layte3);
-
             tv_Menu.setVisibility(VISIBLE);
             iv_Menu.setVisibility(GONE);
         } else {
-            /**
-             * 图形Menu
-             */
-            iv_Menu.setPadding(A2BSupport.dp2px(14), A2BSupport.dp2px(14), A2BSupport.dp2px(14), A2BSupport.dp2px(14));
-            iv_Menu.setImageDrawable(getResources().getDrawable(menuIma));
-            LayoutParams layte4 = new LayoutParams(A2BSupport.dp2px(44), A2BSupport.dp2px(44));
-            layte4.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            layte4.addRule(RelativeLayout.CENTER_VERTICAL);
-            iv_Menu.setLayoutParams(layte4);
-
             tv_Menu.setVisibility(GONE);
             iv_Menu.setVisibility(VISIBLE);
         }
