@@ -29,7 +29,7 @@ import leo.work.support.R;
  * 代码备注:CircularHornImageView
  * ---------------------------------------------------------------------------------------------
  **/
-public class CircleImageView extends ImageView {
+public class CircleImageView extends SquareImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
