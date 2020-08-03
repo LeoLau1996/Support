@@ -23,6 +23,7 @@ import leo.work.support.Support.Common.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
+@Deprecated
 public abstract class BaseService extends Service {
     public Context context;
     private MyBinder mBinder = new MyBinder();

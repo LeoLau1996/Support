@@ -21,7 +21,7 @@ import java.util.List;
  * 备　　注:
  * ---------------------------------------------------------------------------------------------
  **/
-
+@Deprecated
 public abstract class ProAdapterToRecycler2<T> extends RecyclerView.Adapter {
     public Context context;
     public LayoutInflater mInflater;

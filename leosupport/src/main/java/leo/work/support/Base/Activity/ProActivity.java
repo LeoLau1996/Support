@@ -40,8 +40,9 @@ public abstract class ProActivity extends Activity {
         initData();
 
         initViews(savedInstanceState);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
+
         loadData(true, false);
+
         initListener();
     }
 
@@ -63,12 +64,16 @@ public abstract class ProActivity extends Activity {
     /**
      * 加载数据，如：网络请求
      */
-    protected abstract void loadData(final boolean isShowState, final boolean isSaveLastData);
+    protected void loadData(final boolean isShowState, final boolean isSaveLastData) {
+
+    }
 
     /**
      * 初始化监听器
      */
-    protected abstract void initListener();
+    protected void initListener() {
+
+    }
 
     /**
      * 使用时应该写在这上面
@@ -89,30 +94,9 @@ public abstract class ProActivity extends Activity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        hideBottomMenu();
-    }
-
-    @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         BaseApplication.getApplication().onRestoreBiz();
     }
 
-    protected void hideBottomMenu() {
-        //隐藏虚拟按键
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
-            View v = this.getWindow().getDecorView();
-            if (v != null) {
-                v.setSystemUiVisibility(View.GONE);
-            }
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY/* | View.SYSTEM_UI_FLAG_FULLSCREEN*/;
-            if (decorView != null) {
-                decorView.setSystemUiVisibility(uiOptions);
-            }
-        }
-    }
 }

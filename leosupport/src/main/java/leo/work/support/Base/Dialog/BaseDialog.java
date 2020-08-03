@@ -30,6 +30,7 @@ import leo.work.support.Support.Common.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
+@Deprecated
 public abstract class BaseDialog extends DialogFragment {
     //默认样式
     public Context context;

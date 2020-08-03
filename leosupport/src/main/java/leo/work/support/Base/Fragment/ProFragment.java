@@ -70,12 +70,16 @@ public abstract class ProFragment extends Fragment {
     /**
      * 加载数据，如：网络请求
      */
-    protected abstract void loadData(final boolean isShowState, final boolean isSaveLastData);
+    protected void loadData(final boolean isShowState, final boolean isSaveLastData) {
+
+    }
 
     /**
      * 初始化监听器
      */
-    protected abstract void initListener();
+    protected void initListener() {
+
+    }
 
 
     /**

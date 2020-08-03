@@ -66,12 +66,16 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 加载数据，如：网络请求
      */
-    protected abstract void loadData();
+    protected void loadData() {
+
+    }
 
     /**
      * 初始化监听器
      */
-    protected abstract void initListener();
+    protected void initListener() {
+
+    }
 
 
     /**

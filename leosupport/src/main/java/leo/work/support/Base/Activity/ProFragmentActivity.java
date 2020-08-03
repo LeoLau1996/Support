@@ -48,8 +48,9 @@ public abstract class ProFragmentActivity extends FragmentActivity {
         initData();
 
         initViews(savedInstanceState);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
+
         loadData(true, false);
+
         initListener();
     }
 
@@ -70,7 +71,9 @@ public abstract class ProFragmentActivity extends FragmentActivity {
     /**
      * 加载数据，如：网络请求
      */
-    protected abstract void loadData(final boolean isShowState, final boolean isSaveLastData);
+    protected void loadData(final boolean isShowState, final boolean isSaveLastData) {
+
+    }
 
     /**
      * 初始化监听器
