@@ -13,19 +13,24 @@
     </declare-styleable>
 
     <declare-styleable name="TopBar">
-        <attr name="background" format="reference" />
-        <attr name="hasShowBreak" format="boolean" />
-        <attr name="BreakIma" format="reference" />
-        <attr name="Title" format="string" />
-        <attr name="TitleSize" format="dimension" />
-        <attr name="TitleColor" format="color" />
-        <attr name="hasShowMenu" format="boolean" />
-        <attr name="MenuText" format="string" />
-        <attr name="MenuTextColor" format="color" />
-        <attr name="MenuTextSize" format="dimension" />
-        <attr name="MenuIma" format="reference" />
-
+        <attr name="heightDP" format="dimension" />
+        <attr name="showStatusBar" format="boolean" />
+        <attr name="statusBarColor" format="color" />
+        <!--返回键-->
+        <attr name="backImage" format="reference" />
+        <attr name="backPaddingDP" format="dimension" />
+        <!--标题-->
+        <attr name="titleText" format="string" />
+        <attr name="titleSize" format="dimension" />
+        <attr name="titleColor" format="color" />
+        <!--文字菜单-->
+        <attr name="menuTextPaddingDP" format="dimension" />
+        <attr name="menuText" format="string" />
+        <attr name="menuTextSize" format="dimension" />
+        <attr name="menuTextColor" format="color" />
+        <!--图片菜单-->
+        <attr name="menuImage" format="reference" />
+        <attr name="menuImagePaddingDP" format="dimension" />
     </declare-styleable>
-
 
 </resources>

@@ -1,9 +1,14 @@
 package leo.work.support.Widget;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.text.TextUtils;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,8 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import leo.work.support.R;
-import leo.work.support.Support.ToolSupport.A2BSupport;
-import leo.work.support.Support.ToolSupport.LeoSupport;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -25,203 +28,273 @@ import leo.work.support.Support.ToolSupport.LeoSupport;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class TopBar extends RelativeLayout {
-    private ImageView iv_Back;
-    private TextView tv_Title;
-    private ImageView iv_Menu;
-    private TextView tv_Menu;
 
-    //数据
-    private int background;//背景色
+public class TopBar extends RelativeLayout implements View.OnClickListener {
 
-    private boolean hasShowBreak;//是否显示返回键
+    public static TopBarDefaultInfo defaultInfo;
+
+    /**
+     * 返回键
+     */
+    private ImageView ivBack;
     private int backImage;
+    private float backPaddingDP;
 
-    private String title;
+
+    /**
+     * 标题
+     */
+    private TextView tvTitle;
+    private String titleText;
     private int titleColor;
     private float titleSize;
 
-    private boolean hasShowMenu;
-    private int menuIma;
+    /**
+     * 文字菜单键
+     */
+    private TextView tvMenu;
+    private float menuTextPaddingDP;
     private String menuText;
     private int menuTextColor;
     private float menuTextSize;
 
-    private OnBreakClickListener onBreakClickListener;
+    /**
+     * 图片菜单键
+     */
+    private ImageView ivMenu;
+    private int menuImage;
+    private float menuImagePaddingDP;
 
-    public TopBar(final Context context, AttributeSet attrs) {
+    //高度
+    private float heightDP;
+    private int mWidth;
+    private boolean showStatusBar;
+    private int statusBarColor;
+    private int statusBarHeight;
+    //回调
+    private OnTopBarCallBack callBack;
+
+    public TopBar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        /**
-         * 初始化数据
-         */
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TopBar, 0, 0);
+        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TopBar, 0, 0);
+        //高度
+        heightDP = typedArray.getDimension(R.styleable.TopBar_heightDP, 44);
+        showStatusBar = typedArray.getBoolean(R.styleable.TopBar_showStatusBar, true);
+        statusBarColor = typedArray.getColor(R.styleable.TopBar_statusBarColor, getDefaultInfo().getStatusBarColor());
+        //返回键
+        backImage = typedArray.getResourceId(R.styleable.TopBar_backImage, getDefaultInfo().getBackImage());
+        backPaddingDP = typedArray.getDimension(R.styleable.TopBar_backPaddingDP, 14);
+        //标题
+        titleText = typedArray.getString(R.styleable.TopBar_titleText);
+        titleColor = typedArray.getColor(R.styleable.TopBar_titleColor, getDefaultInfo().getTitleColor());
+        titleSize = typedArray.getDimension(R.styleable.TopBar_titleSize, 16);
+        //文字菜单
+        menuTextPaddingDP = typedArray.getDimension(R.styleable.TopBar_menuTextPaddingDP, 20);
+        menuText = typedArray.getString(R.styleable.TopBar_menuText);
+        menuTextColor = typedArray.getColor(R.styleable.TopBar_menuTextColor, Color.BLACK);
+        menuTextSize = typedArray.getDimension(R.styleable.TopBar_menuTextSize, 14);
+        //图片菜单
+        menuImage = typedArray.getResourceId(R.styleable.TopBar_menuImage, 0);
+        menuImagePaddingDP = typedArray.getDimension(R.styleable.TopBar_menuImagePaddingDP, 14);
+        typedArray.recycle();
 
-        background = ta.getResourceId(R.styleable.TopBar_background, LeoSupport.bgColor);
-
-        hasShowBreak = ta.getBoolean(R.styleable.TopBar_hasShowBreak, true);
-        backImage = ta.getResourceId(R.styleable.TopBar_BreakIma, LeoSupport.backIcon);
-
-        title = ta.getString(R.styleable.TopBar_Title);
-        titleColor = ta.getColor(R.styleable.TopBar_TitleColor, getResources().getColor(LeoSupport.titleColor));
-        titleSize = ta.getDimension(R.styleable.TopBar_TitleSize, 18);
-
-        hasShowMenu = ta.getBoolean(R.styleable.TopBar_hasShowMenu, false);
-        menuIma = ta.getResourceId(R.styleable.TopBar_MenuIma, R.color.transp);
-        menuText = ta.getString(R.styleable.TopBar_MenuText);
-        menuTextColor = ta.getColor(R.styleable.TopBar_MenuTextColor, getResources().getColor(LeoSupport.menuTextColor));
-        menuTextSize = ta.getDimension(R.styleable.TopBar_MenuTextSize, 16);
-
-        /**
-         * 初始化控件
-         */
-        iv_Back = new ImageView(context);
-        tv_Title = new TextView(context);
-        iv_Menu = new ImageView(context);
-        tv_Menu = new TextView(context);
-        /**
-         * 设置背景
-         */
-        setBackgroundResource(background);
+        //顶部栏
+        setPadding(0, showStatusBar ? getStatusBarHeight() : 0, 0, 0);
         /**
          * 返回键
          */
-        iv_Back.setPadding(A2BSupport.dp2px( 14), A2BSupport.dp2px( 14), A2BSupport.dp2px( 14), A2BSupport.dp2px( 14));
-        iv_Back.setImageDrawable(getResources().getDrawable(backImage));
-        if (hasShowBreak)
-            iv_Back.setVisibility(VISIBLE);
-        else
-            iv_Back.setVisibility(INVISIBLE);
-        LayoutParams layte1 = new LayoutParams(A2BSupport.dp2px( 44), A2BSupport.dp2px( 44));
-        layte1.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        layte1.addRule(RelativeLayout.CENTER_VERTICAL);
-        iv_Back.setLayoutParams(layte1);
+        {
+            ivBack = new ImageView(context);
+            ivBack.setPadding(dp2px(backPaddingDP), dp2px(backPaddingDP), dp2px(backPaddingDP), dp2px(backPaddingDP));
+            if (backImage != 0) {
+                ivBack.setImageResource(backImage);
+            }
+            LayoutParams layoutParams = new LayoutParams(dp2px(heightDP), dp2px(heightDP));
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            ivBack.setLayoutParams(layoutParams);
+            ivBack.setOnClickListener(this);
+            addView(ivBack);
+        }
 
         /**
          * 标题
          */
-        tv_Title.setMaxLines(1);
-        tv_Title.setEllipsize(TextUtils.TruncateAt.END);
-        tv_Title.setText(title);
-        tv_Title.setTextColor(titleColor);
-        tv_Title.setTextSize(titleSize);
-        tv_Title.setGravity(Gravity.CENTER);
-        tv_Title.setPadding(A2BSupport.dp2px( 44), 0, A2BSupport.dp2px( 44), 0);
-        LayoutParams layte2 = new LayoutParams(LayoutParams.MATCH_PARENT, A2BSupport.dp2px( 44));
-        layte2.addRule(RelativeLayout.CENTER_VERTICAL);
-        tv_Title.setLayoutParams(layte2);
+        {
+            tvTitle = new TextView(context);
+            tvTitle.setText(titleText);
+            tvTitle.setTextColor(titleColor);
+            tvTitle.setTextSize(titleSize);
+            tvTitle.setGravity(Gravity.CENTER);
+            LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, dp2px(heightDP));
+            layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            tvTitle.setLayoutParams(layoutParams);
+            addView(tvTitle);
+        }
 
         /**
          * 文字Menu
          */
-        tv_Menu.setText(menuText);
-        tv_Menu.setTextColor(menuTextColor);
-        tv_Menu.setTextSize(menuTextSize);
-        tv_Menu.setGravity(Gravity.CENTER);
-        tv_Menu.setPadding(A2BSupport.dp2px( 20), 0, A2BSupport.dp2px( 20), 0);
-        LayoutParams layte3 = new LayoutParams(LayoutParams.WRAP_CONTENT, A2BSupport.dp2px( 44));
-        layte3.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        layte3.addRule(RelativeLayout.CENTER_VERTICAL);
-        tv_Menu.setLayoutParams(layte3);
+        {
+            tvMenu = new TextView(context);
+            tvMenu.setText(menuText);
+            tvMenu.setTextColor(menuTextColor);
+            tvMenu.setTextSize(menuTextSize);
+            tvMenu.setGravity(Gravity.CENTER);
+            tvMenu.setPadding(dp2px(menuTextPaddingDP), 0, dp2px(menuTextPaddingDP), 0);
+            LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, dp2px(heightDP));
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            tvMenu.setLayoutParams(layoutParams);
+            tvMenu.setOnClickListener(this);
+            tvMenu.setVisibility((menuText != null && !menuText.equals("")) ? VISIBLE : GONE);
+            addView(tvMenu);
+        }
+
         /**
-         * 图形Menu
+         * 图片菜单
          */
-        iv_Menu.setPadding(A2BSupport.dp2px(14), A2BSupport.dp2px(14), A2BSupport.dp2px(14), A2BSupport.dp2px(14));
-        iv_Menu.setImageDrawable(getResources().getDrawable(menuIma));
-        LayoutParams layte4 = new LayoutParams(A2BSupport.dp2px(44), A2BSupport.dp2px(44));
-        layte4.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        layte4.addRule(RelativeLayout.CENTER_VERTICAL);
-        iv_Menu.setLayoutParams(layte4);
-
-        //优先显示文字
-        if (menuText != null && !menuText.equals("")) {
-            tv_Menu.setVisibility(VISIBLE);
-            iv_Menu.setVisibility(GONE);
-        } else {
-            tv_Menu.setVisibility(GONE);
-            iv_Menu.setVisibility(VISIBLE);
+        {
+            ivMenu = new ImageView(context);
+            ivMenu.setPadding(dp2px(menuImagePaddingDP), dp2px(menuImagePaddingDP), dp2px(menuImagePaddingDP), dp2px(menuImagePaddingDP));
+            if (menuImage != 0) {
+                ivMenu.setImageResource(menuImage);
+            }
+            LayoutParams layoutParams = new LayoutParams(dp2px(heightDP), dp2px(heightDP));
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            ivMenu.setLayoutParams(layoutParams);
+            ivMenu.setOnClickListener(this);
+            tvMenu.setVisibility(menuImage != 0 ? VISIBLE : GONE);
+            addView(ivMenu);
         }
 
-        addView(tv_Title);//
-        addView(iv_Back);//
-        if (hasShowMenu) {
-            addView(tv_Menu);//
-            addView(iv_Menu);//
-        }
-
-        //设置监听事件
-        iv_Back.setOnClickListener(
-            new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (onBreakClickListener != null) {
-                        onBreakClickListener.OnBreakClick();
-                    }
-                }
-            }
-        );
-        iv_Menu.setOnClickListener(
-            new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (onBreakClickListener != null)
-                        onBreakClickListener.OnMenuClick();
-                }
-            }
-        );
-        tv_Menu.setOnClickListener(
-            new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onBreakClickListener != null)
-                        onBreakClickListener.OnMenuClick();
-                }
-            }
-        );
-        ta.recycle();
     }
 
-    public interface OnBreakClickListener {
-        public void OnBreakClick();
-
-        public void OnMenuClick();
-    }
-
-    public void setOnClickListener(OnBreakClickListener onBreakClickListener) {
-        this.onBreakClickListener = onBreakClickListener;
-    }
-
-    public void setTitle(String txt) {
-        tv_Title.setText(txt);
-    }
-
-    public void setMenuText(String txt) {
-        tv_Menu.setText(txt);
-    }
-
-    public void setMenuTextColor(int color) {
-        tv_Menu.setTextColor(getResources().getColor(color));
-    }
-
-    public void isShowMenu(boolean b) {
-        if (b) {
-            iv_Menu.setVisibility(VISIBLE);
-            tv_Menu.setVisibility(VISIBLE);
-        } else {
-            iv_Menu.setVisibility(INVISIBLE);
-            tv_Menu.setVisibility(INVISIBLE);
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        Log.e("liu1009", "onMeasure");
+        int width = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
+        //图标高度
+        int height = dp2px(heightDP) + (showStatusBar ? getStatusBarHeight() : 0);
+        setMeasuredDimension(width, height);
+        if (width != 0) {
+            mWidth = width;
         }
     }
 
-    public void setTopBarBg(int bg) {
-        background = bg;
-        setBackgroundResource(background);
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Log.e("liu1009", "onDraw");
+        if (showStatusBar) {
+            Paint paint = new Paint();
+            paint.setColor(statusBarColor);
+            canvas.drawRect(0, 0, mWidth, getStatusBarHeight(), paint);
+        }
     }
 
-    public void setTopBarAlpha(float alpha) {
-        setAlpha(alpha);
+
+    private int dp2px(float dpValue) {
+        float scale = getContext().getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5F);
     }
 
-    public void setTopBarBgAlpha(int alpha) {
-        getBackground().setAlpha(alpha);
+    @Override
+    public void onClick(View view) {
+        if (callBack == null) {
+            return;
+        }
+        int id = view.getId();
+        if (id == ivBack.getId()) {
+            callBack.onClickBack();
+        } else if (id == tvMenu.getId() || id == ivMenu.getId()) {
+            callBack.onClickMenu();
+        }
     }
+
+    public void setCallBack(OnTopBarCallBack callBack) {
+        this.callBack = callBack;
+    }
+
+    public ImageView getIvBack() {
+        return ivBack;
+    }
+
+    public TextView getTvTitle() {
+        return tvTitle;
+    }
+
+    public TextView getTvMenu() {
+        return tvMenu;
+    }
+
+    public ImageView getIvMenu() {
+        return ivMenu;
+    }
+
+    public interface OnTopBarCallBack {
+        void onClickBack();
+
+        void onClickMenu();
+    }
+
+
+    private static TopBarDefaultInfo getDefaultInfo() {
+        if (defaultInfo == null) {
+            defaultInfo = new TopBarDefaultInfo(0, Color.BLACK, Color.TRANSPARENT);
+        }
+        return defaultInfo;
+    }
+
+    public static void setDefaultInfo(TopBarDefaultInfo defaultInfo) {
+        TopBar.defaultInfo = defaultInfo;
+    }
+
+    public static class TopBarDefaultInfo {
+        private int backImage;
+        private int titleColor;
+        private int statusBarColor;
+
+        public TopBarDefaultInfo(int backImage, int titleColor, int statusBarColor) {
+            this.backImage = backImage;
+            this.titleColor = titleColor;
+            this.statusBarColor = statusBarColor;
+        }
+
+        public int getBackImage() {
+            return backImage;
+        }
+
+        public void setBackImage(int backImage) {
+            this.backImage = backImage;
+        }
+
+        public int getTitleColor() {
+            return titleColor;
+        }
+
+        public void setTitleColor(int titleColor) {
+            this.titleColor = titleColor;
+        }
+
+        public int getStatusBarColor() {
+            return statusBarColor;
+        }
+
+        public void setStatusBarColor(int statusBarColor) {
+            this.statusBarColor = statusBarColor;
+        }
+    }
+
+
+    //获取状态栏高度
+    private int getStatusBarHeight() {
+        if (statusBarHeight == 0) {
+            Resources resources = getResources();
+            int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+            statusBarHeight = resources.getDimensionPixelSize(resourceId);
+        }
+        return statusBarHeight;
+    }
+
+
 }
