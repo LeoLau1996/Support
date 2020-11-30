@@ -216,6 +216,10 @@ public class TopBar extends RelativeLayout {
         }
     }
 
+    public void setStatusBarColor(int statusBarColor) {
+        this.statusBarColor = statusBarColor;
+        invalidate();
+    }
 
     private int dp2px(float dpValue) {
         float scale = getContext().getResources().getDisplayMetrics().density;
@@ -248,6 +252,11 @@ public class TopBar extends RelativeLayout {
 
     public void setMenuText(String txt) {
         getTvMenu().setText(txt);
+    }
+
+    public void isShowMenu(boolean show) {
+        ivMenu.setVisibility(show ? VISIBLE : INVISIBLE);
+        tvMenu.setVisibility(show ? VISIBLE : INVISIBLE);
     }
 
     public interface OnTopBarCallBack {
