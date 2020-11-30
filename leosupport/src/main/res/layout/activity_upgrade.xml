@@ -10,13 +10,13 @@
         android:layout_centerInParent="true"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingTop="@dimen/size16">
+        android:paddingTop="16dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/size16"
-            android:paddingRight="@dimen/size16"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="版本更新"
             android:textColor="@color/textBlack" />
 
@@ -24,10 +24,10 @@
             android:id="@+id/tv_Detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size8"
+            android:layout_marginTop="8dp"
             android:lineSpacingExtra="4dp"
-            android:paddingLeft="@dimen/size16"
-            android:paddingRight="@dimen/size16"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:textColor="@color/textBlack" />
 
         <ProgressBar
@@ -35,21 +35,21 @@
             style="@style/mprogressbar"
             android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:layout_marginTop="@dimen/size16" />
+            android:layout_marginTop="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|right"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size16"
-            android:paddingRight="@dimen/size16">
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
             <TextView
                 android:id="@+id/tv_Cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/size16"
+                android:padding="16dp"
                 android:text="取消"
                 android:textColor="@color/textBlack" />
 
@@ -57,7 +57,7 @@
                 android:id="@+id/tv_Success"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/size16"
+                android:padding="16dp"
                 android:text="确定"
                 android:textColor="@color/textBlack" />
         </LinearLayout>
