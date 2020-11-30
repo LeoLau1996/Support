@@ -29,7 +29,7 @@ import leo.work.support.R;
  * ---------------------------------------------------------------------------------------------
  **/
 
-public class TopBar extends RelativeLayout implements View.OnClickListener {
+public class TopBar extends RelativeLayout {
 
     public static TopBarDefaultInfo defaultInfo;
 
@@ -112,7 +112,15 @@ public class TopBar extends RelativeLayout implements View.OnClickListener {
             LayoutParams layoutParams = new LayoutParams(dp2px(heightDP), dp2px(heightDP));
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
             ivBack.setLayoutParams(layoutParams);
-            ivBack.setOnClickListener(this);
+            ivBack.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (callBack == null) {
+                        return;
+                    }
+                    callBack.onClickBack();
+                }
+            });
             addView(ivBack);
         }
 
@@ -144,7 +152,15 @@ public class TopBar extends RelativeLayout implements View.OnClickListener {
             LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, dp2px(heightDP));
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             tvMenu.setLayoutParams(layoutParams);
-            tvMenu.setOnClickListener(this);
+            tvMenu.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (callBack == null) {
+                        return;
+                    }
+                    callBack.onClickMenu();
+                }
+            });
             tvMenu.setVisibility((menuText != null && !menuText.equals("")) ? VISIBLE : GONE);
             addView(tvMenu);
         }
@@ -161,8 +177,16 @@ public class TopBar extends RelativeLayout implements View.OnClickListener {
             LayoutParams layoutParams = new LayoutParams(dp2px(heightDP), dp2px(heightDP));
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             ivMenu.setLayoutParams(layoutParams);
-            ivMenu.setOnClickListener(this);
-            tvMenu.setVisibility(menuImage != 0 ? VISIBLE : GONE);
+            ivMenu.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (callBack == null) {
+                        return;
+                    }
+                    callBack.onClickMenu();
+                }
+            });
+            ivMenu.setVisibility(menuImage != 0 ? VISIBLE : GONE);
             addView(ivMenu);
         }
 
@@ -196,19 +220,6 @@ public class TopBar extends RelativeLayout implements View.OnClickListener {
     private int dp2px(float dpValue) {
         float scale = getContext().getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5F);
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (callBack == null) {
-            return;
-        }
-        int id = view.getId();
-        if (id == ivBack.getId()) {
-            callBack.onClickBack();
-        } else if (id == tvMenu.getId() || id == ivMenu.getId()) {
-            callBack.onClickMenu();
-        }
     }
 
     public void setCallBack(OnTopBarCallBack callBack) {
