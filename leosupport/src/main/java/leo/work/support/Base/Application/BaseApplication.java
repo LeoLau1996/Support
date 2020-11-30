@@ -35,13 +35,6 @@ public abstract class BaseApplication extends Application {
             isDebug = Is.isDebuggable();
             application = this;
             applicationInfo = setInfo();
-            TopBarInfo topBarInfo = setTopBarInfo();
-            if (topBarInfo != null) {
-                LeoSupport.initTopBar(topBarInfo.getmBgColor(), topBarInfo.getmBackIcon(), topBarInfo.getmTitleColor(), topBarInfo.getmMenuTextColor());
-            } else {
-                LeoSupport.initTopBar();
-            }
-
             toastLayoutModel = setToastLayoutModel();
             init();
         }
@@ -58,8 +51,6 @@ public abstract class BaseApplication extends Application {
     }
 
     protected abstract ApplicationInfo setInfo();
-
-    protected abstract TopBarInfo setTopBarInfo();
 
     protected abstract void init();
 
