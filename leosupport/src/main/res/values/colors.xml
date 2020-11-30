@@ -17,7 +17,7 @@
     <!-- 线 -->
     <color name="line">#dbdbdb</color>
     <!-- 黑色 -->
-    <color name="black">#333333</color>
+    <color name="black">#000000</color>
     <!--绿色-->
     <color name="green">#46c355</color>
     <!--蓝色-->
