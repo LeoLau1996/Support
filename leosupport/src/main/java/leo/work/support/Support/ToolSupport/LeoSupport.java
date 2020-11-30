@@ -42,37 +42,6 @@ import static leo.work.support.Support.Common.Get.getStatusBarHeight;
  * ---------------------------------------------------------------------------------------------
  **/
 public class LeoSupport extends BaseUtil {
-    public static int bgColor;
-    public static int backIcon;
-    public static int titleColor;
-    public static int menuTextColor;
-
-    public static void initTopBar() {
-        initTopBar(0, 0, 0, 0);
-    }
-
-    public static void initTopBar(int mBgColor, int mBackIcon, int mTitleColor, int mMenuTextColor) {
-        bgColor = mBgColor == 0 ? R.color.bule : mBgColor;
-        backIcon = mBackIcon == 0 ? R.drawable.icon_back : mBackIcon;
-        titleColor = mTitleColor == 0 ? R.color.white : mTitleColor;
-        menuTextColor = menuTextColor == 0 ? R.color.textBlack : mMenuTextColor;
-    }
-
-
-    /**
-     * 适用于正常的刷新数据
-     *
-     * @param nowData        原来的数据
-     * @param newData        新增的数据
-     * @param isSaveLastData 是否保存原来的数据
-     * @param <T>
-     */
-    public static <T> void setList(List<T> nowData, List<T> newData, boolean isSaveLastData) {
-        if (!isSaveLastData) {
-            nowData.clear();
-        }
-        nowData.addAll(newData);
-    }
 
     //设置沉浸式状态栏
     public static void setAppStatusBar(Activity activity, int color) {
@@ -123,7 +92,6 @@ public class LeoSupport extends BaseUtil {
             Uri uri = Uri.parse(url);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             activity.startActivity(intent);
-
         } catch (Exception e) {
             Talk.talkShort("打开网页失败，请检查网络链接是否正确。");
         }
