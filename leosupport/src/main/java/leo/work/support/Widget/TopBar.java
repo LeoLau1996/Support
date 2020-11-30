@@ -242,6 +242,14 @@ public class TopBar extends RelativeLayout {
         return ivMenu;
     }
 
+    public void setTitle(String txt) {
+        getTvTitle().setText(txt);
+    }
+
+    public void setMenuText(String txt) {
+        getTvMenu().setText(txt);
+    }
+
     public interface OnTopBarCallBack {
         void onClickBack();
 
