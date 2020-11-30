@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="@dimen/px16dp"
+            android:padding="16dp"
             android:text="a" />
 
         <TextView
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="@dimen/px16dp"
+            android:padding="16dp"
             android:text="b" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="@dimen/px16dp"
+            android:padding="16dp"
             android:text="c" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="@dimen/px16dp"
+            android:padding="16dp"
             android:text="d" />
     </LinearLayout>
 

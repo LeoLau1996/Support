@@ -8,6 +8,7 @@ import com.leo.support.View.Fragment.BFragment;
 import com.leo.support.View.Fragment.CFragment;
 import com.leo.support.View.Fragment.DFragment;
 import com.leo.support.View.Listener.MainListener;
+import com.leo.support.View.MyActivity;
 import com.leo.support.View.Presenter.MainPresenter;
 import com.leo.support.R;
 import com.leo.support.View.View.MainView;
@@ -50,6 +51,7 @@ public class MainActivity extends BaseMVPFragmentActivity<MainView> implements M
     public void onClick(View v) {
         if (v.getId() == R.id.tv1) {
             presenter.select1();
+            JumpUtil.go(activity, MyActivity.class);
         } else if (v.getId() == R.id.tv2) {
             presenter.select2();
         } else if (v.getId() == R.id.tv3) {

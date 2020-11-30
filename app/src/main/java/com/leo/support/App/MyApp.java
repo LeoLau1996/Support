@@ -1,8 +1,10 @@
 package com.leo.support.App;
 
+import com.leo.support.R;
 import leo.work.support.Base.Application.ApplicationInfo;
 import leo.work.support.Base.Application.BaseApplication;
 import leo.work.support.Support.Common.Get;
+import leo.work.support.Widget.TopBar;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -19,7 +21,7 @@ public class MyApp extends BaseApplication {
 
     @Override
     protected void init() {
-
+        TopBar.setDefaultInfo(new TopBar.TopBarDefaultInfo(R.drawable.ic_back_black, R.color.black, R.color.bule));
     }
 
     @Override
