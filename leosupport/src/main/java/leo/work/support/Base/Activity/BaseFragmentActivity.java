@@ -2,20 +2,17 @@ package leo.work.support.Base.Activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Build;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.view.Window;
 
 import leo.work.support.Base.Application.BaseApplication;
 import leo.work.support.R;
-import leo.work.support.Support.Common.Has;
 import leo.work.support.Support.Common.LogUtil;
 
 
@@ -215,4 +212,15 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
 
     }
 
+    /**
+     * 设置 app 不随着系统字体的调整而变化
+     */
+    @Override
+    public Resources getResources() {
+        Resources resources = super.getResources();
+        Configuration config = new Configuration();
+        config.setToDefaults();
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        return resources;
+    }
 }

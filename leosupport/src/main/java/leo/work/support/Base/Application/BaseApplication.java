@@ -2,12 +2,13 @@ package leo.work.support.Base.Application;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 
 
 import leo.work.support.R;
 import leo.work.support.Support.Common.Get;
 import leo.work.support.Support.Common.Is;
-import leo.work.support.Support.ToolSupport.LeoSupport;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -96,5 +97,18 @@ public abstract class BaseApplication extends Application {
     //当Activity
     public void onRestoreBiz() {
 
+    }
+
+
+    /**
+     * 设置 app 不随着系统字体的调整而变化
+     */
+    @Override
+    public Resources getResources() {
+        Resources resources = super.getResources();
+        Configuration config = new Configuration();
+        config.setToDefaults();
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        return resources;
     }
 }
