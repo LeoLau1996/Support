@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import leo.work.support.R;
+import leo.work.support.Support.Common.Is;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -246,12 +247,13 @@ public class TopBar extends RelativeLayout {
         return ivMenu;
     }
 
-    public void setTitle(String txt) {
-        getTvTitle().setText(txt);
+    public void setTitle(String text) {
+            getTvTitle().setText(text);
     }
 
-    public void setMenuText(String txt) {
-        getTvMenu().setText(txt);
+    public void setMenuText(String text) {
+        getTvMenu().setText(text);
+        getTvMenu().setVisibility(Is.isEmpty(text) ? GONE : VISIBLE);
     }
 
     public void isShowMenu(boolean show) {
