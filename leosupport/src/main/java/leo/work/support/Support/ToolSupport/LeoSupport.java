@@ -93,7 +93,7 @@ public class LeoSupport extends BaseUtil {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             activity.startActivity(intent);
         } catch (Exception e) {
-            Talk.talkShort("打开网页失败，请检查网络链接是否正确。");
+
         }
     }
 

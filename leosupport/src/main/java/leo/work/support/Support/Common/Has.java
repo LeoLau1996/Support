@@ -44,22 +44,11 @@ public class Has extends BaseUtil {
         return b;
     }
 
-
     //是否有网络
     public static boolean hasNetwork() {
-        return hasNetwork(true);
-    }
-
-
-    //是否有网络
-    public static boolean hasNetwork(boolean hasShowToast) {
         ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        boolean b = activeNetworkInfo != null && activeNetworkInfo.isAvailable();
-        if (!b && hasShowToast) {
-            Talk.talkShort("网络连接尚未打开");
-        }
-        return b;
+        return activeNetworkInfo != null && activeNetworkInfo.isAvailable();
     }
 
 
