@@ -18,38 +18,40 @@ import leo.work.support.Base.Application.BaseApplication;
 public class LogUtil {
 
     private static final String TAG = "leowork";
+    private static StringBuffer stringBuffer;
 
     public static void e(String detail) {
-        if (!BaseApplication.isDebug) {
-            return;
-        }
-        print(TAG, detail);
+        e(TAG, detail);
     }
 
-    public static void e(String tag, String detail) {
+    public static void e(String tag, String text) {
+        if (stringBuffer == null) {
+            stringBuffer = new StringBuffer();
+        }
+        stringBuffer.append(DateSupport.toString(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss"));
+        stringBuffer.append(":");
+        stringBuffer.append(text);
+        stringBuffer.append("\n");
         if (!BaseApplication.isDebug) {
             return;
         }
-        print(tag, detail);
-    }
 
-    private static void print(String tag, String result) {
-        if (!BaseApplication.isDebug) {
-            return;
-        }
-
-        if (result.length() > 4000) {
-            int chunkCount = result.length() / 4000;     // integer division
+        if (text.length() > 4000) {
+            int chunkCount = text.length() / 4000;     // integer division
             for (int i = 0; i <= chunkCount; i++) {
                 int max = 4000 * (i + 1);
-                if (max >= result.length()) {
-                    Log.e(tag, "chunk " + i + " of " + chunkCount + ":" + result.substring(4000 * i));
+                if (max >= text.length()) {
+                    Log.e(tag, "chunk " + i + " of " + chunkCount + ":" + text.substring(4000 * i));
                 } else {
-                    Log.e(tag, "chunk " + i + " of " + chunkCount + ":" + result.substring(4000 * i, max));
+                    Log.e(tag, "chunk " + i + " of " + chunkCount + ":" + text.substring(4000 * i, max));
                 }
             }
         } else {
-            Log.e(tag, result);
+            Log.e(tag, text);
         }
+    }
+
+    public String getLog() {
+        return stringBuffer != null ? stringBuffer.toString() : "";
     }
 }
