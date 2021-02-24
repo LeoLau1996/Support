@@ -51,7 +51,7 @@ public class LogUtil {
         }
     }
 
-    public String getLog() {
+    public static String getLog() {
         return stringBuffer != null ? stringBuffer.toString() : "";
     }
 }
