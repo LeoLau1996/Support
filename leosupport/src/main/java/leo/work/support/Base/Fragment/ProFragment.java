@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -44,13 +45,18 @@ public abstract class ProFragment extends Fragment {
         view = inflater.inflate(setLayout(), container, false);
         context = getContext();
         activity = getActivity();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initData();
 
         initViews(savedInstanceState);
 
         loadData(true, false);
         initListener();
-        return view;
     }
 
     protected abstract int setLayout();

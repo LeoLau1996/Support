@@ -40,13 +40,17 @@ public abstract class BaseFragment extends Fragment {
         view = inflater.inflate(setLayout(), container, false);
         context = getContext();
         activity = getActivity();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initData();
         initViews(savedInstanceState);
         loadData();
         initListener();
-        return view;
     }
-
 
     protected abstract int setLayout();
 

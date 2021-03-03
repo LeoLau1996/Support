@@ -17,16 +17,8 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.List;
 
 import leo.work.support.Base.Util.BaseUtil;
-import leo.work.support.Info.RefreshInfo;
-import leo.work.support.R;
-import leo.work.support.Support.Common.Get;
-import leo.work.support.Support.Common.Talk;
-import leo.work.support.Support.Thread.ThreadSupport;
 
 import static leo.work.support.Support.Common.Get.getStatusBarHeight;
 
