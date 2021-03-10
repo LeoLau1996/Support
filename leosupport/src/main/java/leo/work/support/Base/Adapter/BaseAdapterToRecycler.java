@@ -39,13 +39,15 @@ public abstract class BaseAdapterToRecycler<T, H extends ViewHolder> extends Rec
 
     @Override
     public int getItemCount() {
+        if (mList == null) {
+            return 0;
+        }
         return mList.size();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder = setViewHolder(mInflater.inflate(setLayout(), parent, false));
-        return viewHolder;
+        return setViewHolder(mInflater.inflate(setLayout(), parent, false));
     }
 
 

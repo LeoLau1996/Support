@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.List;
+
 import leo.work.support.Base.Adapter.BaseAdapterToListView.ViewHolder;
 
 
@@ -21,7 +22,7 @@ import leo.work.support.Base.Adapter.BaseAdapterToListView.ViewHolder;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class BaseAdapterToListView<T,H extends ViewHolder> extends BaseAdapter {
+public abstract class BaseAdapterToListView<T, H extends ViewHolder> extends BaseAdapter {
     public Context context;
     public LayoutInflater mInflater;
     public List<T> mList;
@@ -34,11 +35,17 @@ public abstract class BaseAdapterToListView<T,H extends ViewHolder> extends Base
 
     @Override
     public int getCount() {
+        if (mList == null) {
+            return 0;
+        }
         return mList.size();
     }
 
     @Override
     public Object getItem(int position) {
+        if (mList == null) {
+            return null;
+        }
         return mList.get(position);
     }
 
