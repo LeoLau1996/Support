@@ -35,7 +35,7 @@ public abstract class ProActivity extends Activity {
         context = this;
         activity = this;
 
-        initData();
+        initData(savedInstanceState);
 
         initViews(savedInstanceState);
 
@@ -49,7 +49,7 @@ public abstract class ProActivity extends Activity {
     /**
      * 初始化数据
      */
-    protected abstract void initData();
+    protected abstract void initData(Bundle savedInstanceState);
 
 
     /**
