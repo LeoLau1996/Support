@@ -43,7 +43,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         activity = this;
         mFragmentManager = getSupportFragmentManager();
 
-        initData();
+        initData(savedInstanceState);
 
         initViews(savedInstanceState);
 
@@ -57,7 +57,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
     /**
      * 初始化数据
      */
-    protected abstract void initData();
+    protected abstract void initData(Bundle savedInstanceState);
 
     /**
      * 加载View
@@ -69,7 +69,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
     /**
      * 加载数据，如：网络请求
      */
-    protected void loadData(){
+    protected void loadData() {
 
     }
 

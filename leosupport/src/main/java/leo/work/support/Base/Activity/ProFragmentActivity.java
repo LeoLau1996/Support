@@ -47,7 +47,7 @@ public abstract class ProFragmentActivity extends FragmentActivity {
         context = this;
         activity = this;
         mFragmentManager = getSupportFragmentManager();
-        initData();
+        initData(savedInstanceState);
 
         initViews(savedInstanceState);
 
@@ -61,7 +61,7 @@ public abstract class ProFragmentActivity extends FragmentActivity {
     /**
      * 初始化数据
      */
-    protected abstract void initData();
+    protected abstract void initData(Bundle savedInstanceState);
 
     /**
      * 加载View

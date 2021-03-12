@@ -46,7 +46,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initData();
+        initData(savedInstanceState);
         initViews(savedInstanceState);
         loadData();
         initListener();
@@ -57,7 +57,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 初始化数据
      */
-    protected abstract void initData();
+    protected abstract void initData(Bundle savedInstanceState);
 
     /**
      * 加载View

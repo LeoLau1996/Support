@@ -34,7 +34,7 @@ public abstract class BaseActivity extends Activity {
         setContentView(setLayout());
         context = this;
         activity = this;
-        initData();
+        initData(savedInstanceState);
 
         initViews(savedInstanceState);
 
@@ -49,7 +49,7 @@ public abstract class BaseActivity extends Activity {
     /**
      * 初始化数据
      */
-    protected abstract void initData();
+    protected abstract void initData(Bundle savedInstanceState);
 
 
     /**
