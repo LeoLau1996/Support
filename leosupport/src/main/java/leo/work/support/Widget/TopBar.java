@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -134,7 +135,10 @@ public class TopBar extends RelativeLayout {
             tvTitle.setTextColor(titleColor);
             tvTitle.setTextSize(titleSize);
             tvTitle.setGravity(Gravity.CENTER);
+            tvTitle.setSingleLine(true);
+            tvTitle.setEllipsize(TextUtils.TruncateAt.valueOf("END"));
             LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, dp2px(heightDP));
+            layoutParams.setMargins(dp2px(heightDP), 0, dp2px(heightDP), 0);
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
             tvTitle.setLayoutParams(layoutParams);
             addView(tvTitle);
@@ -149,8 +153,9 @@ public class TopBar extends RelativeLayout {
             tvMenu.setTextColor(menuTextColor);
             tvMenu.setTextSize(menuTextSize);
             tvMenu.setGravity(Gravity.CENTER);
-            tvMenu.setPadding(dp2px(menuTextPaddingDP), 0, dp2px(menuTextPaddingDP), 0);
-            LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, dp2px(heightDP));
+            tvMenu.setSingleLine(true);
+            tvMenu.setEllipsize(TextUtils.TruncateAt.valueOf("END"));
+            LayoutParams layoutParams = new LayoutParams(dp2px(heightDP), dp2px(heightDP));
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             tvMenu.setLayoutParams(layoutParams);
             tvMenu.setOnClickListener(new OnClickListener() {
@@ -248,7 +253,7 @@ public class TopBar extends RelativeLayout {
     }
 
     public void setTitle(String text) {
-            getTvTitle().setText(text);
+        getTvTitle().setText(text);
     }
 
     public void setMenuText(String text) {
