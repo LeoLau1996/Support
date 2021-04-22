@@ -2,22 +2,20 @@ package leo.work.support.Base.Activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+
 import android.view.View;
 import android.view.Window;
 
 import leo.work.support.Base.Application.BaseApplication;
 import leo.work.support.R;
-import leo.work.support.Support.Common.Has;
 import leo.work.support.Support.Common.LogUtil;
 
 

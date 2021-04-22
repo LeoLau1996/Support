@@ -1,14 +1,14 @@
-package leo.work.support.Base.Fragment;
+package leo.work.support.Base.Activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
 
 import leo.work.support.Support.Common.LogUtil;
 
@@ -16,41 +16,45 @@ import leo.work.support.Support.Common.LogUtil;
  * ---------------------------------------------------------------------------------------------
  * 功能描述:
  * ---------------------------------------------------------------------------------------------
- * 时　　间: 2018/4/19.
+ * 时　　间:  2021/4/21
  * ---------------------------------------------------------------------------------------------
  * 代码创建: 刘桂安
  * ---------------------------------------------------------------------------------------------
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class BaseFragment extends Fragment {
-    public View view;
+public abstract class BaseMVVMActivity<T extends ViewDataBinding> extends Activity {
     public Context context;
     public Activity activity;
+
+    public T binding;
     //数据
     public boolean isLoading = false;//是否正在加载
-    private boolean hasResume = false;//是否前台（不保证正在显示该页面）
     public boolean hasFront = false;//当前页面是否在前台
-    public boolean hidden = false;//Fragment显示/隐藏状态
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        //支持转场动画
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
+        super.onCreate(savedInstanceState);
         LogUtil.e("=======================>" + this.getClass().getName());
-        view = inflater.inflate(setLayout(), container, false);
-        context = getContext();
-        activity = getActivity();
-        return view;
-    }
+        //竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        context = this;
+        activity = this;
+        binding = DataBindingUtil.setContentView(activity, setLayout());
         initData(savedInstanceState);
+
         initViews(savedInstanceState);
+
         loadData();
+
         initListener();
     }
+
 
     protected abstract int setLayout();
 
@@ -59,12 +63,15 @@ public abstract class BaseFragment extends Fragment {
      */
     protected abstract void initData(Bundle savedInstanceState);
 
+
     /**
      * 加载View
      *
      * @param savedInstanceState
      */
-    protected abstract void initViews(Bundle savedInstanceState);
+    protected void initViews(Bundle savedInstanceState) {
+
+    }
 
     /**
      * 加载数据，如：网络请求
@@ -80,7 +87,6 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-
     /**
      * 使用时应该写在这上面
      * ....
@@ -88,39 +94,26 @@ public abstract class BaseFragment extends Fragment {
      * 不应该写在super下面
      */
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
-        hasResume = true;
-        hasFront = !hidden;
+        hasFront = true;
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
-        hasResume = false;
         hasFront = false;
     }
 
+    /**
+     * 设置 app 不随着系统字体的调整而变化
+     */
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        this.hidden = hidden;
-        if (hasResume)
-            this.hasFront = !hidden;
-        else
-            this.hasFront = false;
+    public Resources getResources() {
+        Resources resources = super.getResources();
+        Configuration config = new Configuration();
+        config.setToDefaults();
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        return resources;
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-
 }
