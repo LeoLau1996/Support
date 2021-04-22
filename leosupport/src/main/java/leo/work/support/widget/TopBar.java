@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import leo.work.support.R;
-import leo.work.support.Support.Common.Is;
+import leo.work.support.support.common.Is;
 
 /**
  * ---------------------------------------------------------------------------------------------
