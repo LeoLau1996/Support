@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <leo.work.support.Widget.TopBar
+    <leo.work.support.widget.TopBar
         android:id="@+id/mTopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

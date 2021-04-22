@@ -9,7 +9,7 @@
     <declare-styleable name="ProportionView">
         <attr name="x" format="integer" />
         <attr name="y" format="integer" />
-        <attr name="maxHeight" format="dimension"/>
+        <attr name="maxHeight" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="TopBar">

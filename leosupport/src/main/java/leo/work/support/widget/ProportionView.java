@@ -1,14 +1,12 @@
-package leo.work.support.Widget;
+package leo.work.support.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import leo.work.support.R;
-import leo.work.support.Support.Common.Talk;
 
 /**
  * ---------------------------------------------------------------------------------------------

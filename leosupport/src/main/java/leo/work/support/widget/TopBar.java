@@ -1,4 +1,4 @@
-package leo.work.support.Widget;
+package leo.work.support.widget;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -256,9 +256,15 @@ public class TopBar extends RelativeLayout {
         getTvTitle().setText(text);
     }
 
+    public void setTitleText(String text) {
+        this.titleText = text;
+        getTvTitle().setText(titleText);
+    }
+
     public void setMenuText(String text) {
-        getTvMenu().setText(text);
-        getTvMenu().setVisibility(Is.isEmpty(text) ? GONE : VISIBLE);
+        this.menuText = text;
+        getTvMenu().setText(menuText);
+        getTvMenu().setVisibility(Is.isEmpty(menuText) ? GONE : VISIBLE);
     }
 
     public void isShowMenu(boolean show) {

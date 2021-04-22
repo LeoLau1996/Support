@@ -1,26 +1,26 @@
-package leo.work.support.Widget;
+package leo.work.support.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ListView;
+import android.widget.GridView;
 
 /**
- * listview 用于不需要滚动的listview
+ * gridview 用于不需要滚动的gridview 多用于嵌套scrollview
  *
  * @author Administrator
  */
-public class NListView extends ListView {
+public class NGridView extends GridView {
 
-    public NListView(Context context) {
+    public NGridView(Context context) {
         super(context);
     }
 
-    public NListView(Context context, AttributeSet attrs) {
+    public NGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
         // TODO Auto-generated constructor stub
     }
 
-    public NListView(Context context, AttributeSet attrs, int defStyle) {
+    public NGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -29,10 +29,4 @@ public class NListView extends ListView {
         int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);
     }
-
-
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//    }
 }

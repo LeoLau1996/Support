@@ -1,4 +1,4 @@
-package leo.work.support.Widget;
+package leo.work.support.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -1,4 +1,4 @@
-package leo.work.support.Widget;
+package leo.work.support.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,7 +14,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import leo.work.support.R;
 
