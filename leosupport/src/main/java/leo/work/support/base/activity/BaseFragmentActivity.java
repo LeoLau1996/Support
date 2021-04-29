@@ -160,52 +160,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         mFragmentTAG = String.valueOf(index);
     }
 
-    public void selectFragmentAnimation(int id, Fragment fragment, int index) {
-        //如果相同
-        if (mFragment == fragment) {
-            return;
-        }
-        int var1, var2;
-        int var3, var4;
-        if (index > Integer.valueOf(mFragmentTAG)) {
-            var1 = R.anim.from_right;
-            var2 = R.anim.out_left;
-
-
-            var3 = R.anim.from_left;
-            var4 = R.anim.out_right;
-        } else {
-            var1 = R.anim.from_left;
-            var2 = R.anim.out_right;
-
-
-            var3 = R.anim.from_right;
-            var4 = R.anim.out_left;
-        }
-
-
-        //隐藏当前的fragment
-        if (mFragment != null) {
-            mFragmentManager.beginTransaction()
-                    .setCustomAnimations(var1, var2)
-                    .hide(mFragment).commitAllowingStateLoss();
-        }
-        //没有被添加  没有显示   没有删除 ---->   添加新的Fragment
-        if (!fragment.isAdded() && !fragment.isVisible() && !fragment.isRemoving()) {
-            //添加fragment到Activity
-            mFragmentManager.beginTransaction()
-                    .setCustomAnimations(var3, var4)
-                    .add(id, fragment, String.valueOf(index)).commitAllowingStateLoss();
-        }
-        //显示fragment
-        else {
-            mFragmentManager.beginTransaction()
-                    .setCustomAnimations(var3, var4)
-                    .show(fragment).commitAllowingStateLoss();
-        }
-        mFragment = fragment;
-        mFragmentTAG = String.valueOf(index);
-    }
 
     //恢复Fragmen
     public void recoveryFragmet(String fragmentTAG) {
