@@ -3,13 +3,16 @@ package leo.work.support.base.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import leo.work.support.base.application.BaseApplication;
 import leo.work.support.support.common.LogUtil;
 
 /**
@@ -32,6 +35,9 @@ public abstract class BaseFragment extends Fragment {
     private boolean hasResume = false;//是否前台（不保证正在显示该页面）
     public boolean hasFront = false;//当前页面是否在前台
     public boolean hidden = false;//Fragment显示/隐藏状态
+
+    public Fragment mFragment = null;
+    public String mFragmentTAG = "1";
 
     @Nullable
     @Override
@@ -112,14 +118,45 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        if (outState != null && !mFragmentTAG.equals("")) {
+            if (mFragment != null) {
+                //隐藏当前的fragment,避免重叠
+                getFragmentManager().beginTransaction().hide(mFragment).commitAllowingStateLoss();
+                mFragment = null;
+            }
+            outState.putString("currentTab", mFragmentTAG);
+        }
+        super.onSaveInstanceState(outState);
     }
 
+    public void selectFragment(int id, Fragment fragment, int index) {
+        //如果相同
+        if (mFragment == fragment) {
+            return;
+        }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //隐藏当前的fragment
+        if (mFragment != null) {
+            getFragmentManager().beginTransaction()
+                    //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    .hide(mFragment).commitAllowingStateLoss();
+        }
+        //没有被添加  没有显示   没有删除 ---->   添加新的Fragment
+        if (!fragment.isAdded() && !fragment.isVisible() && !fragment.isRemoving()) {
+            //添加fragment到Activity
+            getFragmentManager().beginTransaction()
+                    //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .add(id, fragment, String.valueOf(index)).commitAllowingStateLoss();
+        }
+        //显示fragment
+        else {
+            getFragmentManager().beginTransaction()
+                    //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .show(fragment).commitAllowingStateLoss();
+        }
+        mFragment = fragment;
+        mFragmentTAG = String.valueOf(index);
     }
 
 
