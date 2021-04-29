@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 
 import java.util.List;
 
-import leo.work.support.base.adapter.BaseAdapterToListView.ViewHolder;
+import leo.work.support.base.adapter.BaseListViewAdapter.ViewHolder;
 
 
 /**
@@ -22,12 +22,12 @@ import leo.work.support.base.adapter.BaseAdapterToListView.ViewHolder;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class BaseAdapterToListView<T, H extends ViewHolder> extends BaseAdapter {
+public abstract class BaseListViewAdapter<T, H extends ViewHolder> extends BaseAdapter {
     public Context context;
     public LayoutInflater mInflater;
     public List<T> mList;
 
-    public BaseAdapterToListView(Context context, List<T> mList) {
+    public BaseListViewAdapter(Context context, List<T> mList) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.mList = mList;

@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import leo.work.support.base.adapter.BaseAdapterToRecycler.ViewHolder;
+import leo.work.support.base.adapter.BaseRecyclerAdapter.ViewHolder;
 
 import java.util.List;
 
@@ -23,12 +23,12 @@ import java.util.List;
  * ---------------------------------------------------------------------------------------------
  **/
 
-public abstract class BaseAdapterToRecycler<T, H extends ViewHolder> extends RecyclerView.Adapter {
+public abstract class BaseRecyclerAdapter<T, H extends ViewHolder> extends RecyclerView.Adapter {
     public Context context;
     public LayoutInflater mInflater;
     public List<T> mList;
 
-    public BaseAdapterToRecycler(Context context, List<T> mList) {
+    public BaseRecyclerAdapter(Context context, List<T> mList) {
         /**
          * 基本传值
          */
