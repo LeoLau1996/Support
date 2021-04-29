@@ -3,30 +3,31 @@ package leo.work.support.base.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import leo.work.support.base.application.BaseApplication;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
+
 import leo.work.support.support.common.LogUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------
  * 功能描述:
  * ---------------------------------------------------------------------------------------------
- * 时　　间: 2018/4/19.
+ * 时　　间:  2021/4/29
  * ---------------------------------------------------------------------------------------------
  * 代码创建: 刘桂安
  * ---------------------------------------------------------------------------------------------
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseMVVMFragment<T extends ViewDataBinding> extends Fragment {
+
     public View view;
     public Context context;
     public Activity activity;
@@ -37,6 +38,7 @@ public abstract class BaseFragment extends Fragment {
 
     public Fragment mFragment = null;
     public String mFragmentTAG = "1";
+    public T binding;
 
     @Nullable
     @Override
@@ -45,6 +47,7 @@ public abstract class BaseFragment extends Fragment {
         view = inflater.inflate(setLayout(), container, false);
         context = getContext();
         activity = getActivity();
+        binding = DataBindingUtil.setContentView(activity, setLayout());
         return view;
     }
 
@@ -157,6 +160,5 @@ public abstract class BaseFragment extends Fragment {
         mFragment = fragment;
         mFragmentTAG = String.valueOf(index);
     }
-
 
 }

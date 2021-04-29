@@ -28,8 +28,6 @@ public abstract class BaseMVVMActivity<T extends ViewDataBinding> extends Activi
     public Activity activity;
 
     public T binding;
-    //数据
-    public boolean isLoading = false;//是否正在加载
     public boolean hasFront = false;//当前页面是否在前台
 
     @Override
