@@ -7,13 +7,15 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.Window;
 
 import leo.work.support.base.application.BaseApplication;
 import leo.work.support.support.common.LogUtil;
 
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AppCompatActivity {
     public Context context;
     public Activity activity;
 
