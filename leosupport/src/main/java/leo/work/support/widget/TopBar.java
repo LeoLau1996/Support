@@ -6,7 +6,9 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+
 import androidx.annotation.Nullable;
+
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -67,10 +69,10 @@ public class TopBar extends RelativeLayout {
     private int menuImage;
     private float menuImagePaddingDP;
 
-    //高度
-    private float heightDP;
+
     private int mWidth;
     private boolean showStatusBar;
+    private float heightDP;
     private int statusBarColor;
     private int statusBarHeight;
     //回调
@@ -80,7 +82,7 @@ public class TopBar extends RelativeLayout {
         super(context, attrs);
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TopBar, 0, 0);
         //高度
-        heightDP = typedArray.getDimension(R.styleable.TopBar_heightDP, 44);
+        heightDP = typedArray.getDimension(R.styleable.TopBar_heightDP, getDefaultInfo().heightDP);
         showStatusBar = typedArray.getBoolean(R.styleable.TopBar_showStatusBar, true);
         statusBarColor = typedArray.getColor(R.styleable.TopBar_statusBarColor, getDefaultInfo().getStatusBarColor());
         //返回键
@@ -102,7 +104,7 @@ public class TopBar extends RelativeLayout {
 
         //顶部栏
         setPadding(0, showStatusBar ? getStatusBarHeight() : 0, 0, 0);
-        /**
+        /*
          * 返回键
          */
         {
@@ -126,7 +128,7 @@ public class TopBar extends RelativeLayout {
             addView(ivBack);
         }
 
-        /**
+        /*
          * 标题
          */
         {
@@ -144,7 +146,7 @@ public class TopBar extends RelativeLayout {
             addView(tvTitle);
         }
 
-        /**
+        /*
          * 文字Menu
          */
         {
@@ -171,7 +173,7 @@ public class TopBar extends RelativeLayout {
             addView(tvMenu);
         }
 
-        /**
+        /*
          * 图片菜单
          */
         {
@@ -281,7 +283,7 @@ public class TopBar extends RelativeLayout {
 
     private static TopBarDefaultInfo getDefaultInfo() {
         if (defaultInfo == null) {
-            defaultInfo = new TopBarDefaultInfo(0, Color.BLACK, Color.TRANSPARENT);
+            defaultInfo = new TopBarDefaultInfo(0, Color.BLACK, Color.TRANSPARENT, 44);
         }
         return defaultInfo;
     }
@@ -295,10 +297,14 @@ public class TopBar extends RelativeLayout {
         private int titleColor;
         private int statusBarColor;
 
-        public TopBarDefaultInfo(int backImage, int titleColor, int statusBarColor) {
+
+        private float heightDP;
+
+        public TopBarDefaultInfo(int backImage, int titleColor, int statusBarColor, int heightDP) {
             this.backImage = backImage;
             this.titleColor = titleColor;
             this.statusBarColor = statusBarColor;
+            this.heightDP = heightDP;
         }
 
         public int getBackImage() {
@@ -324,6 +330,14 @@ public class TopBar extends RelativeLayout {
         public void setStatusBarColor(int statusBarColor) {
             this.statusBarColor = statusBarColor;
         }
+
+        public void setHeightDP(float heightDP) {
+            this.heightDP = heightDP;
+        }
+
+        public float getHeightDP() {
+            return heightDP;
+        }
     }
 
 
@@ -336,6 +350,5 @@ public class TopBar extends RelativeLayout {
         }
         return statusBarHeight;
     }
-
 
 }
