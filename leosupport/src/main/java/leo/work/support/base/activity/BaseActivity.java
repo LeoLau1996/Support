@@ -98,6 +98,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         hasFront = false;
     }
 
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
