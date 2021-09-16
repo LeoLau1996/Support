@@ -75,6 +75,10 @@ public abstract class BaseFragment extends Fragment {
      * 加载数据，如：网络请求
      */
     protected void loadData() {
+        loadData(true, false);
+    }
+
+    protected void loadData(final boolean isShowState, final boolean isSaveLastData) {
 
     }
 

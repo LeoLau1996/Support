@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -64,7 +65,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 加载数据，如：网络请求
      */
-    protected void loadData(){
+    protected void loadData() {
+        loadData(true, false);
+    }
+
+    protected void loadData(final boolean isShowState, final boolean isSaveLastData) {
 
     }
 

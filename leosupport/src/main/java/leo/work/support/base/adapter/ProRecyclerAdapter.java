@@ -49,8 +49,7 @@ public abstract class ProRecyclerAdapter<T> extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder = setViewHolder(mInflater.inflate(setLayout(viewType), parent, false), viewType);
-        return viewHolder;
+        return setViewHolder(mInflater.inflate(setLayout(viewType), parent, false), viewType);
     }
 
 
