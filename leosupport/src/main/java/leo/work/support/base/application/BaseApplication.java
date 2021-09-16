@@ -24,7 +24,6 @@ import leo.work.support.support.common.Is;
 public abstract class BaseApplication extends Application {
 
     public static BaseApplication application = null;
-    public static ApplicationInfo applicationInfo = null;
     public static boolean isDebug;
     private static ToastLayoutModel toastLayoutModel;
 
@@ -32,14 +31,13 @@ public abstract class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (Get.getCurrentProcessName().equals(getPackageName())) {
-            isDebug = Is.isDebuggable();
-            application = this;
-            applicationInfo = setInfo();
-            toastLayoutModel = setToastLayoutModel();
-            init();
+        if (!Get.getCurrentProcessName().equals(getPackageName())) {
+            return;
         }
-
+        isDebug = Is.isDebuggable();
+        application = this;
+        toastLayoutModel = setToastLayoutModel();
+        init();
     }
 
     private ToastLayoutModel setToastLayoutModel() {
@@ -51,10 +49,7 @@ public abstract class BaseApplication extends Application {
         return toastLayoutModel;
     }
 
-    protected abstract ApplicationInfo setInfo();
-
     protected abstract void init();
-
 
     public static BaseApplication getApplication() {
         return application;
@@ -62,10 +57,6 @@ public abstract class BaseApplication extends Application {
 
     public static Context getContext() {
         return application.getApplicationContext();
-    }
-
-    public static ApplicationInfo getInfo() {
-        return applicationInfo;
     }
 
     public class ToastLayoutModel {
@@ -92,11 +83,6 @@ public abstract class BaseApplication extends Application {
         public void setY(float y) {
             this.y = y;
         }
-    }
-
-    //当Activity
-    public void onRestoreBiz() {
-
     }
 
 

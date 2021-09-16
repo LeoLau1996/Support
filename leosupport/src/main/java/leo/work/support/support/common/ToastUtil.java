@@ -25,32 +25,32 @@ import leo.work.support.base.util.BaseUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class Talk extends BaseUtil {
+public class ToastUtil extends BaseUtil {
     private static Toast mToast;
 
     public static void showToast(final CharSequence text) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                if (!TextUtils.isEmpty(text)) {
-                    TextView toastTextView = (TextView) LayoutInflater.from(getContext()).inflate(BaseApplication.getToastLayoutModel().getLayout(), null);
-                    toastTextView.getBackground().mutate().setAlpha(150);
-                    toastTextView.setText(text);
-                    if (mToast != null) {
-                        mToast.cancel();
-                    }
-                    mToast = new Toast(getContext());
-                    mToast.setView(toastTextView);
-                    mToast.setDuration(Toast.LENGTH_SHORT);
-
-
-                    WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-                    DisplayMetrics dm = new DisplayMetrics();
-                    wm.getDefaultDisplay().getMetrics(dm);
-                    int height = (int) (dm.heightPixels * BaseApplication.getToastLayoutModel().getY());
-                    mToast.setGravity(Gravity.BOTTOM, 0, height);
-                    mToast.show();
+                if (TextUtils.isEmpty(text)) {
+                    return;
                 }
+                TextView textView = (TextView) LayoutInflater.from(getContext()).inflate(BaseApplication.getToastLayoutModel().getLayout(), null);
+                textView.getBackground().mutate().setAlpha(150);
+                textView.setText(text);
+                if (mToast != null) {
+                    mToast.cancel();
+                }
+                mToast = new Toast(getContext());
+                mToast.setView(textView);
+                mToast.setDuration(Toast.LENGTH_SHORT);
+
+                WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+                int height = (int) (displayMetrics.heightPixels * BaseApplication.getToastLayoutModel().getY());
+                mToast.setGravity(Gravity.BOTTOM, 0, height);
+                mToast.show();
             }
         });
     }
