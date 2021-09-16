@@ -147,10 +147,15 @@ public class A2BSupport extends BaseUtil {
     //Bitmap转Base64
     public static String Bitmap2StrByBase64(Bitmap bit) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
         bit.compress(Bitmap.CompressFormat.JPEG, 40, bos);//参数100表示不压缩
         byte[] bytes = bos.toByteArray();
         return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+    //字节转Base64
+    public static String Bytes2Base64String(byte[] b) {
+        BASE64Encoder encoder = new BASE64Encoder();
+        return encoder.encodeBuffer(b);//"data:image;base64,"
     }
 
     /**
@@ -266,14 +271,14 @@ public class A2BSupport extends BaseUtil {
      */
     public static int[] getBit(byte by) {
         int[] bit = {
-            (by >> 7) & 0x1,
-            (by >> 6) & 0x1,
-            (by >> 5) & 0x1,
-            (by >> 4) & 0x1,
-            (by >> 3) & 0x1,
-            (by >> 2) & 0x1,
-            (by >> 1) & 0x1,
-            (by >> 0) & 0x1};
+                (by >> 7) & 0x1,
+                (by >> 6) & 0x1,
+                (by >> 5) & 0x1,
+                (by >> 4) & 0x1,
+                (by >> 3) & 0x1,
+                (by >> 2) & 0x1,
+                (by >> 1) & 0x1,
+                (by >> 0) & 0x1};
         return bit;
     }
 
@@ -321,12 +326,6 @@ public class A2BSupport extends BaseUtil {
         drawable.setBounds(0, 0, width, height);
         drawable.draw(canvas);// 把drawable内容画到画布中
         return bitmap;
-    }
-
-    //字节转Base64
-    public static String Byte2Base64String(byte[] b) {
-        BASE64Encoder encoder = new BASE64Encoder();
-        return encoder.encodeBuffer(b);//"data:image;base64,"
     }
 
 
