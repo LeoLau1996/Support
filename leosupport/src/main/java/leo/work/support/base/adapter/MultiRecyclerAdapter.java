@@ -21,13 +21,13 @@ import java.util.List;
  * ---------------------------------------------------------------------------------------------
  **/
 
-public abstract class ProRecyclerAdapter<T> extends RecyclerView.Adapter {
+public abstract class MultiRecyclerAdapter<T> extends RecyclerView.Adapter {
     public Context context;
     public LayoutInflater mInflater;
     public List<T> mList;
 
 
-    public ProRecyclerAdapter(Context context, List<T> mList) {
+    public MultiRecyclerAdapter(Context context, List<T> mList) {
         /**
          * 基本传值
          */
