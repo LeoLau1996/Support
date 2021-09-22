@@ -49,24 +49,23 @@ public class MediaPlayerSupport {
         });
     }
 
-    public void download(String url, final String fileName, final String path) {
-        DownloadSupport support = new DownloadSupport(new DownloadSupport.OnDownloadListener() {
+    public void play(String url, final String fileName, final String path) {
+        new DownloadSupport().download(url, fileName, path, new DownloadSupport.OnDownloadListener() {
             @Override
             public void onDownloadSuccess() {
-                play(path+ fileName);
+                play(path + fileName);
             }
 
             @Override
-            public void onDownloading(int i) {
+            public void onDownloading(int progress) {
 
             }
 
             @Override
             public void onDownloadFail() {
-
+                LogUtil.e(TAG, "下载失败");
             }
         });
-        support.download(url, fileName, path);
     }
 
     private void play(String path) {

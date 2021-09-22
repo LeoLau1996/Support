@@ -24,9 +24,4 @@ public class MyApp extends BaseApplication {
         TopBar.setDefaultInfo(new TopBar.TopBarDefaultInfo(R.drawable.ic_back_black, R.color.black, R.color.bule, 44));
     }
 
-    @Override
-    protected ApplicationInfo setInfo() {
-        return new ApplicationInfo("波波来了", Get.getAppVersionName(), "5cd2a0213fc195fb5e0008ba");
-    }
-
 }

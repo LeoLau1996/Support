@@ -7,12 +7,10 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Window;
 
-import leo.work.support.base.application.BaseApplication;
 import leo.work.support.support.common.LogUtil;
 
 
@@ -97,19 +95,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onPause();
         hasFront = false;
     }
-
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        BaseApplication.getApplication().onRestoreBiz();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
 
     /**
      * 设置 app 不随着系统字体的调整而变化
