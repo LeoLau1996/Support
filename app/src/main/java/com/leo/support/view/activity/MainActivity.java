@@ -1,9 +1,7 @@
-package com.leo.support.View.Activity;
+package com.leo.support.view.activity;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import com.leo.support.R;

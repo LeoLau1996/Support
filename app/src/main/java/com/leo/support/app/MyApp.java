@@ -1,9 +1,8 @@
-package com.leo.support.App;
+package com.leo.support.app;
 
 import com.leo.support.R;
 
 import leo.work.support.base.application.BaseApplication;
-import leo.work.support.support.common.Get;
 import leo.work.support.widget.TopBar;
 
 /**

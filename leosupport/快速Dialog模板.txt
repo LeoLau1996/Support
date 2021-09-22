@@ -1,0 +1,38 @@
+import android.app.Activity;
+import android.app.Dialog;
+
+import androidx.annotation.NonNull;
+
+import com.wakeup.howear.R;
+
+import butterknife.ButterKnife;
+
+public class ${NAME} extends Dialog {
+
+    private static ${NAME} instance;
+
+    public static synchronized void show${NAME}(Activity context) {
+        dismiss${NAME}();
+        instance = new ${NAME}(context);
+        instance.show();
+    }
+
+    public static synchronized void dismiss${NAME}() {
+        try {
+            if ((instance != null) && instance.isShowing()) {
+                instance.dismiss();
+            }
+        } catch (final Exception e) {
+            
+        } finally {
+            instance = null;
+        }
+    }
+
+    public ${NAME}(@NonNull Activity context) {
+        super(context, R.style.BaseDialog);
+        setContentView(R.layout.dialog_);
+        ButterKnife.bind(this);
+    }
+
+}

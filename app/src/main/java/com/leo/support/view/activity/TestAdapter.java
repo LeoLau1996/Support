@@ -1,11 +1,6 @@
-package com.leo.support.View.Activity;
+package com.leo.support.view.activity;
 
 import android.content.Context;
-import android.view.ViewGroup;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.leo.support.R;
 import com.leo.support.databinding.ItemTestBinding;
