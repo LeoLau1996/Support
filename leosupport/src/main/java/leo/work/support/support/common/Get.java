@@ -8,14 +8,17 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.preference.PreferenceManager;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.format.Formatter;
@@ -44,6 +47,18 @@ import leo.work.support.base.util.BaseUtil;
  * ---------------------------------------------------------------------------------------------
  **/
 public class Get extends BaseUtil {
+
+    public static long getVideo(String path) {
+        try {
+            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+            mediaMetadataRetriever.setDataSource(path);
+            return Long.valueOf(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+        } catch (Exception exception) {
+
+        }
+        return -1;
+    }
+
     //获取手机总存储,可用存储
     public static String getMemoryInfo() {
         File path = Environment.getDataDirectory();
