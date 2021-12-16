@@ -14,7 +14,7 @@ import android.view.Window;
 import leo.work.support.support.common.LogUtil;
 
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class CommonActivity extends AppCompatActivity {
     public Context context;
     public Activity activity;
 

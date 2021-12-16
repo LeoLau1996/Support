@@ -1,32 +1,25 @@
-package leo.work.support.base.activity.common;
+package leo.work.support.base.activity.mvp;
 
 import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * View
- *
- * @param <A>
+ * 数据与逻辑
  */
-public abstract class ActivityView<A extends CommonActivity> {
+public abstract class ActivityBiz<A extends CommonMVPActivity> {
 
     public A activity;
-    public int layoutId;
 
-    public ActivityView(A activity, int layoutId) {
+    public ActivityBiz(A activity) {
         this.activity = activity;
-        this.layoutId = layoutId;
     }
 
+    protected abstract void initData(Bundle savedInstanceState);
 
-    //初始化View
-    protected abstract void initView();
-
-    //初始化监听事件
-    protected abstract void initListener();
-
+    protected abstract void loadData(boolean isShowState, boolean isSaveLastData);
 
     public void onResume() {
 
@@ -65,4 +58,5 @@ public abstract class ActivityView<A extends CommonActivity> {
     public void onBackPressed() {
 
     }
+
 }

@@ -9,10 +9,10 @@ import com.leo.support.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import leo.work.support.base.activity.BaseActivity;
+import leo.work.support.base.activity.CommonActivity;
 import leo.work.support.support.common.RecyclerSupport;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends CommonActivity {
 
     private RecyclerView mRecyclerView;
     private TestAdapter adapter;

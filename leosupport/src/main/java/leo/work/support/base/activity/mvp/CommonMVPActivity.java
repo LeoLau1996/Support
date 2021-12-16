@@ -1,4 +1,4 @@
-package leo.work.support.base.activity.common;
+package leo.work.support.base.activity.mvp;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import leo.work.support.support.common.LogUtil;
 
 
-public abstract class CommonActivity<V extends ActivityView, B extends ActivityBiz> extends AppCompatActivity {
+public abstract class CommonMVPActivity<V extends ActivityView, B extends ActivityBiz> extends AppCompatActivity {
 
     public Activity activity;
     public V view;

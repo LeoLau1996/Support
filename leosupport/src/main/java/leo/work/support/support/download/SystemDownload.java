@@ -8,13 +8,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Environment;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import leo.work.support.base.activity.BaseActivity;
 import leo.work.support.base.application.BaseApplication;
-import leo.work.support.support.common.Get;
-import leo.work.support.support.mediaPlayer.MediaPlayerSupport;
 
 public class SystemDownload {
 
