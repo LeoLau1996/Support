@@ -7,10 +7,8 @@ import android.content.res.Resources;
 
 
 import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
 
 import leo.work.support.support.common.Get;
-import leo.work.support.support.common.Is;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -23,7 +21,7 @@ import leo.work.support.support.common.Is;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class BaseApplication extends MultiDexApplication {
+public abstract class BaseApplication extends Application {
 
     public static BaseApplication application = null;
 
@@ -35,12 +33,6 @@ public abstract class BaseApplication extends MultiDexApplication {
         }
         application = this;
         init();
-    }
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
     }
 
     protected abstract void init();
