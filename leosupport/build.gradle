@@ -11,6 +11,8 @@ android {
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
+        multiDexEnabled true
+
     }
 
     buildTypes {
@@ -60,5 +62,7 @@ dependencies {
     implementation rootProject.ext.dependencies["support-v4"]
     //解析BASE64_JAR包
     implementation files('libs/BASE64Encoder.jar')
+    //多包
+    implementation 'androidx.multidex:multidex:2.0.1'
 
 }
