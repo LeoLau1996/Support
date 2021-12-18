@@ -19,6 +19,7 @@ public class LogUtil {
 
     private static final String TAG = "leowork";
     private static StringBuffer stringBuffer;
+    private static Boolean isDebug = null;
 
     public static void e(String detail) {
         e(TAG, detail);
@@ -32,7 +33,10 @@ public class LogUtil {
         stringBuffer.append(":");
         stringBuffer.append(text);
         stringBuffer.append("\n");
-        if (!BaseApplication.isDebug) {
+        if (isDebug == null) {
+            isDebug = Is.isDebuggable();
+        }
+        if (!isDebug) {
             return;
         }
 
