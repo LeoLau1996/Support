@@ -18,7 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import java.io.File;
 import java.io.IOException;
 
-import leo.work.support.base.util.BaseUtil;
+import leo.work.support.util.BaseUtil;
 
 import static leo.work.support.support.common.Get.getStatusBarHeight;
 

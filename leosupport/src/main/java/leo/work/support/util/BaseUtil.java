@@ -1,4 +1,4 @@
-package leo.work.support.base.util;
+package leo.work.support.util;
 
 import android.app.Application;
 import android.content.Context;

@@ -18,7 +18,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 
-import leo.work.support.base.util.BaseUtil;
+import leo.work.support.util.BaseUtil;
 import sun.misc.BASE64Encoder;
 
 /**

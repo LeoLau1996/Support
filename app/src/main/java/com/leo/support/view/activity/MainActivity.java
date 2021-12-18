@@ -9,7 +9,7 @@ import com.leo.support.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import leo.work.support.base.activity.CommonActivity;
+import leo.work.support.base.activity.mvc.CommonActivity;
 import leo.work.support.support.common.RecyclerSupport;
 
 public class MainActivity extends CommonActivity {

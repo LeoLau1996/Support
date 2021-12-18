@@ -1,4 +1,4 @@
-package leo.work.support.base.activity;
+package leo.work.support.base.activity.mvc;
 
 import android.app.Activity;
 import android.content.Context;

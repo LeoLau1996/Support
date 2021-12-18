@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import leo.work.support.base.util.BaseUtil;
+import leo.work.support.util.BaseUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import leo.work.support.base.application.BaseApplication;
-import leo.work.support.base.util.BaseUtil;
+import leo.work.support.util.BaseUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------

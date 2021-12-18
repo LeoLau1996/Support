@@ -3,7 +3,7 @@ package leo.work.support.support.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import leo.work.support.base.util.BaseUtil;
+import leo.work.support.util.BaseUtil;
 
 public class SPUtil extends BaseUtil {
 

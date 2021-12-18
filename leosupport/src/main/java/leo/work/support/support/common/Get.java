@@ -8,7 +8,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -18,7 +17,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
-import android.preference.PreferenceManager;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.format.Formatter;
@@ -33,7 +31,7 @@ import java.io.File;
 import java.util.Locale;
 import java.util.UUID;
 
-import leo.work.support.base.util.BaseUtil;
+import leo.work.support.util.BaseUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------

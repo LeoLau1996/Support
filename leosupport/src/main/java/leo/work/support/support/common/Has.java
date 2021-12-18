@@ -9,7 +9,7 @@ import android.net.NetworkInfo;
 import java.io.File;
 import java.lang.reflect.Method;
 
-import leo.work.support.base.util.BaseUtil;
+import leo.work.support.util.BaseUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------
