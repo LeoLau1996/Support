@@ -58,8 +58,6 @@ dependencies {
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["recyclerview-v7"]
     implementation rootProject.ext.dependencies["support-v4"]
-    //网络
-    implementation rootProject.ext.dependencies["okhttp3"]
     //解析BASE64_JAR包
     implementation files('libs/BASE64Encoder.jar')
 
