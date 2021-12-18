@@ -35,25 +35,6 @@ import static leo.work.support.support.common.Get.getStatusBarHeight;
  **/
 public class LeoSupport extends BaseUtil {
 
-    //设置沉浸式状态栏
-    public static void setAppStatusBar(Activity activity, int color) {
-        //设置 paddingTop
-        ViewGroup rootView = (ViewGroup) activity.getWindow().getDecorView().findViewById(android.R.id.content);
-        rootView.setPadding(0, getStatusBarHeight(activity), 0, 0);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //5.0 以上直接设置状态栏颜色
-            activity.getWindow().setStatusBarColor(activity.getResources().getColor(color));
-        } else {
-            //根布局添加占位状态栏
-            ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-            View statusBarView = new View(activity);
-            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                getStatusBarHeight(activity));
-            statusBarView.setBackgroundColor(activity.getResources().getColor(color));
-            decorView.addView(statusBarView, lp);
-        }
-    }
-
     //改变顶部状态栏字体颜色
     public static void changeStatusBarTextColor(Activity activity, boolean isBlack) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
@@ -86,41 +67,6 @@ public class LeoSupport extends BaseUtil {
             activity.startActivity(intent);
         } catch (Exception e) {
 
-        }
-    }
-
-    //设置控件宽高
-    public static void setParams(View view, int width, int height) {
-        //调整
-        ViewGroup.LayoutParams linearParams = view.getLayoutParams();
-        if (width != -1) {
-            linearParams.width = width;
-        }
-        if (height != -1) {
-            linearParams.height = height;
-        }
-        view.setLayoutParams(linearParams);
-    }
-
-    /**
-     * 提升读写权限
-     *
-     * @param filePath 文件路径
-     *                 这里需要注意一点
-     *                 在下载完成后需要提升一下文件的读写权限
-     *                 否则在安装的时候会出现apk解析失败的页面,就是别人访问不了我们的apk文件
-     *                 chmod 是Linux下设置文件权限的命令,后面的三个数字每一个代表不同的用户组
-     *                 权限分为三种:读(r=4),写(w=2),执行(x=1)
-     *                 那么这三种权限就可以组成7种不同的权限,分别用1-7这几个数字代表,例如7 = 4 + 2 + 1,那么就代表该组用户拥有可读,可写,可执行的权限;5 = 4 + 1,就代表可读可执行权限
-     *                 而三位数字就带包,该登陆用户,它所在的组,以及其他人
-     */
-    public static void setPermission(String filePath) {
-        try {
-            String command = "chmod " + "777" + " " + filePath;
-            Runtime runtime = Runtime.getRuntime();
-            runtime.exec(command);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
