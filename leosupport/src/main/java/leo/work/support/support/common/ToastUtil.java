@@ -11,7 +11,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import leo.work.support.R;
 import leo.work.support.base.application.BaseApplication;
+import leo.work.support.support.toast.ToastLayoutModel;
 import leo.work.support.util.BaseUtil;
 
 /**
@@ -26,7 +28,21 @@ import leo.work.support.util.BaseUtil;
  * ---------------------------------------------------------------------------------------------
  **/
 public class ToastUtil extends BaseUtil {
+    //
     private static Toast mToast;
+    //
+    private static ToastLayoutModel toastLayoutModel;
+
+    public static ToastLayoutModel getToastLayoutModel() {
+        if (toastLayoutModel == null) {
+            toastLayoutModel = new ToastLayoutModel(R.layout.include_toast, 0.58f);
+        }
+        return toastLayoutModel;
+    }
+
+    public static void setToastLayoutModel(ToastLayoutModel toastLayoutModel) {
+        ToastUtil.toastLayoutModel = toastLayoutModel;
+    }
 
     public static void showToast(final CharSequence text) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -35,20 +51,26 @@ public class ToastUtil extends BaseUtil {
                 if (TextUtils.isEmpty(text)) {
                     return;
                 }
-                TextView textView = (TextView) LayoutInflater.from(getContext()).inflate(BaseApplication.getToastLayoutModel().getLayout(), null);
+                //
+                ToastLayoutModel toastLayoutModel = getToastLayoutModel();
+                //
+                TextView textView = (TextView) LayoutInflater.from(getContext()).inflate(toastLayoutModel.getLayout(), null);
                 textView.getBackground().mutate().setAlpha(150);
                 textView.setText(text);
+                //
                 if (mToast != null) {
                     mToast.cancel();
                 }
                 mToast = new Toast(getContext());
                 mToast.setView(textView);
                 mToast.setDuration(Toast.LENGTH_SHORT);
-
-                WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+                //
                 DisplayMetrics displayMetrics = new DisplayMetrics();
+                WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
                 windowManager.getDefaultDisplay().getMetrics(displayMetrics);
-                int height = (int) (displayMetrics.heightPixels * BaseApplication.getToastLayoutModel().getY());
+                int height = (int) (displayMetrics.heightPixels * toastLayoutModel.getY());
+
+                //
                 mToast.setGravity(Gravity.BOTTOM, 0, height);
                 mToast.show();
             }

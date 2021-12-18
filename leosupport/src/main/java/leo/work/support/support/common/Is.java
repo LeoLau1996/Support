@@ -64,7 +64,25 @@ public class Is extends BaseUtil {
     }
 
     public static boolean isEmpty(String text) {
-        return text == null || text.isEmpty();
+        return TextUtils.isEmpty(text);
+    }
+
+    public static boolean isEqualsy(String... texts) {
+        if (texts.length < 2) {
+            return false;
+        }
+        for (String text : texts) {
+            if (isEmpty(text)) {
+                return false;
+            }
+        }
+        String firstText = texts[0];
+        for (int i = 1; i < texts.length; i++) {
+            if (!firstText.equals(texts[i])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
