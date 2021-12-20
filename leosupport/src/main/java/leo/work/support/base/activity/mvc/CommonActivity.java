@@ -15,7 +15,7 @@ import leo.work.support.support.common.LogUtil;
 
 
 public abstract class CommonActivity extends AppCompatActivity {
-    public Context context;
+
     public Activity activity;
 
     //数据
@@ -24,27 +24,25 @@ public abstract class CommonActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //支持转场动画
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        }
         super.onCreate(savedInstanceState);
         LogUtil.e("=======================>" + this.getClass().getName());
         //竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //设置布局
         setContentView(setLayout());
-        context = this;
+        //获得Activity
         activity = this;
+        //
         initData(savedInstanceState);
-
+        //
         initViews(savedInstanceState);
-
+        //
         loadData();
-
+        //
         initListener();
     }
 
-
+    //初始化
     protected abstract int setLayout();
 
     /**

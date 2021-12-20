@@ -1,14 +1,14 @@
 package leo.work.support.base.activity.mvvm;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.view.Window;
 
 import leo.work.support.support.common.LogUtil;
 
@@ -23,33 +23,33 @@ import leo.work.support.support.common.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class BaseMVVMActivity<T extends ViewDataBinding> extends Activity {
-    public Context context;
-    public Activity activity;
+public abstract class CommonMVVMActivity<T extends ViewDataBinding> extends AppCompatActivity {
 
+    //Activity
+    public Activity activity;
+    //ViewDataBinding
     public T binding;
-    public boolean hasFront = false;//当前页面是否在前台
+    //当前页面是否在前台
+    public boolean hasFront = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //支持转场动画
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        }
         super.onCreate(savedInstanceState);
+        //打印Log
         LogUtil.e("=======================>" + this.getClass().getName());
         //竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        context = this;
+        //
         activity = this;
+        //
         binding = DataBindingUtil.setContentView(activity, setLayout());
+        //
         initData(savedInstanceState);
-
+        //
         initViews(savedInstanceState);
-
+        //
         loadData();
-
+        //
         initListener();
     }
 
