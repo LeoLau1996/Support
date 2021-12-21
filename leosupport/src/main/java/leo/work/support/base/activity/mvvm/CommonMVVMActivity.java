@@ -14,7 +14,7 @@ import leo.work.support.support.common.LogUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------
- * 功能描述:
+ * 功能描述: 简单的Activity
  * ---------------------------------------------------------------------------------------------
  * 时　　间:  2021/4/21
  * ---------------------------------------------------------------------------------------------
@@ -43,13 +43,13 @@ public abstract class CommonMVVMActivity<T extends ViewDataBinding> extends AppC
         activity = this;
         //
         binding = DataBindingUtil.setContentView(activity, setLayout());
-        //
+        //初始化数据
         initData(savedInstanceState);
-        //
+        //加载View
         initViews(savedInstanceState);
-        //
+        //加载数据
         loadData();
-        //
+        //初始化监听器
         initListener();
     }
 
