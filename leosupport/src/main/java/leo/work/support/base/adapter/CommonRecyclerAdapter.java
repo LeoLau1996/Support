@@ -28,23 +28,16 @@ import java.util.List;
  * ---------------------------------------------------------------------------------------------
  **/
 
-public abstract class CommonRecyclerAdapter<T, H extends ViewHolder, B extends ViewDataBinding> extends RecyclerView.Adapter {
+public abstract class CommonRecyclerAdapter<M, H extends ViewHolder, B extends ViewDataBinding> extends RecyclerView.Adapter {
 
     public Context context;
     public LayoutInflater mInflater;
-    public List<T> mList;
+    public List<M> mList;
 
     public CommonRecyclerAdapter(Context context) {
-        this(context, new ArrayList<T>());
-    }
-
-    public CommonRecyclerAdapter(Context context, List<T> mList) {
-        /**
-         * 基本传值
-         */
         this.context = context;
         this.mInflater = LayoutInflater.from(this.context);
-        this.mList = mList;
+        this.mList = new ArrayList<>();
     }
 
     @Override
@@ -73,9 +66,7 @@ public abstract class CommonRecyclerAdapter<T, H extends ViewHolder, B extends V
 
     protected abstract H setViewHolder(B binding);
 
-    protected abstract void initListener(final H holder, B binding, int position, T model);
-
-    public abstract static class ViewHolder<T, B extends ViewDataBinding> extends RecyclerView.ViewHolder {
+    public abstract static class ViewHolder<M, B extends ViewDataBinding> extends RecyclerView.ViewHolder {
 
         private B binding;
 
@@ -84,9 +75,9 @@ public abstract class CommonRecyclerAdapter<T, H extends ViewHolder, B extends V
             this.binding = binding;
         }
 
-        protected abstract void initView(int position, T model);
+        protected abstract void initView(int position, M model);
 
-        protected abstract void initListener(int position, T model);
+        protected abstract void initListener(int position, M model);
     }
 
 }
