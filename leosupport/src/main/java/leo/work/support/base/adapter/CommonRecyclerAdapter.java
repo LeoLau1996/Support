@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import leo.work.support.base.adapter.CommonRecyclerAdapter.ViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,16 +26,18 @@ import java.util.List;
  * ---------------------------------------------------------------------------------------------
  **/
 
-public abstract class CommonRecyclerAdapter<M, H extends ViewHolder, B extends ViewDataBinding> extends RecyclerView.Adapter {
+public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolder, B extends ViewDataBinding, C> extends RecyclerView.Adapter {
 
     public Context context;
     public LayoutInflater mInflater;
     public List<M> mList;
+    public C callBack;
 
-    public CommonRecyclerAdapter(Context context) {
+    public CommonRecyclerAdapter(Context context, C callBack) {
         this.context = context;
         this.mInflater = LayoutInflater.from(this.context);
         this.mList = new ArrayList<>();
+        this.callBack = callBack;
     }
 
     @Override
@@ -52,7 +52,7 @@ public abstract class CommonRecyclerAdapter<M, H extends ViewHolder, B extends V
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int layout = setLayout();
         B binding = DataBindingUtil.inflate(mInflater, layout, parent, false);
-        return setViewHolder(binding);
+        return setViewHolder(binding, callBack);
     }
 
     @Override
@@ -64,20 +64,6 @@ public abstract class CommonRecyclerAdapter<M, H extends ViewHolder, B extends V
 
     protected abstract int setLayout();
 
-    protected abstract H setViewHolder(B binding);
-
-    public abstract static class ViewHolder<M, B extends ViewDataBinding> extends RecyclerView.ViewHolder {
-
-        private B binding;
-
-        public ViewHolder(B binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-        }
-
-        protected abstract void initView(int position, M model);
-
-        protected abstract void initListener(int position, M model);
-    }
+    protected abstract H setViewHolder(B binding, C callBack);
 
 }
