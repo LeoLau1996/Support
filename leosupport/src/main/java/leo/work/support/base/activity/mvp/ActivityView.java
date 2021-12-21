@@ -18,8 +18,10 @@ public abstract class ActivityView<A extends CommonMVPActivity, T extends ViewDa
     //ViewDataBinding
     public T binding;
 
-    public ActivityView(A activity, int layoutId) {
-        this.activity = activity;
+    public ActivityView(A mActivity, int layoutId) {
+        activity = mActivity;
+        //设置布局
+        activity.setContentView(layoutId);
         //ViewDataBinding
         binding = DataBindingUtil.setContentView(activity, layoutId);
     }

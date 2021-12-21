@@ -35,8 +35,6 @@ public abstract class CommonMVPActivity<V extends ActivityView, B extends Activi
         activityView = createActivityView();
         //
         activityBiz = createActivityBiz();
-        //设置布局
-        setContentView(activityView.layoutId);
         //初始化数据
         activityBiz.initData(savedInstanceState);
         //初始化View
