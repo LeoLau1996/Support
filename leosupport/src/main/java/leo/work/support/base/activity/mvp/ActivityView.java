@@ -4,20 +4,27 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 
 /**
  * View
  *
  * @param <A>
  */
-public abstract class ActivityView<A extends CommonMVPActivity> {
+public abstract class ActivityView<A extends CommonMVPActivity, T extends ViewDataBinding> {
 
     public A activity;
+    //布局文件
     public int layoutId;
+    //ViewDataBinding
+    public T binding;
 
     public ActivityView(A activity, int layoutId) {
         this.activity = activity;
         this.layoutId = layoutId;
+        //ViewDataBinding
+        binding = DataBindingUtil.setContentView(activity, layoutId);
     }
 
 
