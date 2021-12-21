@@ -16,9 +16,12 @@ import leo.work.support.support.common.LogUtil;
 
 public abstract class CommonMVPActivity<V extends ActivityView, B extends ActivityBiz> extends AppCompatActivity {
 
+    //Activity对象
     public Activity activity;
-    public V view;
-    public B biz;
+    //View对象
+    public V activityView;
+    //业务逻辑对象
+    public B activityBiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,87 +29,94 @@ public abstract class CommonMVPActivity<V extends ActivityView, B extends Activi
         LogUtil.e("=======================>" + this.getClass().getName());
         //竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //
         activity = this;
-        view = createViewModel();
-        biz = createLogicModel();
-        setContentView(view.layoutId);
-
-        biz.initData(savedInstanceState);
-        view.initView();
-        biz.loadData(true, false);
-        view.initListener();
+        //
+        activityView = createActivityView();
+        //
+        activityBiz = createActivityBiz();
+        //设置布局
+        setContentView(activityView.layoutId);
+        //初始化数据
+        activityBiz.initData(savedInstanceState);
+        //初始化View
+        activityView.initView();
+        //网络加载
+        activityBiz.loadData(true, false);
+        //监听加载
+        activityView.initListener();
     }
 
 
     //View
-    protected abstract V createViewModel();
+    protected abstract V createActivityView();
 
     //逻辑
-    protected abstract B createLogicModel();
+    protected abstract B createActivityBiz();
 
     @Override
     protected void onResume() {
         super.onResume();
-        view.onResume();
-        biz.onResume();
+        activityView.onResume();
+        activityBiz.onResume();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        view.onStart();
-        biz.onStart();
+        activityView.onStart();
+        activityBiz.onStart();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        view.onPause();
-        biz.onPause();
+        activityView.onPause();
+        activityBiz.onPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        view.onStop();
-        biz.onStop();
+        activityView.onStop();
+        activityBiz.onStop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        view.onDestroy();
-        biz.onDestroy();
+        activityView.onDestroy();
+        activityBiz.onDestroy();
     }
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        view.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        biz.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        activityView.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        activityBiz.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        view.onActivityResult(requestCode, resultCode, data);
-        biz.onActivityResult(requestCode, resultCode, data);
+        activityView.onActivityResult(requestCode, resultCode, data);
+        activityBiz.onActivityResult(requestCode, resultCode, data);
 
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        view.onNewIntent(intent);
-        biz.onNewIntent(intent);
+        activityView.onNewIntent(intent);
+        activityBiz.onNewIntent(intent);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        view.onBackPressed();
-        biz.onBackPressed();
+        activityView.onBackPressed();
+        activityBiz.onBackPressed();
     }
 
     /**
