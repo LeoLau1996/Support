@@ -1,5 +1,7 @@
 package leo.work.support.base.adapter;
 
+import android.content.Context;
+
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,9 +20,11 @@ public abstract class CommonRecyclerViewHolder<M, B extends ViewDataBinding, C> 
 
     public B binding;
     public C callBack;
+    public Context context;
 
-    public CommonRecyclerViewHolder(B binding, C callBack) {
+    public CommonRecyclerViewHolder(Context context, B binding, C callBack) {
         super(binding.getRoot());
+        this.context = context;
         this.binding = binding;
         this.callBack = callBack;
     }
