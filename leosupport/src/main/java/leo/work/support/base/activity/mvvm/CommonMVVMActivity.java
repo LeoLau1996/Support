@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import android.os.Bundle;
 
+import leo.work.support.base.activity.CommonActivity;
 import leo.work.support.support.common.LogUtil;
 
 /**
@@ -23,7 +24,7 @@ import leo.work.support.support.common.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonMVVMActivity<T extends ViewDataBinding> extends AppCompatActivity {
+public abstract class CommonMVVMActivity<T extends ViewDataBinding> extends CommonActivity {
 
     //Activity
     public Activity activity;
