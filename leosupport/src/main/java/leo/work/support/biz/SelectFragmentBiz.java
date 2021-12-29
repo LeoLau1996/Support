@@ -7,11 +7,10 @@ import androidx.fragment.app.FragmentManager;
 
 import leo.work.support.base.activity.CommonActivity;
 import leo.work.support.base.biz.CommonLifeBiz;
-import leo.work.support.support.common.Is;
 
 /**
  * ---------------------------------------------------------------------------------------------
- * 功能描述:
+ * 功能描述: 显示隐藏Fragment专用
  * ---------------------------------------------------------------------------------------------
  * 时　　间: 2021/12/29
  * ---------------------------------------------------------------------------------------------
