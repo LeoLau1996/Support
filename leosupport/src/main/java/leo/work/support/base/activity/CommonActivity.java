@@ -93,4 +93,21 @@ public abstract class CommonActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        for (int i = 0; lifeCallBackList != null && i < lifeCallBackList.size(); i++) {
+            lifeCallBackList.get(i).onSaveInstanceState(outState);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        for (int i = 0; lifeCallBackList != null && i < lifeCallBackList.size(); i++) {
+            lifeCallBackList.get(i).onRestoreInstanceState(savedInstanceState);
+        }
+    }
+
 }

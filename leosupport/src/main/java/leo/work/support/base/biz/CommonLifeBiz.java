@@ -66,4 +66,14 @@ public class CommonLifeBiz implements CommonLifeCallBack {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+
+    }
 }

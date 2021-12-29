@@ -31,5 +31,9 @@ public interface CommonLifeCallBack {
 
     void onActivityResult(int requestCode, int resultCode, Intent data);
 
-    void onRequestPermissionsResult(int requestCode,String[] permissions,  int[] grantResults);
+    void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
+
+    void onSaveInstanceState(Bundle outState);
+
+    void onRestoreInstanceState(Bundle savedInstanceState);
 }
