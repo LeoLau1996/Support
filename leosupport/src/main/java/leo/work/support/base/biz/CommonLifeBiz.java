@@ -3,7 +3,7 @@ package leo.work.support.base.biz;
 import android.content.Intent;
 import android.os.Bundle;
 
-import leo.work.support.base.activity.CommonActivity;
+import leo.work.support.base.LifeControlInterface;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -16,64 +16,62 @@ import leo.work.support.base.activity.CommonActivity;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class CommonLifeBiz implements CommonLifeCallBack {
+public class CommonLifeBiz {
 
-    private CommonActivity commonActivity;
+    private LifeControlInterface lifeControlInterface;
 
-    public CommonLifeBiz(CommonActivity commonActivity) {
-        this.commonActivity = commonActivity;
+    public CommonLifeBiz(LifeControlInterface lifeControlInterface) {
+        this.lifeControlInterface = lifeControlInterface;
         addCommonLifeCallBack();
     }
 
+    //添加
     private void addCommonLifeCallBack() {
-        if (commonActivity == null) {
+        if (lifeControlInterface == null) {
             return;
         }
-        commonActivity.addLifeCallBackList(this);
+        lifeControlInterface.addLifeCallBackList(this);
     }
 
-    @Override
+    //删除
+    private void removeLifeCallBackList() {
+        lifeControlInterface.removeLifeCallBackList(this);
+    }
+
     public void onStart() {
 
     }
 
-    @Override
     public void onResume() {
 
     }
 
-    @Override
     public void onPause() {
 
     }
 
-    @Override
     public void onStop() {
 
     }
 
-    @Override
     public void onDestroy() {
-        commonActivity.removeLifeCallBackList(this);
+        removeLifeCallBackList();
     }
 
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     }
 
-    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
     }
 
-    @Override
     public void onSaveInstanceState(Bundle outState) {
 
     }
 
-    @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
 
     }
+
 }

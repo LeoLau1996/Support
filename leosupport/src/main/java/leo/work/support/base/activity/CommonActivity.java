@@ -10,86 +10,89 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import leo.work.support.base.biz.CommonLifeCallBack;
+import leo.work.support.base.LifeControlInterface;
+import leo.work.support.base.biz.CommonLifeBiz;
 
 
-public abstract class CommonActivity extends AppCompatActivity {
+public abstract class CommonActivity extends AppCompatActivity implements LifeControlInterface {
 
-    private List<CommonLifeCallBack> lifeCallBackList;
+    private List<CommonLifeBiz> lifeBizList;
 
-    public void addLifeCallBackList(CommonLifeCallBack callBack) {
-        if (lifeCallBackList == null) {
-            lifeCallBackList = new ArrayList<>();
+    @Override
+    public void addLifeCallBackList(CommonLifeBiz biz) {
+        if (lifeBizList == null) {
+            lifeBizList = new ArrayList<>();
         }
-        if (callBack == null) {
+        if (biz == null) {
             return;
         }
-        lifeCallBackList.add(callBack);
+        lifeBizList.add(biz);
     }
 
-    public void removeLifeCallBackList(CommonLifeCallBack callBack) {
-        if (lifeCallBackList == null) {
+    @Override
+    public void removeLifeCallBackList(CommonLifeBiz biz) {
+        if (lifeBizList == null) {
             return;
         }
-        if (callBack == null) {
+        if (biz == null) {
             return;
         }
-        lifeCallBackList.remove(callBack);
+        lifeBizList.remove(biz);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        for (int i = 0; lifeCallBackList != null && i < lifeCallBackList.size(); i++) {
-            lifeCallBackList.get(i).onStart();
+        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
+            lifeBizList.get(i).onStart();
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        for (int i = 0; lifeCallBackList != null && i < lifeCallBackList.size(); i++) {
-            lifeCallBackList.get(i).onResume();
+        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
+            lifeBizList.get(i).onResume();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        for (int i = 0; lifeCallBackList != null && i < lifeCallBackList.size(); i++) {
-            lifeCallBackList.get(i).onPause();
+        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
+            lifeBizList.get(i).onPause();
         }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        for (int i = 0; lifeCallBackList != null && i < lifeCallBackList.size(); i++) {
-            lifeCallBackList.get(i).onStop();
+        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
+            lifeBizList.get(i).onStop();
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        for (int i = 0; lifeCallBackList != null && i < lifeCallBackList.size(); i++) {
-            lifeCallBackList.get(i).onDestroy();
+        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
+            lifeBizList.get(i).onDestroy();
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        for (int i = 0; lifeCallBackList != null && i < lifeCallBackList.size(); i++) {
-            lifeCallBackList.get(i).onActivityResult(requestCode, resultCode, data);
+        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
+            lifeBizList.get(i).onActivityResult(requestCode, resultCode, data);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (int i = 0; lifeCallBackList != null && i < lifeCallBackList.size(); i++) {
-            lifeCallBackList.get(i).onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
+            lifeBizList.get(i).onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -97,16 +100,16 @@ public abstract class CommonActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        for (int i = 0; lifeCallBackList != null && i < lifeCallBackList.size(); i++) {
-            lifeCallBackList.get(i).onSaveInstanceState(outState);
+        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
+            lifeBizList.get(i).onSaveInstanceState(outState);
         }
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        for (int i = 0; lifeCallBackList != null && i < lifeCallBackList.size(); i++) {
-            lifeCallBackList.get(i).onRestoreInstanceState(savedInstanceState);
+        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
+            lifeBizList.get(i).onRestoreInstanceState(savedInstanceState);
         }
     }
 
