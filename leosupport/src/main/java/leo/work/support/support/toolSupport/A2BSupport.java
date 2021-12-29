@@ -38,68 +38,87 @@ public class A2BSupport extends BaseUtil {
     /**
      * 字符串与数字之间转换
      */
-    public static int String2int(String A) {
-        int result;
+    public static int String2int(String s) {
+        int i;
         try {
-            result = Integer.valueOf(A);
+            i = Integer.parseInt(s);
         } catch (Exception e) {
-            result = 0;
+            i = 0;
         }
-        return result;
+        return i;
     }
 
-    public static String int2String(int A) {
-        String B;
+    public static String int2String(int i) {
+        String s;
         try {
-            B = String.valueOf(A);
+            s = String.valueOf(i);
         } catch (Exception e) {
-            B = "";
+            s = "";
         }
-        return B;
+        return s;
     }
 
-    public static String long2String(long A) {
-        String B;
+    public static String long2String(long l) {
+        String s;
         try {
-            B = String.valueOf(A);
+            s = String.valueOf(l);
         } catch (Exception e) {
-            B = "";
+            s = "";
         }
-        return B;
+        return s;
     }
 
-    public static long String2Long(String A) {
-        long result;
+    public static long String2Long(String s) {
+        long l;
         try {
-            result = Long.valueOf(A);
+            l = Long.parseLong(s);
         } catch (Exception e) {
-            result = 0;
+            l = 0;
         }
-        return result;
-    }
-
-
-    public static float String2float(String A) {
-        float result;
-        try {
-            result = Float.valueOf(A);
-        } catch (Exception e) {
-            result = 0f;
-        }
-        return result;
-    }
-
-    public static String float2String(float A) {
-        String B;
-        try {
-            B = String.valueOf(A);
-        } catch (Exception e) {
-            B = "";
-        }
-        return B;
+        return l;
     }
 
 
+    public static float String2float(String s) {
+        float f;
+        try {
+            f = Float.parseFloat(s);
+        } catch (Exception e) {
+            f = 0f;
+        }
+        return f;
+    }
+
+    public static String float2String(float f) {
+        String s;
+        try {
+            s = String.valueOf(f);
+        } catch (Exception e) {
+            s = "";
+        }
+        return s;
+    }
+
+
+    public static double String2Double(String s) {
+        double d;
+        try {
+            d = Double.parseDouble(s);
+        } catch (Exception e) {
+            d = 0f;
+        }
+        return d;
+    }
+
+    public static String Double2String(double d) {
+        String s;
+        try {
+            s = String.valueOf(d);
+        } catch (Exception e) {
+            s = "";
+        }
+        return s;
+    }
     /**
      * 尺寸转换
      */
