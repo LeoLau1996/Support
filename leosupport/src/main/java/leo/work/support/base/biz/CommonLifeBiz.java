@@ -16,11 +16,11 @@ import leo.work.support.base.activity.CommonActivity;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class BaseBiz implements CommonLifeCallBack {
+public class CommonLifeBiz implements CommonLifeCallBack {
 
     private CommonActivity commonActivity;
 
-    public BaseBiz(CommonActivity commonActivity) {
+    public CommonLifeBiz(CommonActivity commonActivity) {
         this.commonActivity = commonActivity;
         addCommonLifeCallBack();
     }
