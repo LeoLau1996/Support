@@ -1,4 +1,4 @@
-package leo.work.support.support.permissions;
+package leo.work.support.util;
 
 import android.Manifest;
 import android.app.Activity;
@@ -19,7 +19,7 @@ import androidx.core.content.ContextCompat;
  * Created by Best100_Android on 17/11/14.
  */
 
-public class PermissionsSupport {
+public class PermissionsUtil {
 
     //判断权限集合
     public static boolean hasPermissions(Context context, String... permissions) {
@@ -44,13 +44,6 @@ public class PermissionsSupport {
     //请求权限（兼容低版本）
     public static void getPermissions(Fragment fragment, int requestCode, String... permissions) {
         fragment.requestPermissions(permissions, requestCode);
-    }
-
-    //进入手机设置---权限页面
-    public static void startAppSettings(Activity activity, int permissionsReturnCode) {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(Uri.parse("package:" + activity.getPackageName()));
-        activity.startActivity(intent);
     }
 
 }

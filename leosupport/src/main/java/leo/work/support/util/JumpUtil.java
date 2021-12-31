@@ -7,14 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 
 import androidx.core.app.ActivityOptionsCompat;
 
 import java.util.List;
-
-import leo.work.support.support.permissions.PermissionsSupport;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -162,7 +161,7 @@ public class JumpUtil {
      */
     @SuppressLint("MissingPermission")
     public static void callPhone(Activity activity, String phoneNum, int slotId) {
-        if (!PermissionsSupport.hasPermissions(activity, Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE)) {
+        if (!PermissionsUtil.hasPermissions(activity, Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE)) {
             callPhone(activity, phoneNum);
             return;
         }
@@ -191,7 +190,7 @@ public class JumpUtil {
 
     //拨打电话（直接拨打电话）
     public static void callPhone(Activity activity, String phoneNum) {
-        if (!PermissionsSupport.hasPermissions(activity, Manifest.permission.CALL_PHONE)) {
+        if (!PermissionsUtil.hasPermissions(activity, Manifest.permission.CALL_PHONE)) {
             return;
         }
         Intent intent = new Intent(Intent.ACTION_CALL);
@@ -210,4 +209,12 @@ public class JumpUtil {
 
         }
     }
+
+    //进入手机设置---权限页面
+    public static void startAppSettings(Activity activity) {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + activity.getPackageName()));
+        activity.startActivity(intent);
+    }
+
 }
