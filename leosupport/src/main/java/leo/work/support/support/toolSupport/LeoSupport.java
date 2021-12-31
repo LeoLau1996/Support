@@ -1,13 +1,16 @@
 package leo.work.support.support.toolSupport;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+
 import androidx.core.content.FileProvider;
+
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -56,18 +59,9 @@ public class LeoSupport extends BaseUtil {
         imm.showSoftInput(v, InputMethodManager.SHOW_FORCED);
     }
 
-    public static void openURL(Activity activity, String url) {
-        try {
-            Uri uri = Uri.parse(url);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            activity.startActivity(intent);
-        } catch (Exception e) {
-
-        }
-    }
 
     //安装APK
-    public static void installNormal(Context context,String authority, String apkPath) throws Exception {
+    public static void installNormal(Context context, String authority, String apkPath) throws Exception {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         //版本在7.0以上是不能直接通过uri访问的
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -81,13 +75,6 @@ public class LeoSupport extends BaseUtil {
             intent.setDataAndType(Uri.fromFile(new File(apkPath)), "application/vnd.android.package-archive");
         }
         context.startActivity(intent);
-    }
-
-    //复制
-    public static void copy(Activity activity, String txt) {
-        ClipboardManager cm = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-        // 将文本内容放到系统剪贴板里。
-        cm.setText(txt);
     }
 
     /**

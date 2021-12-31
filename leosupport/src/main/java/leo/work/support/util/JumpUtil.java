@@ -1,9 +1,14 @@
 package leo.work.support.util;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.core.app.ActivityOptionsCompat;
+
+import leo.work.support.support.permissions.PermissionsSupport;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -143,5 +148,26 @@ public class JumpUtil {
         }
     }
 
+    //拨打电话（直接拨打电话）
+    public static void callPhone(Activity activity, Context context, String phoneNum) {
+        if (!PermissionsSupport.hasPermissions(context, Manifest.permission.CALL_PHONE)) {
+            PermissionsSupport.getPermissions(activity, 100, Manifest.permission.CALL_PHONE);
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        activity.startActivity(intent);
+    }
 
+    //打开网页
+    public static void openURL(Activity activity, String url) {
+        try {
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            activity.startActivity(intent);
+        } catch (Exception e) {
+
+        }
+    }
 }

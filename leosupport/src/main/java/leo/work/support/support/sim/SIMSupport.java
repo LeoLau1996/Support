@@ -25,6 +25,7 @@ import leo.work.support.support.permissions.PermissionsSupport;
  * ---------------------------------------------------------------------------------------------
  **/
 public class SIMSupport {
+
     private static final String[] dualSimTypes = {"subscription", "Subscription", "simSlotIndex", "com.android.phone.extra.slot", "phone", "com.android.phone.DialingMode", "simId", "simnum", "phone_type", "simSlot"};
 
     /**
@@ -38,20 +39,22 @@ public class SIMSupport {
             PermissionsSupport.getPermissions(activity, 100, Manifest.permission.CALL_PHONE);
             return;
         }
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+            callPhone(activity, phoneNum);
+            return;
+        }
+        TelecomManager telecomManager = (TelecomManager) activity.getSystemService(Context.TELECOM_SERVICE);
+        if (telecomManager == null) {
+            callPhone(activity, phoneNum);
+            return;
+        }
         try {
-            TelecomManager telecomManager = (TelecomManager) activity.getSystemService(Context.TELECOM_SERVICE);
-            if (telecomManager == null) {
-                callPhone(activity, phoneNum);
-                return;
-            }
-
-            /***/
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_CALL);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setData(Uri.parse(String.format("tel:%s", phoneNum)));
-            for (int i = 0; i < dualSimTypes.length; i++) {
-                intent.putExtra(dualSimTypes[i], slotId);
+            for (String dualSimType : dualSimTypes) {
+                intent.putExtra(dualSimType, slotId);
             }
             List<PhoneAccountHandle> phoneAccountHandleList = telecomManager.getCallCapablePhoneAccounts();
             intent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandleList.get(slotId));
