@@ -1,12 +1,18 @@
 package leo.work.support.util;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telecom.PhoneAccountHandle;
+import android.telecom.TelecomManager;
+
 import androidx.core.app.ActivityOptionsCompat;
+
+import java.util.List;
 
 import leo.work.support.support.permissions.PermissionsSupport;
 
@@ -148,10 +154,44 @@ public class JumpUtil {
         }
     }
 
+    /**
+     * 拨打电话（直接拨打电话）
+     *
+     * @param phoneNum 电话号码
+     * @param slotId   电话号码       0:卡1  1:卡2
+     */
+    @SuppressLint("MissingPermission")
+    public static void callPhone(Activity activity, String phoneNum, int slotId) {
+        if (!PermissionsSupport.hasPermissions(activity, Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE)) {
+            callPhone(activity, phoneNum);
+            return;
+        }
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
+            callPhone(activity, phoneNum);
+            return;
+        }
+        try {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_CALL);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setData(Uri.parse(String.format("tel:%s", phoneNum)));
+            String[] dualSimTypes = {"subscription", "Subscription", "simSlotIndex", "com.android.phone.extra.slot", "phone", "com.android.phone.DialingMode", "simId", "simnum", "phone_type", "simSlot"};
+            for (String dualSimType : dualSimTypes) {
+                intent.putExtra(dualSimType, slotId);
+            }
+            TelecomManager telecomManager = (TelecomManager) activity.getSystemService(Context.TELECOM_SERVICE);
+            List<PhoneAccountHandle> phoneAccountHandleList = telecomManager.getCallCapablePhoneAccounts();
+            PhoneAccountHandle phoneAccountHandle = phoneAccountHandleList.get(slotId);
+            intent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandle);
+            activity.startActivity(intent);
+        } catch (Exception e) {
+            callPhone(activity, phoneNum);
+        }
+    }
+
     //拨打电话（直接拨打电话）
-    public static void callPhone(Activity activity, Context context, String phoneNum) {
-        if (!PermissionsSupport.hasPermissions(context, Manifest.permission.CALL_PHONE)) {
-            PermissionsSupport.getPermissions(activity, 100, Manifest.permission.CALL_PHONE);
+    public static void callPhone(Activity activity, String phoneNum) {
+        if (!PermissionsSupport.hasPermissions(activity, Manifest.permission.CALL_PHONE)) {
             return;
         }
         Intent intent = new Intent(Intent.ACTION_CALL);
