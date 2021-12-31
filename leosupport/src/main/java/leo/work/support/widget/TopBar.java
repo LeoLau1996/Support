@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import leo.work.support.R;
-import leo.work.support.support.common.Is;
+import leo.work.support.util.Is;
 
 /**
  * ---------------------------------------------------------------------------------------------

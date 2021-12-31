@@ -1,4 +1,4 @@
-package leo.work.support.support.common;
+package leo.work.support.util;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -16,10 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import leo.work.support.util.BaseUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------

@@ -1,9 +1,11 @@
-package leo.work.support.support.common;
+package leo.work.support.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+
+import leo.work.support.util.LogUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -16,7 +18,7 @@ import java.util.zip.GZIPOutputStream;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class GZipSupport {
+public class GZipUtil {
 
     private final static String TAG = "GZipSupport";
     public static final String GZIP_ENCODE_UTF_8 = "UTF-8";

@@ -5,13 +5,12 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import android.os.Bundle;
 
 import leo.work.support.base.activity.CommonActivity;
-import leo.work.support.support.common.LogUtil;
+import leo.work.support.util.LogUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------

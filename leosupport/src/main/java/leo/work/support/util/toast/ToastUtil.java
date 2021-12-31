@@ -1,4 +1,4 @@
-package leo.work.support.support.common;
+package leo.work.support.util.toast;
 
 import android.content.Context;
 import android.os.Handler;
@@ -12,8 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import leo.work.support.R;
-import leo.work.support.base.application.BaseApplication;
-import leo.work.support.support.toast.ToastLayoutModel;
 import leo.work.support.util.BaseUtil;
 
 /**

@@ -1,8 +1,8 @@
-package leo.work.support.support.common;
+package leo.work.support.util;
 
 import android.util.Log;
 
-import leo.work.support.base.application.BaseApplication;
+import leo.work.support.util.Is;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ import leo.work.support.base.application.BaseApplication;
 public class LogUtil {
 
     private static final String TAG = "leowork";
-    private static StringBuffer stringBuffer;
+
     private static Boolean isDebug = null;
 
     public static void e(String detail) {
@@ -26,13 +26,6 @@ public class LogUtil {
     }
 
     public static void e(String tag, String text) {
-        if (stringBuffer == null) {
-            stringBuffer = new StringBuffer();
-        }
-        stringBuffer.append(DateSupport.toString(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss"));
-        stringBuffer.append(":");
-        stringBuffer.append(text);
-        stringBuffer.append("\n");
         if (isDebug == null) {
             isDebug = Is.isDebuggable();
         }
@@ -55,7 +48,4 @@ public class LogUtil {
         }
     }
 
-    public static String getLog() {
-        return stringBuffer != null ? stringBuffer.toString() : "";
-    }
 }

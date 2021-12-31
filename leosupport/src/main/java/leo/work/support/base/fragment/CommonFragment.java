@@ -1,25 +1,16 @@
 package leo.work.support.base.fragment;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import leo.work.support.base.LifeControlInterface;
-import leo.work.support.base.application.BaseApplication;
 import leo.work.support.base.biz.CommonLifeBiz;
-import leo.work.support.support.common.LogUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------

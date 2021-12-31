@@ -6,9 +6,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 
 
-import androidx.multidex.MultiDex;
-
-import leo.work.support.support.common.Get;
+import leo.work.support.util.Get;
 
 /**
  * ---------------------------------------------------------------------------------------------

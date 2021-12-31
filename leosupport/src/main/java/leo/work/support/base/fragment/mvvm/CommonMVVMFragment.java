@@ -11,10 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
-import androidx.fragment.app.Fragment;
 
 import leo.work.support.base.fragment.CommonFragment;
-import leo.work.support.support.common.LogUtil;
+import leo.work.support.util.LogUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------

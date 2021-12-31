@@ -1,6 +1,6 @@
-package leo.work.support.support.common;
+package leo.work.support.util;
 
-import static leo.work.support.support.common.Get.getStatusBarHeight;
+import static leo.work.support.util.Get.getStatusBarHeight;
 
 import android.app.Activity;
 import android.os.Build;

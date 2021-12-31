@@ -9,18 +9,14 @@ import android.net.Uri;
 import android.os.Build;
 import androidx.core.content.FileProvider;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 
 import java.io.File;
-import java.io.IOException;
 
 import leo.work.support.util.BaseUtil;
-
-import static leo.work.support.support.common.Get.getStatusBarHeight;
 
 /**
  * ---------------------------------------------------------------------------------------------
