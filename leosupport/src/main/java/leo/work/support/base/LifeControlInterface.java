@@ -16,9 +16,9 @@ import leo.work.support.base.biz.CommonLifeBiz;
 public interface LifeControlInterface {
 
     //添加生命周期监听
-    void addLifeCallBackList(CommonLifeBiz callBack);
+    void addLifeCallBackList(CommonLifeBiz biz);
 
     //删除生命周期监听
-    void removeLifeCallBackList(CommonLifeBiz callBack);
+    void removeLifeCallBackList(CommonLifeBiz biz);
 
 }
