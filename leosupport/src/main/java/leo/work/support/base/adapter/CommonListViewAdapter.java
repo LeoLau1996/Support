@@ -6,9 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import java.util.List;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 
-import leo.work.support.base.adapter.BaseListViewAdapter.ViewHolder;
+import java.util.List;
 
 
 /**
@@ -22,15 +23,18 @@ import leo.work.support.base.adapter.BaseListViewAdapter.ViewHolder;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class BaseListViewAdapter<T, H extends ViewHolder> extends BaseAdapter {
-    public Context context;
-    public LayoutInflater mInflater;
-    public List<T> mList;
+public abstract class CommonListViewAdapter<M, H extends CommonViewHolder, B extends ViewDataBinding, C> extends BaseAdapter {
 
-    public BaseListViewAdapter(Context context, List<T> mList) {
+    public Context context;
+    public LayoutInflater layoutInflater;
+    public List<M> mList;
+    public C callBack;
+
+    public CommonListViewAdapter(Context context, List<M> mList, C callBack) {
         this.context = context;
-        this.mInflater = LayoutInflater.from(context);
+        this.layoutInflater = LayoutInflater.from(context);
         this.mList = mList;
+        this.callBack = callBack;
     }
 
     @Override
@@ -56,34 +60,22 @@ public abstract class BaseListViewAdapter<T, H extends ViewHolder> extends BaseA
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+        H viewHolder;
         if (convertView == null) {
-            convertView = mInflater.inflate(setLayout(), null);
-            viewHolder = setViewHolder(convertView);
+            int layout = setLayout();
+            B binding = DataBindingUtil.inflate(layoutInflater, layout, parent, false);
+            viewHolder = setViewHolder(binding, callBack);
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (H) convertView.getTag();
         }
-
-        /**
-         * 操作
-         */
-        initView((H) viewHolder, position, this.mList.get(position));
-        initListener((H) viewHolder, position, this.mList.get(position));
+        viewHolder.initView(position, mList.get(position));
+        viewHolder.initListener(position, mList.get(position));
         return convertView;
     }
 
     protected abstract int setLayout();
 
-    protected abstract ViewHolder setViewHolder(View convertView);
+    protected abstract H setViewHolder(B binding, C callBack);
 
-    protected abstract void initView(final H holder, final int position, final T bean);
-
-    protected abstract void initListener(final H holder, final int position, final T bean);
-
-    public static class ViewHolder {
-        public ViewHolder(View view) {
-
-        }
-    }
 }

@@ -29,13 +29,13 @@ import java.util.List;
 public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolder, B extends ViewDataBinding, C> extends RecyclerView.Adapter {
 
     public Context context;
-    public LayoutInflater mInflater;
+    public LayoutInflater layoutInflater;
     public List<M> mList;
     public C callBack;
 
     public CommonRecyclerAdapter(Context context, C callBack) {
         this.context = context;
-        this.mInflater = LayoutInflater.from(this.context);
+        this.layoutInflater = LayoutInflater.from(this.context);
         this.mList = new ArrayList<>();
         this.callBack = callBack;
     }
@@ -51,7 +51,7 @@ public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int layout = setLayout();
-        B binding = DataBindingUtil.inflate(mInflater, layout, parent, false);
+        B binding = DataBindingUtil.inflate(layoutInflater, layout, parent, false);
         return setViewHolder(binding, callBack);
     }
 
