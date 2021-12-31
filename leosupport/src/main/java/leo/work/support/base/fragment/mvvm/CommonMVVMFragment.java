@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 
+import leo.work.support.base.fragment.CommonFragment;
 import leo.work.support.support.common.LogUtil;
 
 /**
@@ -26,9 +27,9 @@ import leo.work.support.support.common.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class BaseMVVMFragment<T extends ViewDataBinding> extends Fragment {
+public abstract class CommonMVVMFragment<T extends ViewDataBinding> extends CommonFragment {
 
-    public View view;
+    public View rootView;
     public Context context;
     public Activity activity;
 
@@ -36,24 +37,22 @@ public abstract class BaseMVVMFragment<T extends ViewDataBinding> extends Fragme
     public boolean hasFront = false;//当前页面是否在前台
     public boolean hidden = false;//Fragment显示/隐藏状态
 
-    public Fragment mFragment = null;
-    public String mFragmentTAG = "1";
     public T binding;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LogUtil.e("=======================>" + this.getClass().getName());
-        view = inflater.inflate(setLayout(), container, false);
-        context = getContext();
-        activity = getActivity();
-        binding = DataBindingUtil.setContentView(activity, setLayout());
-        return view;
+        rootView = inflater.inflate(setLayout(), container, false);
+        return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        context = getContext();
+        activity = getActivity();
+        binding = DataBindingUtil.setContentView(activity, setLayout());
         initData(savedInstanceState);
         initViews(savedInstanceState);
         loadData();
@@ -113,52 +112,11 @@ public abstract class BaseMVVMFragment<T extends ViewDataBinding> extends Fragme
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         this.hidden = hidden;
-        if (hasResume)
+        if (hasResume) {
             this.hasFront = !hidden;
-        else
+        } else {
             this.hasFront = false;
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        if (outState != null && !mFragmentTAG.equals("")) {
-            if (mFragment != null) {
-                //隐藏当前的fragment,避免重叠
-                getFragmentManager().beginTransaction().hide(mFragment).commitAllowingStateLoss();
-                mFragment = null;
-            }
-            outState.putString("currentTab", mFragmentTAG);
         }
-        super.onSaveInstanceState(outState);
-    }
-
-    public void selectFragment(int id, Fragment fragment, int index) {
-        //如果相同
-        if (mFragment == fragment) {
-            return;
-        }
-
-        //隐藏当前的fragment
-        if (mFragment != null) {
-            getFragmentManager().beginTransaction()
-                    //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    .hide(mFragment).commitAllowingStateLoss();
-        }
-        //没有被添加  没有显示   没有删除 ---->   添加新的Fragment
-        if (!fragment.isAdded() && !fragment.isVisible() && !fragment.isRemoving()) {
-            //添加fragment到Activity
-            getFragmentManager().beginTransaction()
-                    //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .add(id, fragment, String.valueOf(index)).commitAllowingStateLoss();
-        }
-        //显示fragment
-        else {
-            getFragmentManager().beginTransaction()
-                    //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .show(fragment).commitAllowingStateLoss();
-        }
-        mFragment = fragment;
-        mFragmentTAG = String.valueOf(index);
     }
 
 }
