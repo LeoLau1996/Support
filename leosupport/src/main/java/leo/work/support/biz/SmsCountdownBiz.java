@@ -1,5 +1,6 @@
 package leo.work.support.biz;
 
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.Timer;
@@ -16,7 +17,7 @@ import leo.work.support.base.biz.CommonLifeBiz;
  * ---------------------------------------------------------------------------------------------
  * 代码创建: Leo
  * ---------------------------------------------------------------------------------------------
- * 代码备注: TODO 设计成单例
+ * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
 public class SmsCountdownBiz extends CommonLifeBiz {
@@ -29,28 +30,35 @@ public class SmsCountdownBiz extends CommonLifeBiz {
     private Timer timer;
     //倒计时回调
     private OnSmsCountdownBizCallBack callBack;
+    //点击发送短信的按钮
+    private View view;
 
-    public SmsCountdownBiz(LifeControlInterface lifeControlInterface, int totalDuration, OnSmsCountdownBizCallBack callBack) {
+    public SmsCountdownBiz(LifeControlInterface lifeControlInterface, View view, int totalDuration, OnSmsCountdownBizCallBack callBack) {
         super(lifeControlInterface);
+        this.view = view;
         this.totalDuration = totalDuration;
         this.callBack = callBack;
+        this.callBack.onSmsPrepare();
     }
 
     //请求服务器
     public void requestService() {
-
+        view.setClickable(false);
+        callBack.onSmsPrepare();
     }
 
-    //
+    //请求服务器得到的结果
     public void serviceResult(boolean success) {
         if (!success) {
+            view.setClickable(true);
+            callBack.onSmsPrepare();
             return;
         }
-        xxx();
+        startCountdown();
     }
 
     //开始倒计时
-    private void xxx() {
+    private void startCountdown() {
         if (timer == null) {
             timer = new Timer();
         }
@@ -60,14 +68,26 @@ public class SmsCountdownBiz extends CommonLifeBiz {
             public void run() {
                 int seconds = totalDuration - currentDuration;
                 if (seconds <= 0) {
-                    callBack.end();
-                    timer.cancel();
+                    countdownEnd();
                 } else {
-                    callBack.onTimeChange(seconds);
+                    callBack.onSmsTimeChange(seconds);
                     currentDuration++;
                 }
             }
         }, 1000);
+    }
+
+    //倒计时结束
+    private void countdownEnd() {
+        if (callBack != null) {
+            callBack.onSmsPrepare();
+        }
+        if (view != null) {
+            view.setClickable(true);
+        }
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 
     public interface OnSmsCountdownBizCallBack {
@@ -76,9 +96,16 @@ public class SmsCountdownBiz extends CommonLifeBiz {
         void onSmsPrepare();
 
         //开始倒计时
-        void onTimeChange(int time);
+        void onSmsTimeChange(int time);
 
-        //
-        void end();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+        }
+        timer = null;
     }
 }
