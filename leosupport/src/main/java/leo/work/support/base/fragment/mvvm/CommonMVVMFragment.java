@@ -41,7 +41,7 @@ public abstract class CommonMVVMFragment<T extends ViewDataBinding> extends Comm
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LogUtil.e("=======================>" + this.getClass().getName());
-        binding = DataBindingUtil.setContentView(activity, setLayout());
+        binding = DataBindingUtil.inflate(inflater, setLayout(), container, false);
         return binding.getRoot();
     }
 

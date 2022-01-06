@@ -1,12 +1,12 @@
 package leo.work.support.base.activity.mvvm;
 
-import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+
 import android.os.Bundle;
 
 import leo.work.support.base.activity.CommonActivity;
@@ -26,7 +26,7 @@ import leo.work.support.util.LogUtil;
 public abstract class CommonMVVMActivity<T extends ViewDataBinding> extends CommonActivity {
 
     //Activity
-    public Activity activity;
+    public CommonMVVMActivity activity;
     //ViewDataBinding
     public T binding;
     //当前页面是否在前台
