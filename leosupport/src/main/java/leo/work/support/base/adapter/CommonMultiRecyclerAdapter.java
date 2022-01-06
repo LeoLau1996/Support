@@ -21,18 +21,18 @@ import java.util.List;
  * ---------------------------------------------------------------------------------------------
  **/
 
-public abstract class MultiRecyclerAdapter<T> extends RecyclerView.Adapter {
+public abstract class CommonMultiRecyclerAdapter<T> extends RecyclerView.Adapter {
     public Context context;
-    public LayoutInflater mInflater;
+    public LayoutInflater layoutInflater;
     public List<T> mList;
 
 
-    public MultiRecyclerAdapter(Context context, List<T> mList) {
+    public CommonMultiRecyclerAdapter(Context context, List<T> mList) {
         /**
          * 基本传值
          */
         this.context = context;
-        this.mInflater = LayoutInflater.from(this.context);
+        this.layoutInflater = LayoutInflater.from(this.context);
         this.mList = mList;
     }
 
@@ -49,7 +49,7 @@ public abstract class MultiRecyclerAdapter<T> extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return setViewHolder(mInflater.inflate(setLayout(viewType), parent, false), viewType);
+        return setViewHolder(layoutInflater.inflate(setLayout(viewType), parent, false), viewType);
     }
 
 
