@@ -67,9 +67,7 @@ public abstract class CommonMVVMActivity<T extends ViewDataBinding> extends Comm
      *
      * @param savedInstanceState
      */
-    protected void initViews(Bundle savedInstanceState) {
-
-    }
+    protected abstract void initViews(Bundle savedInstanceState);
 
     /**
      * 加载数据，如：网络请求

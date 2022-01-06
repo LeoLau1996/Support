@@ -28,7 +28,6 @@ import leo.work.support.util.LogUtil;
  **/
 public abstract class CommonMVVMFragment<T extends ViewDataBinding> extends CommonFragment {
 
-    public View rootView;
     public Context context;
     public Activity activity;
 
@@ -42,8 +41,8 @@ public abstract class CommonMVVMFragment<T extends ViewDataBinding> extends Comm
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LogUtil.e("=======================>" + this.getClass().getName());
-        rootView = inflater.inflate(setLayout(), container, false);
-        return rootView;
+        binding = DataBindingUtil.setContentView(activity, setLayout());
+        return binding.getRoot();
     }
 
     @Override
@@ -51,7 +50,7 @@ public abstract class CommonMVVMFragment<T extends ViewDataBinding> extends Comm
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
         activity = getActivity();
-        binding = DataBindingUtil.setContentView(activity, setLayout());
+
         initData(savedInstanceState);
         initViews(savedInstanceState);
         loadData();
