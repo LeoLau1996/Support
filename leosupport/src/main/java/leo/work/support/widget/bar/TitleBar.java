@@ -156,6 +156,11 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         LayoutParams layoutParams = new LayoutParams(Get.getWindowWidth(context), (int) contentHeight);
         layoutParams.addRule(RelativeLayout.BELOW, statusBar.getId());
+        rlContent.setPadding(
+                paddingLeft == 0 ? TitleBarDefaultInfo.getTitleBarDefaultInfo().getDefaultPadding() : paddingLeft,
+                rlContent.getPaddingTop(),
+                paddingRight == 0 ? TitleBarDefaultInfo.getTitleBarDefaultInfo().getDefaultPadding() : paddingRight,
+                rlContent.getPaddingBottom());
         rlContent.setLayoutParams(layoutParams);
 
     }
@@ -171,7 +176,6 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(A2BSupport.dp2px(16), A2BSupport.dp2px(16));
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-        layoutParams.setMarginStart(paddingLeft == 0 ? TitleBarDefaultInfo.getTitleBarDefaultInfo().getDefaultPadding() : paddingLeft);
         ivBack.setLayoutParams(layoutParams);
         //
         ivBack.setOnClickListener(this);
@@ -224,13 +228,12 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         int menuImage = typedArray.getResourceId(R.styleable.TitleBar_menuImage, 0);
         ivMenu.setImageResource(menuImage);
         //
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(A2BSupport.dp2px(16), A2BSupport.dp2px(16));
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(menuImage != 0 ? A2BSupport.dp2px(16) : 0, menuImage != 0 ? A2BSupport.dp2px(16) : 0);
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        layoutParams.setMarginEnd(paddingRight == 0 ? TitleBarDefaultInfo.getTitleBarDefaultInfo().getDefaultPadding() : paddingRight);
         ivMenu.setLayoutParams(layoutParams);
         //
-        ivMenu.setVisibility(menuImage != 0 ? VISIBLE : GONE);
+        ivMenu.setVisibility(menuImage != 0 ? VISIBLE : INVISIBLE);
         //
         ivMenu.setOnClickListener(this);
         //
@@ -255,8 +258,8 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        layoutParams.setMarginEnd(paddingRight == 0 ? TitleBarDefaultInfo.getTitleBarDefaultInfo().getDefaultPadding() : paddingRight);
+        layoutParams.addRule(RelativeLayout.LEFT_OF, ivMenu.getId());
+        layoutParams.setMarginEnd((int) typedArray.getDimension(R.styleable.TitleBar_menuPadding, 0));
         tvMenu.setLayoutParams(layoutParams);
         //
         tvMenu.setVisibility(!Is.isEmpty(text) ? VISIBLE : GONE);
