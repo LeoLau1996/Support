@@ -3,7 +3,8 @@ package com.leo.support.app;
 import com.leo.support.R;
 
 import leo.work.support.base.application.BaseApplication;
-import leo.work.support.widget.TopBar;
+import leo.work.support.util.A2BSupport;
+import leo.work.support.widget.bar.TitleBarDefaultInfo;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -20,7 +21,7 @@ public class MyApp extends BaseApplication {
 
     @Override
     protected void init() {
-        TopBar.setDefaultInfo(new TopBar.TopBarDefaultInfo(R.drawable.ic_back_black, R.color.black, R.color.bule, 44));
+        TitleBarDefaultInfo.setTitleBarDefaultInfo(new TitleBarDefaultInfo(A2BSupport.dp2px(14),R.drawable.ic_back_black, R.color.black, R.color.bule, A2BSupport.dp2px(50)));
     }
 
 }
