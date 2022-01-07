@@ -1,5 +1,7 @@
 package leo.work.support.widget.bar;
 
+import android.view.View;
+
 /**
  * ---------------------------------------------------------------------------------------------
  * 功能描述:
@@ -16,4 +18,6 @@ public interface OnTitleBarCallBack {
     void onClickBack();
 
     void onClickMenu();
+
+    void onClickOtherView(View view);
 }

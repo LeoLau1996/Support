@@ -9,12 +9,16 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import leo.work.support.R;
 import leo.work.support.util.A2BSupport;
@@ -100,9 +104,23 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+        for (int i = 0, roomViewCount = getChildCount(); i < roomViewCount; i++) {
+            View childView = getChildAt(i);
+            if (childView.getId() == R.id.statusBar) {
 
-        final int count = getChildCount();
-        LogUtil.e("liu0107", "onLayout    count = " + count);
+            } else if (childView.getId() == R.id.rlContent) {
+                RelativeLayout rlContent = (RelativeLayout) childView;
+                for (int index = 0, childCount = rlContent.getChildCount(); roomViewCount > 2 && index < childCount; index++) {
+                    rlContent.getChildAt(index).setVisibility(GONE);
+                }
+            } else {
+                LayoutParams layoutParams = (LayoutParams) childView.getLayoutParams();
+                layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin + statusBarHeight, layoutParams.rightMargin, layoutParams.bottomMargin);
+                childView.setLayoutParams(layoutParams);
+                childView.setOnClickListener(this);
+            }
+        }
+
     }
 
     //初始化 ---- 状态栏
@@ -123,6 +141,8 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         rlContent = new RelativeLayout(context);
         //
+        rlContent.setId(R.id.rlContent);
+        //
         Drawable drawable = getBackground();
         if (drawable != null) {
             rlContent.setBackground(drawable);
@@ -131,8 +151,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         }
         //
         LayoutParams layoutParams = new LayoutParams(Get.getWindowWidth(context), (int) contentHeight);
-        int id = statusBar.getId();
-        layoutParams.addRule(RelativeLayout.BELOW, id);
+        layoutParams.addRule(RelativeLayout.BELOW, statusBar.getId());
         rlContent.setLayoutParams(layoutParams);
 
     }
@@ -237,6 +256,8 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             callBack.onClickMenu();
         } else if (tvMenu != null && view.getId() == tvMenu.getId() && callBack != null) {
             callBack.onClickMenu();
+        } else {
+            callBack.onClickOtherView(view);
         }
     }
 
