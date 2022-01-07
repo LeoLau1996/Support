@@ -205,6 +205,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         } else if (titleGravity == 0x02) {
             layoutParams.addRule(RelativeLayout.RIGHT_OF, ivBack.getId());
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+            tvTitle.setPadding((int) typedArray.getDimension(R.styleable.TitleBar_titlePadding, 0), tvTitle.getPaddingTop(), tvTitle.getPaddingRight(), tvTitle.getPaddingBottom());
         }
         tvTitle.setLayoutParams(layoutParams);
         //
