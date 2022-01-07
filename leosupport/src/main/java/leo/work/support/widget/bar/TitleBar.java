@@ -3,6 +3,7 @@ package leo.work.support.widget.bar;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -99,9 +100,11 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
     }
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-        LogUtil.e("liu0107", "onLayout");
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        final int count = getChildCount();
+        LogUtil.e("liu0107", "onLayout    count = " + count);
     }
 
     //初始化 ---- 状态栏
@@ -120,7 +123,12 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
         //
         rlContent = new RelativeLayout(context);
         //
-        rlContent.setBackgroundColor(context.getResources().getColor(R.color.bule));
+        Drawable drawable = getBackground();
+        if (drawable != null) {
+            rlContent.setBackground(drawable);
+        } else {
+            rlContent.setBackgroundResource(TitleBarDefaultInfo.getTitleBarDefaultInfo().getContentBackground());
+        }
         //
         rlContent.setLayoutParams(new LayoutParams(Get.getWindowWidth(context), (int) contentHeight, 1));
     }
