@@ -33,7 +33,7 @@ import leo.work.support.util.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class TitleBar extends LinearLayout implements View.OnClickListener {
+public class TitleBar extends RelativeLayout implements View.OnClickListener {
 
     //状态栏
     private View statusBar;
@@ -57,8 +57,6 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
         paddingLeft = getPaddingLeft();
         paddingRight = getPaddingRight();
         setPadding(0, getPaddingTop(), 0, getPaddingBottom());
-        //设置方向
-        setOrientation(LinearLayout.VERTICAL);
         //获取属性
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TitleBar, 0, 0);
         //高度
@@ -111,10 +109,12 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
     private void initStatusBar(Context context, TypedArray typedArray) {
         //
         statusBar = new View(context);
+        statusBar.setId(R.id.statusBar);
         //
         statusBar.setBackgroundColor(typedArray.getColor(R.styleable.TitleBar_statusBarColor, TitleBarDefaultInfo.getTitleBarDefaultInfo().getStatusBarColor()));
         //
         statusBarHeight = typedArray.getBoolean(R.styleable.TitleBar_showStatusBar, true) ? Get.getStatusBarHeight(context) : 0;
+        //
         statusBar.setLayoutParams(new LayoutParams(Get.getWindowWidth(context), statusBarHeight));
     }
 
@@ -130,7 +130,11 @@ public class TitleBar extends LinearLayout implements View.OnClickListener {
             rlContent.setBackgroundResource(TitleBarDefaultInfo.getTitleBarDefaultInfo().getContentBackground());
         }
         //
-        rlContent.setLayoutParams(new LayoutParams(Get.getWindowWidth(context), (int) contentHeight, 1));
+        LayoutParams layoutParams = new LayoutParams(Get.getWindowWidth(context), (int) contentHeight);
+        int id = statusBar.getId();
+        layoutParams.addRule(RelativeLayout.BELOW, id);
+        rlContent.setLayoutParams(layoutParams);
+
     }
 
     //初始化 ---- 返回键
