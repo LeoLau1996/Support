@@ -30,6 +30,8 @@
         <attr name="statusBarColor" format="color" />
         <!--返回键：图片-->
         <attr name="backImage" format="reference" />
+        <!--返回键：图片大小-->
+        <attr name="backImageSize" format="dimension" />
         <!--标题：文本-->
         <attr name="title" format="string" />
         <!--标题：字体大小-->
@@ -47,6 +49,8 @@
         <attr name="titlePadding" format="dimension" />
         <!--图片菜单：图片-->
         <attr name="menuImage" format="reference" />
+        <!--文字菜单：图片大小-->
+        <attr name="menuImageSize" format="dimension" />
         <!--文字菜单：文本-->
         <attr name="menuText" format="string" />
         <!--文字菜单：字体大小-->

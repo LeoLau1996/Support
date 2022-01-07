@@ -133,7 +133,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         statusBar = new View(context);
         statusBar.setId(R.id.statusBar);
         //
-        statusBar.setBackgroundColor(typedArray.getColor(R.styleable.TitleBar_statusBarColor, TitleBarDefaultInfo.getTitleBarDefaultInfo().getStatusBarColor()));
+        statusBar.setBackgroundColor(typedArray.getColor(R.styleable.TitleBar_statusBarColor, context.getResources().getColor(TitleBarDefaultInfo.getTitleBarDefaultInfo().getStatusBarColor())));
         //
         statusBarHeight = typedArray.getBoolean(R.styleable.TitleBar_showStatusBar, true) ? Get.getStatusBarHeight(context) : 0;
         //
@@ -174,7 +174,8 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         ivBack.setImageResource(typedArray.getResourceId(R.styleable.TitleBar_backImage, TitleBarDefaultInfo.getTitleBarDefaultInfo().getBackImage()));
         //
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(A2BSupport.dp2px(16), A2BSupport.dp2px(16));
+        int backImageSize = (int) typedArray.getDimension(R.styleable.TitleBar_backImageSize, A2BSupport.dp2px(16));
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(backImageSize, backImageSize);
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
         ivBack.setLayoutParams(layoutParams);
         //
@@ -228,7 +229,8 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         int menuImage = typedArray.getResourceId(R.styleable.TitleBar_menuImage, 0);
         ivMenu.setImageResource(menuImage);
         //
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(menuImage != 0 ? A2BSupport.dp2px(16) : 0, menuImage != 0 ? A2BSupport.dp2px(16) : 0);
+        int menuImageSize = (int) typedArray.getDimension(R.styleable.TitleBar_menuImageSize, A2BSupport.dp2px(16));
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(menuImage == 0 ? 0 : menuImageSize, menuImage == 0 ? 0 : menuImageSize);
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         ivMenu.setLayoutParams(layoutParams);
