@@ -7,13 +7,7 @@
     <leo.work.support.widget.bar.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/red"
-        app:backImage="@drawable/ic_back_black"
-        app:menuText="123"
-        app:statusBarColor="@color/transp"
-        app:title="测试">
-
-    </leo.work.support.widget.bar.TitleBar>
+        app:title="测试" />
 
 
 </RelativeLayout>
