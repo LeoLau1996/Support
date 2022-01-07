@@ -3,4 +3,8 @@
     <item name="statusBar" type="id" />
     <item name="rlContent" type="id" />
     <item name="ivBack" type="id" />
+    <item name="tvTitle" type="id" />
+    <item name="tvMenu" type="id" />
+    <item name="ivMenu" type="id" />
+
 </resources>

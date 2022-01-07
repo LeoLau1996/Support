@@ -1,5 +1,6 @@
 package leo.work.support.widget.bar;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,8 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     private int statusBarHeight = 0;
     //内容高度
     private float contentHeight;
+    //标题位置
+    private int titleGravity;
     //回调
     private OnTitleBarCallBack callBack;
     private int paddingLeft, paddingRight;
@@ -179,6 +183,8 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     private void initTitle(Context context, TypedArray typedArray) {
         //
         tvTitle = new TextView(context);
+        //
+        tvTitle.setId(R.id.tvTitle);
         //标题
         tvTitle.setText(typedArray.getString(R.styleable.TitleBar_title));
         //
@@ -193,7 +199,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         tvTitle.setEllipsize(TextUtils.TruncateAt.valueOf("END"));
         //
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        int titleGravity = typedArray.getInt(R.styleable.TitleBar_titleGravity, 0x01);
+        titleGravity = typedArray.getInt(R.styleable.TitleBar_titleGravity, 0x01);
         if (titleGravity == 0x01) {
             layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         } else if (titleGravity == 0x02) {
@@ -202,6 +208,8 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         }
         tvTitle.setLayoutParams(layoutParams);
         //
+        tvTitle.setOnClickListener(this);
+        //
         rlContent.addView(tvTitle);
     }
 
@@ -209,6 +217,8 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     private void initIvMenu(Context context, TypedArray typedArray) {
         //
         ivMenu = new ImageView(context);
+        //
+        ivMenu.setId(R.id.ivMenu);
         //
         int menuImage = typedArray.getResourceId(R.styleable.TitleBar_menuImage, 0);
         ivMenu.setImageResource(menuImage);
@@ -230,6 +240,8 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     private void initTvMenu(Context context, TypedArray typedArray) {
         //
         tvMenu = new TextView(context);
+        //设置ID
+        tvMenu.setId(R.id.tvMenu);
         //标题
         String text = typedArray.getString(R.styleable.TitleBar_menuText);
         tvMenu.setText(text);
@@ -258,14 +270,39 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         if (view == null) {
             return;
         }
-        if (ivBack != null && view.getId() == ivBack.getId() && callBack != null) {
-            callBack.onClickBack();
-        } else if (ivMenu != null && view.getId() == ivMenu.getId() && callBack != null) {
-            callBack.onClickMenu();
-        } else if (tvMenu != null && view.getId() == tvMenu.getId() && callBack != null) {
-            callBack.onClickMenu();
+        if (view.getId() == R.id.ivBack) {
+            if (callBack != null) {
+                callBack.onClickBack();
+            } else if (getContext() instanceof Activity) {
+                ((Activity) getContext()).finish();
+            }
+        } else if (view.getId() == R.id.ivMenu) {
+            if (callBack != null) {
+                callBack.onClickMenu();
+            }
+        } else if (view.getId() == R.id.tvMenu) {
+            if (callBack != null) {
+                callBack.onClickMenu();
+            }
+        } else if (view.getId() == R.id.tvTitle) {
+            //返回
+            if (titleGravity == 0x02) {
+                if (callBack != null) {
+                    callBack.onClickBack();
+                } else {
+                    if (getContext() instanceof Activity) {
+                        ((Activity) getContext()).finish();
+                    }
+                }
+                return;
+            }
+            if (callBack != null) {
+                callBack.onClickOtherView(view);
+            }
         } else {
-            callBack.onClickOtherView(view);
+            if (callBack != null) {
+                callBack.onClickOtherView(view);
+            }
         }
     }
 
