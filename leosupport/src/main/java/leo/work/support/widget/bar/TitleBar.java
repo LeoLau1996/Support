@@ -161,6 +161,8 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         ivBack = new ImageView(context);
         //
+        ivBack.setId(R.id.ivBack);
+        //
         ivBack.setImageResource(typedArray.getResourceId(R.styleable.TitleBar_backImage, TitleBarDefaultInfo.getTitleBarDefaultInfo().getBackImage()));
         //
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(A2BSupport.dp2px(16), A2BSupport.dp2px(16));
@@ -182,7 +184,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         tvTitle.setTextColor(typedArray.getColor(R.styleable.TitleBar_titleColor, TitleBarDefaultInfo.getTitleBarDefaultInfo().getTitleColor()));
         //
-        tvTitle.setTextSize(typedArray.getDimension(R.styleable.TitleBar_titleSize, 16));
+        tvTitle.setTextSize(typedArray.getDimension(R.styleable.TitleBar_titleSize, 18));
         //
         tvTitle.setGravity(Gravity.CENTER);
         //
@@ -191,7 +193,13 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         tvTitle.setEllipsize(TextUtils.TruncateAt.valueOf("END"));
         //
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        int titleGravity = typedArray.getInt(R.styleable.TitleBar_titleGravity, 0x01);
+        if (titleGravity == 0x01) {
+            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        } else if (titleGravity == 0x02) {
+            layoutParams.addRule(RelativeLayout.RIGHT_OF, ivBack.getId());
+            layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        }
         tvTitle.setLayoutParams(layoutParams);
         //
         rlContent.addView(tvTitle);

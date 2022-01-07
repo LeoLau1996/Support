@@ -2,4 +2,5 @@
 <resources>
     <item name="statusBar" type="id" />
     <item name="rlContent" type="id" />
+    <item name="ivBack" type="id" />
 </resources>
