@@ -12,25 +12,38 @@
         <attr name="maxHeight" format="dimension" />
     </declare-styleable>
 
-    <declare-styleable name="TopBar">
-        <attr name="heightDP" format="dimension" />
+<!--    <declare-styleable name="TopBar">-->
+<!--        <attr name="backPaddingDP" format="dimension" />-->
+
+<!--        &lt;!&ndash;文字菜单&ndash;&gt;-->
+<!--        <attr name="menuTextPaddingDP" format="dimension" />-->
+<!--        &lt;!&ndash;图片菜单&ndash;&gt;-->
+<!--        <attr name="menuImagePaddingDP" format="dimension" />-->
+<!--    </declare-styleable>-->
+
+    <declare-styleable name="TitleBar">
+        <!--内容高度-->
+        <attr name="contentHeight" format="dimension" />
+        <!--状态栏：是否显示-->
         <attr name="showStatusBar" format="boolean" />
+        <!--状态栏：颜色-->
         <attr name="statusBarColor" format="color" />
-        <!--返回键-->
+        <!--返回键：图片-->
         <attr name="backImage" format="reference" />
-        <attr name="backPaddingDP" format="dimension" />
-        <!--标题-->
-        <attr name="titleText" format="string" />
+        <!--标题：文本-->
+        <attr name="title" format="string" />
+        <!--标题：字体大小-->
         <attr name="titleSize" format="dimension" />
+        <!--标题：字体颜色-->
         <attr name="titleColor" format="color" />
-        <!--文字菜单-->
-        <attr name="menuTextPaddingDP" format="dimension" />
-        <attr name="menuText" format="string" />
-        <attr name="menuTextSize" format="dimension" />
-        <attr name="menuTextColor" format="color" />
-        <!--图片菜单-->
+        <!--图片菜单：图片-->
         <attr name="menuImage" format="reference" />
-        <attr name="menuImagePaddingDP" format="dimension" />
+        <!--文字菜单：文本-->
+        <attr name="menuText" format="string" />
+        <!--文字菜单：字体大小-->
+        <attr name="menuTextSize" format="dimension" />
+        <!--文字菜单：字体颜色-->
+        <attr name="menuTextColor" format="color" />
     </declare-styleable>
 
 </resources>

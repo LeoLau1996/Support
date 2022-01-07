@@ -138,12 +138,10 @@ public class Get extends BaseUtil {
         return currentProcName;
     }
 
-    public static int getStatusBarHeight(Activity activity) {
-        Resources resources = activity.getResources();
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        int height = resources.getDimensionPixelSize(resourceId);
-        Log.d("msg", "Status height:" + height);
-        return height;
+        return resources.getDimensionPixelSize(resourceId);
     }
 
     /**
@@ -257,17 +255,15 @@ public class Get extends BaseUtil {
     }
 
     //获取屏幕宽度
-    public static int getWindowWidth(Activity activity) {
-        DisplayMetrics dm = activity.getResources().getDisplayMetrics();
-        int i = dm.widthPixels;
-        return i;
+    public static int getWindowWidth(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return displayMetrics.widthPixels;
     }
 
     //获取屏幕高度
-    public static int getWindowHeight(Activity activity) {
-        DisplayMetrics dm = activity.getResources().getDisplayMetrics();
-        int i = dm.heightPixels;
-        return i;
+    public static int getWindowHeight(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return displayMetrics.heightPixels;
     }
 
     /**
