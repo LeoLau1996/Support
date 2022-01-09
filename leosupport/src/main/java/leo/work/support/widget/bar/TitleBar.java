@@ -110,18 +110,21 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         super.onLayout(changed, left, top, right, bottom);
         for (int i = 0, roomViewCount = getChildCount(); i < roomViewCount; i++) {
             View childView = getChildAt(i);
+            //状态栏
             if (childView.getId() == R.id.statusBar) {
 
-            } else if (childView.getId() == R.id.rlContent) {
+            }
+            //内容栏
+            else if (childView.getId() == R.id.rlContent) {
                 RelativeLayout rlContent = (RelativeLayout) childView;
                 for (int index = 0, childCount = rlContent.getChildCount(); roomViewCount > 2 && index < childCount; index++) {
                     rlContent.getChildAt(index).setVisibility(GONE);
                 }
-            } else {
-                LayoutParams layoutParams = (LayoutParams) childView.getLayoutParams();
-                layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin + statusBarHeight, layoutParams.rightMargin, layoutParams.bottomMargin);
-                childView.setLayoutParams(layoutParams);
-                childView.setOnClickListener(this);
+            }
+            //其他子View
+            else {
+                removeView(childView);
+                rlContent.addView(childView);
             }
         }
 
