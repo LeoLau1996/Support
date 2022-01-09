@@ -21,7 +21,8 @@ public class MyApp extends BaseApplication {
 
     @Override
     protected void init() {
-        TitleBarDefaultInfo.setTitleBarDefaultInfo(new TitleBarDefaultInfo(A2BSupport.dp2px(14), R.drawable.ic_back_black, R.color.black, R.color.bule, A2BSupport.dp2px(50), R.color.red));
+        TitleBarDefaultInfo.setTitleBarDefaultInfo(new TitleBarDefaultInfo(A2BSupport.dp2px(14), R.mipmap.ic_back, R.color.white, R.color.color_01c4b6, A2BSupport.dp2px(44), R.color.color_01c4b6));
+
     }
 
 }
