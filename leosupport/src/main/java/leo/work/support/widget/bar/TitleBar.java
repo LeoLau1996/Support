@@ -7,26 +7,18 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import leo.work.support.R;
 import leo.work.support.util.A2BSupport;
 import leo.work.support.util.Get;
 import leo.work.support.util.Is;
-import leo.work.support.util.LogUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -111,11 +103,11 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         for (int i = 0, roomViewCount = getChildCount(); i < roomViewCount; i++) {
             View childView = getChildAt(i);
             //状态栏
-            if (childView.getId() == R.id.statusBar) {
+            if (childView.getId() == R.id.titleBarStatusBar) {
 
             }
             //内容栏
-            else if (childView.getId() == R.id.rlContent) {
+            else if (childView.getId() == R.id.rlTitleBarContent) {
                 RelativeLayout rlContent = (RelativeLayout) childView;
                 for (int index = 0, childCount = rlContent.getChildCount(); roomViewCount > 2 && index < childCount; index++) {
                     rlContent.getChildAt(index).setVisibility(GONE);
@@ -134,7 +126,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     private void initStatusBar(Context context, TypedArray typedArray) {
         //
         statusBar = new View(context);
-        statusBar.setId(R.id.statusBar);
+        statusBar.setId(R.id.titleBarStatusBar);
         //
         statusBar.setBackgroundColor(typedArray.getColor(R.styleable.TitleBar_statusBarColor, context.getResources().getColor(TitleBarDefaultInfo.getTitleBarDefaultInfo().getStatusBarColor())));
         //
@@ -148,7 +140,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         rlContent = new RelativeLayout(context);
         //
-        rlContent.setId(R.id.rlContent);
+        rlContent.setId(R.id.rlTitleBarContent);
         //
         Drawable drawable = getBackground();
         if (drawable != null) {
@@ -173,7 +165,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         ivBack = new ImageView(context);
         //
-        ivBack.setId(R.id.ivBack);
+        ivBack.setId(R.id.ivTitleBarBack);
         //
         ivBack.setImageResource(typedArray.getResourceId(R.styleable.TitleBar_backImage, TitleBarDefaultInfo.getTitleBarDefaultInfo().getBackImage()));
         //
@@ -192,7 +184,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         tvTitle = new TextView(context);
         //
-        tvTitle.setId(R.id.tvTitle);
+        tvTitle.setId(R.id.tvTitleBarTitle);
         //标题
         tvTitle.setText(typedArray.getString(R.styleable.TitleBar_title));
         //
@@ -227,7 +219,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         ivMenu = new ImageView(context);
         //
-        ivMenu.setId(R.id.ivMenu);
+        ivMenu.setId(R.id.ivTitleBarMenu);
         //
         int menuImage = typedArray.getResourceId(R.styleable.TitleBar_menuImage, 0);
         ivMenu.setImageResource(menuImage);
@@ -250,7 +242,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         tvMenu = new TextView(context);
         //设置ID
-        tvMenu.setId(R.id.tvMenu);
+        tvMenu.setId(R.id.tvTitleBarMenu);
         //标题
         String text = typedArray.getString(R.styleable.TitleBar_menuText);
         tvMenu.setText(text);
@@ -279,21 +271,21 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         if (view == null) {
             return;
         }
-        if (view.getId() == R.id.ivBack) {
+        if (view.getId() == R.id.ivTitleBarBack) {
             if (callBack != null) {
                 callBack.onClickBack();
             } else if (getContext() instanceof Activity) {
                 ((Activity) getContext()).finish();
             }
-        } else if (view.getId() == R.id.ivMenu) {
+        } else if (view.getId() == R.id.ivTitleBarMenu) {
             if (callBack != null) {
                 callBack.onClickMenu();
             }
-        } else if (view.getId() == R.id.tvMenu) {
+        } else if (view.getId() == R.id.tvTitleBarMenu) {
             if (callBack != null) {
                 callBack.onClickMenu();
             }
-        } else if (view.getId() == R.id.tvTitle) {
+        } else if (view.getId() == R.id.tvTitleBarTitle) {
             //返回
             if (titleGravity == 0x02) {
                 if (callBack != null) {
