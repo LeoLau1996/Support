@@ -1,5 +1,7 @@
 package leo.work.support.widget.bar;
 
+import static android.util.TypedValue.COMPLEX_UNIT_PX;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -190,7 +192,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //
         tvTitle.setTextColor(typedArray.getColor(R.styleable.TitleBar_titleColor, context.getResources().getColor(TitleBarDefaultInfo.getTitleBarDefaultInfo().getTitleColor())));
         //
-        tvTitle.setTextSize(typedArray.getDimension(R.styleable.TitleBar_titleSize, 18));
+        tvTitle.setTextSize(COMPLEX_UNIT_PX, typedArray.getDimension(R.styleable.TitleBar_titleSize, A2BSupport.sp2px(18)));
         //
         tvTitle.setGravity(Gravity.CENTER);
         //
