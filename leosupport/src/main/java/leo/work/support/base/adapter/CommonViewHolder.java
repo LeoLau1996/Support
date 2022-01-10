@@ -5,6 +5,8 @@ import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
 
+import java.util.List;
+
 /**
  * ---------------------------------------------------------------------------------------------
  * 功能描述: 通用的ViewHolder
@@ -20,6 +22,7 @@ public abstract class CommonViewHolder<M, B extends ViewDataBinding, C> {
 
     public B binding;
     public C callBack;
+    public List<M> mList;
     public Context context;
 
     public CommonViewHolder(Context context, B binding, C callBack) {
@@ -28,7 +31,15 @@ public abstract class CommonViewHolder<M, B extends ViewDataBinding, C> {
         this.callBack = callBack;
     }
 
-    protected abstract void initView( final int position, final M bean);
+    protected abstract void initView(final int position, final M bean);
 
-    protected abstract void initListener( final int position, final M bean);
+    protected abstract void initListener(final int position, final M bean);
+
+    public List<M> getList() {
+        return mList;
+    }
+
+    public void setList(List<M> mList) {
+        this.mList = mList;
+    }
 }

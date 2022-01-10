@@ -5,6 +5,8 @@ import android.content.Context;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 /**
  * ---------------------------------------------------------------------------------------------
  * 功能描述:
@@ -20,6 +22,7 @@ public abstract class CommonRecyclerViewHolder<M, B extends ViewDataBinding, C> 
 
     public B binding;
     public C callBack;
+    public List<M> mList;
     public Context context;
 
     public CommonRecyclerViewHolder(Context context, B binding, C callBack) {
@@ -32,4 +35,12 @@ public abstract class CommonRecyclerViewHolder<M, B extends ViewDataBinding, C> 
     protected abstract void initView(int position, M model);
 
     protected abstract void initListener(int position, M model);
+
+    public List<M> getList() {
+        return mList;
+    }
+
+    public void setList(List<M> mList) {
+        this.mList = mList;
+    }
 }
