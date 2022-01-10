@@ -188,7 +188,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         //标题
         tvTitle.setText(typedArray.getString(R.styleable.TitleBar_title));
         //
-        tvTitle.setTextColor(typedArray.getColor(R.styleable.TitleBar_titleColor, TitleBarDefaultInfo.getTitleBarDefaultInfo().getTitleColor()));
+        tvTitle.setTextColor(typedArray.getColor(R.styleable.TitleBar_titleColor, context.getResources().getColor(TitleBarDefaultInfo.getTitleBarDefaultInfo().getTitleColor())));
         //
         tvTitle.setTextSize(typedArray.getDimension(R.styleable.TitleBar_titleSize, 18));
         //
