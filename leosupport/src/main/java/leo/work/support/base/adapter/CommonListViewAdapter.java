@@ -62,8 +62,8 @@ public abstract class CommonListViewAdapter<M, H extends CommonViewHolder, B ext
     public View getView(int position, View convertView, ViewGroup parent) {
         H viewHolder;
         if (convertView == null) {
-            int layout = setLayout();
-            B binding = DataBindingUtil.inflate(layoutInflater, layout, parent, false);
+            B binding = DataBindingUtil.inflate(layoutInflater, setLayout(), parent, false);
+            convertView = binding.getRoot();
             viewHolder = setViewHolder(binding, callBack);
             convertView.setTag(viewHolder);
         } else {
