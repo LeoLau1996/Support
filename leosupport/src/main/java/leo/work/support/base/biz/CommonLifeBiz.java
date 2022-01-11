@@ -2,6 +2,7 @@ package leo.work.support.base.biz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 import leo.work.support.base.LifeControlInterface;
 
@@ -18,7 +19,7 @@ import leo.work.support.base.LifeControlInterface;
  **/
 public class CommonLifeBiz {
 
-    private LifeControlInterface lifeControlInterface;
+    public LifeControlInterface lifeControlInterface;
 
     public CommonLifeBiz(LifeControlInterface lifeControlInterface) {
         this.lifeControlInterface = lifeControlInterface;
@@ -74,4 +75,7 @@ public class CommonLifeBiz {
 
     }
 
+    public void dispatchTouchEvent(MotionEvent event) {
+
+    }
 }

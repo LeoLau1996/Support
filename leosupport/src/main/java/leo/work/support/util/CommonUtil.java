@@ -54,12 +54,17 @@ public class CommonUtil {
         if (view == null) {
             return;
         }
+        hideKeyboard(activity, view);
+    }
+
+    //隐藏虚拟键盘
+    public static void hideKeyboard(Activity activity, View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     //隐藏虚拟键盘(只适用于Dialog)
-    public static void hideKeyboard(Dialog dialog){
+    public static void hideKeyboard(Dialog dialog) {
         View view = dialog.getCurrentFocus();
         if (view == null) {
             return;

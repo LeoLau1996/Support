@@ -11,6 +11,9 @@ import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
 
 import java.io.File;
 import java.io.IOException;
@@ -199,4 +202,19 @@ public class Is extends BaseUtil {
         return Pattern.matches(regular, url);
     }
 
+    //
+    public static boolean isShouldHideInput(View view, MotionEvent event) {
+        if (view != null && (view instanceof EditText)) {
+            int[] leftTop = {0, 0};
+            view.getLocationInWindow(leftTop);
+            int left = leftTop[0], top = leftTop[1], bottom = top + view.getHeight(), right = left + view.getWidth();
+            if (event.getX() > left && event.getX() < right && event.getY() > top && event.getY() < bottom) {
+                //保留点击EditText的事件
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
 }

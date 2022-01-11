@@ -2,6 +2,7 @@ package leo.work.support.base.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import leo.work.support.base.LifeControlInterface;
 import leo.work.support.base.biz.CommonLifeBiz;
+import leo.work.support.util.CommonUtil;
 
 
 public abstract class CommonActivity extends AppCompatActivity implements LifeControlInterface {
@@ -111,6 +113,14 @@ public abstract class CommonActivity extends AppCompatActivity implements LifeCo
         for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
             lifeBizList.get(i).onRestoreInstanceState(savedInstanceState);
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
+            lifeBizList.get(i).dispatchTouchEvent(event);
+        }
+        return super.dispatchTouchEvent(event);
     }
 
 }
