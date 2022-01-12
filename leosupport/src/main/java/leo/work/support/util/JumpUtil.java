@@ -161,7 +161,7 @@ public class JumpUtil {
      */
     @SuppressLint("MissingPermission")
     public static void callPhone(Activity activity, String phoneNum, int slotId) {
-        if (!PermissionsUtil.hasPermissions(activity, Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE)) {
+        if (!PermissionsUtil.hasPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE)) {
             callPhone(activity, phoneNum);
             return;
         }
@@ -190,7 +190,7 @@ public class JumpUtil {
 
     //拨打电话（直接拨打电话）
     public static void callPhone(Activity activity, String phoneNum) {
-        if (!PermissionsUtil.hasPermissions(activity, Manifest.permission.CALL_PHONE)) {
+        if (!PermissionsUtil.hasPermissions( Manifest.permission.CALL_PHONE)) {
             return;
         }
         Intent intent = new Intent(Intent.ACTION_CALL);

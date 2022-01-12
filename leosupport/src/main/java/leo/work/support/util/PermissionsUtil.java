@@ -1,12 +1,8 @@
 package leo.work.support.util;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.provider.Settings;
+
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
@@ -19,12 +15,12 @@ import androidx.core.content.ContextCompat;
  * Created by Best100_Android on 17/11/14.
  */
 
-public class PermissionsUtil {
+public class PermissionsUtil extends BaseUtil {
 
     //判断权限集合
-    public static boolean hasPermissions(Context context, String... permissions) {
+    public static boolean hasPermissions(String... permissions) {
         for (String permission : permissions) {
-            if (!hasPermission(context, permission)) {
+            if (!hasPermission(permission)) {
                 return false;
             }
         }
@@ -32,8 +28,8 @@ public class PermissionsUtil {
     }
 
     //判断是否拥有某一权限
-    private static boolean hasPermission(Context context, String permission) {
-        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+    private static boolean hasPermission(String permission) {
+        return ContextCompat.checkSelfPermission(getContext(), permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     //请求权限（兼容低版本）
