@@ -94,6 +94,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             //match_parent
             case MeasureSpec.EXACTLY:
             default: {
+                contentHeight = MeasureSpec.getSize(heightMeasureSpec);
                 break;
             }
         }
@@ -151,7 +152,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             rlContent.setBackgroundResource(TitleBarDefaultInfo.getTitleBarDefaultInfo().getContentBackground());
         }
         //
-        LayoutParams layoutParams = new LayoutParams(Get.getWindowWidth(context), (int) contentHeight);
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         layoutParams.addRule(RelativeLayout.BELOW, statusBar.getId());
         rlContent.setPadding(
                 paddingLeft == 0 ? TitleBarDefaultInfo.getTitleBarDefaultInfo().getDefaultPadding() : paddingLeft,
