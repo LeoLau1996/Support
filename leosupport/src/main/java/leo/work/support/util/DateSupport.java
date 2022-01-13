@@ -104,17 +104,35 @@ public class DateSupport {
 
     //获取当前年份
     public static int getYear() {
-        return Calendar.getInstance().get(Calendar.YEAR);
+        return getYear(System.currentTimeMillis());
+    }
+
+    public static int getYear(long timestamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
+        return calendar.get(Calendar.YEAR);
     }
 
     //获取当前月份
     public static int getMonth() {
-        return Calendar.getInstance().get(Calendar.MONTH) + 1;
+        return getMonth(System.currentTimeMillis());
+    }
+
+    public static int getMonth(long timestamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
+        return calendar.get(Calendar.MONTH) + 1;
     }
 
     //获取当前几号
     public static int getDay() {
-        return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        return getDay(System.currentTimeMillis());
+    }
+
+    public static int getDay(long timestamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
+        return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
     //增加月数
@@ -182,7 +200,7 @@ public class DateSupport {
     public static int getDaysOfMonth(int year, int month) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);//指定年份
-        calendar.set(Calendar.MONTH, month -1);//指定月份 Java月份从0开始算
+        calendar.set(Calendar.MONTH, month - 1);//指定月份 Java月份从0开始算
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
