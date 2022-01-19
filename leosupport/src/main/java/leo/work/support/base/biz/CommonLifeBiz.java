@@ -1,8 +1,12 @@
 package leo.work.support.base.biz;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
+
+import androidx.fragment.app.Fragment;
 
 import leo.work.support.base.LifeControlInterface;
 
@@ -78,4 +82,29 @@ public class CommonLifeBiz {
     public void dispatchTouchEvent(MotionEvent event) {
 
     }
+
+    //获取Context
+    private Context getContext() {
+        Context context = null;
+        if (lifeControlInterface instanceof Activity) {
+            context = (Context) lifeControlInterface;
+        } else if (lifeControlInterface instanceof Fragment) {
+            context = ((Fragment) lifeControlInterface).getContext();
+        } else {
+            throw new RuntimeException("lifeControlInterface 不是Activity,也不是Fragment");
+        }
+        return context;
+    }
+
+    //获取Activity
+    private Activity getActivity() {
+        Activity activity = null;
+        if (lifeControlInterface instanceof Activity) {
+            activity = (Activity) lifeControlInterface;
+        } else {
+            throw new RuntimeException("lifeControlInterface 不是Activity");
+        }
+        return activity;
+    }
+
 }
