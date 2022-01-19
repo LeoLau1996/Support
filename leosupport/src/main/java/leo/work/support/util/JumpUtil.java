@@ -217,4 +217,10 @@ public class JumpUtil {
         activity.startActivity(intent);
     }
 
+    //进入GPS开启页面
+    public static void openGpsSwitch(Activity activity,int requestCode){
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
 }

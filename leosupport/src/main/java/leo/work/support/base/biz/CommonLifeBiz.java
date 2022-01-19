@@ -84,7 +84,7 @@ public class CommonLifeBiz {
     }
 
     //获取Context
-    private Context getContext() {
+    public Context getContext() {
         Context context = null;
         if (lifeControlInterface instanceof Activity) {
             context = (Context) lifeControlInterface;
@@ -97,7 +97,7 @@ public class CommonLifeBiz {
     }
 
     //获取Activity
-    private Activity getActivity() {
+    public Activity getActivity() {
         Activity activity = null;
         if (lifeControlInterface instanceof Activity) {
             activity = (Activity) lifeControlInterface;
