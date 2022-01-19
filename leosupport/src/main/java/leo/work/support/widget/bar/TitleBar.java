@@ -21,6 +21,7 @@ import leo.work.support.R;
 import leo.work.support.util.A2BSupport;
 import leo.work.support.util.Get;
 import leo.work.support.util.Is;
+import leo.work.support.util.Set;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -52,10 +53,18 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     private int titleGravity;
     //回调
     private OnTitleBarCallBack callBack;
-    private int paddingLeft, paddingRight;
+    private final int paddingLeft, paddingRight;
+
+    public TitleBar(Context context) {
+        this(context, null);
+    }
 
     public TitleBar(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
+    }
+
+    public TitleBar(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         paddingLeft = getPaddingLeft();
         paddingRight = getPaddingRight();
         setPadding(0, getPaddingTop(), 0, getPaddingBottom());
@@ -88,13 +97,15 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         switch (MeasureSpec.getMode(heightMeasureSpec)) {
             //wrap_content
             case MeasureSpec.AT_MOST: {
-                setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), (int) (contentHeight + statusBarHeight));
+                int hight = (int) (contentHeight + statusBarHeight);
+                setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), hight);
                 break;
             }
             //match_parent
             case MeasureSpec.EXACTLY:
             default: {
                 contentHeight = MeasureSpec.getSize(heightMeasureSpec);
+                Set.setParams(rlContent,Get.getWindowWidth(getContext()), (int) contentHeight);
                 break;
             }
         }
@@ -105,6 +116,9 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         super.onLayout(changed, left, top, right, bottom);
         for (int i = 0, roomViewCount = getChildCount(); i < roomViewCount; i++) {
             View childView = getChildAt(i);
+            if (childView == null) {
+                break;
+            }
             //状态栏
             if (childView.getId() == R.id.titleBarStatusBar) {
 
@@ -152,7 +166,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             rlContent.setBackgroundResource(TitleBarDefaultInfo.getTitleBarDefaultInfo().getContentBackground());
         }
         //
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        LayoutParams layoutParams = new LayoutParams(Get.getWindowWidth(context), (int) contentHeight);
         layoutParams.addRule(RelativeLayout.BELOW, statusBar.getId());
         rlContent.setPadding(
                 paddingLeft == 0 ? TitleBarDefaultInfo.getTitleBarDefaultInfo().getDefaultPadding() : paddingLeft,
