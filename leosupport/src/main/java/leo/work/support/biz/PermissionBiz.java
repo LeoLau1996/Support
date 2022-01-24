@@ -36,6 +36,11 @@ public class PermissionBiz extends CommonLifeBiz {
         super(lifeControlInterface);
     }
 
+    //是否存在某些权限
+    public boolean hasPermissions(String[] permissions) {
+        return PermissionsUtil.hasPermissions(permissions);
+    }
+
     //检查权限
     public void checkPermission(String[] permissions, int requestCode, OnPermissionBizCallBack callBack) {
         //只接受Activity、Fragment
@@ -43,7 +48,7 @@ public class PermissionBiz extends CommonLifeBiz {
             return;
         }
         //如果没有权限
-        if (!PermissionsUtil.hasPermissions(permissions)) {
+        if (!hasPermissions(permissions)) {
             addCallBack(requestCode, callBack);
             //获取权限
             if (lifeControlInterface instanceof Activity) {
@@ -53,7 +58,7 @@ public class PermissionBiz extends CommonLifeBiz {
             }
             return;
         }
-        callBack.onPermissionSuccess(permissions);
+        callBack.onPermissionSuccess(requestCode, permissions);
     }
 
     //
@@ -68,7 +73,7 @@ public class PermissionBiz extends CommonLifeBiz {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (callBackMap == null || !callBackMap.containsKey(requestCode)) {
+        if (callBackMap == null) {
             return;
         }
         OnPermissionBizCallBack callBack = callBackMap.get(requestCode);
@@ -91,18 +96,18 @@ public class PermissionBiz extends CommonLifeBiz {
         }
 
         if (success) {
-            callBack.onPermissionSuccess(successPermissionList.toArray(new String[0]));
+            callBack.onPermissionSuccess(requestCode, successPermissionList.toArray(new String[0]));
         } else {
-            callBack.onPermissionFail(successPermissionList.toArray(new String[0]), failPermissionList.toArray(new String[0]));
+            callBack.onPermissionFail(requestCode, successPermissionList.toArray(new String[0]), failPermissionList.toArray(new String[0]));
         }
         callBackMap.remove(requestCode);
     }
 
     public interface OnPermissionBizCallBack {
 
-        void onPermissionSuccess(String[] permissions);
+        void onPermissionSuccess(int requestCode, String[] permissions);
 
-        void onPermissionFail(String[] successPermissions, String[] failPermissions);
+        void onPermissionFail(int requestCode, String[] successPermissions, String[] failPermissions);
     }
 
 
