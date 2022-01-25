@@ -16,13 +16,13 @@ import leo.work.support.util.JumpUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------
- * 功能描述:
+ * 功能描述: 跳转到某个页面并带回参数业务
  * ---------------------------------------------------------------------------------------------
  * 时　　间: 2022/1/25
  * ---------------------------------------------------------------------------------------------
  * 代码创建: 1613-3
  * ---------------------------------------------------------------------------------------------
- * 代码备注:
+ * 代码备注: 更优雅跳转与返回数据
  * ---------------------------------------------------------------------------------------------
  **/
 public class JumpBiz extends CommonLifeBiz {
@@ -33,12 +33,14 @@ public class JumpBiz extends CommonLifeBiz {
         super(lifeControlInterface);
     }
 
-    public void jump(Activity activity, Class<?> mClass, Bundle bundle, int requestCode, OnJumpBizCallBack callBack) {
+    //Activity跳转
+    public void jumpForResult(Activity activity, Class<?> mClass, Bundle bundle, int requestCode, OnJumpBizCallBack callBack) {
         addCallBack(requestCode, callBack);
         JumpUtil.go(activity, mClass, bundle, requestCode);
     }
 
-    public void jump(Fragment fragment, Class<?> mClass, Bundle bundle, int requestCode, OnJumpBizCallBack callBack) {
+    //Fragment跳转
+    public void jumpForResult(Fragment fragment, Class<?> mClass, Bundle bundle, int requestCode, OnJumpBizCallBack callBack) {
         addCallBack(requestCode, callBack);
         JumpFromFragmentUtil.go(fragment, mClass, bundle, requestCode);
     }
