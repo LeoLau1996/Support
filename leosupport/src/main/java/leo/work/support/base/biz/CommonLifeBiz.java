@@ -85,7 +85,7 @@ public class CommonLifeBiz {
 
     //获取Context
     public Context getContext() {
-        Context context = null;
+        Context context;
         if (lifeControlInterface instanceof Activity) {
             context = (Context) lifeControlInterface;
         } else if (lifeControlInterface instanceof Fragment) {
@@ -98,7 +98,7 @@ public class CommonLifeBiz {
 
     //获取Activity
     public Activity getActivity() {
-        Activity activity = null;
+        Activity activity;
         if (lifeControlInterface instanceof Activity) {
             activity = (Activity) lifeControlInterface;
         } else {
