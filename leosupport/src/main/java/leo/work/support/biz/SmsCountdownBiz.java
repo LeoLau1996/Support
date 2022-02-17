@@ -27,7 +27,7 @@ import leo.work.support.base.biz.CommonLifeBiz;
 public class SmsCountdownBiz extends CommonLifeBiz implements Handler.Callback {
 
     //总时长
-    private final int totalDuration;
+    private int totalDuration;
     //当前时长
     private int currentDuration;
     //倒计时
@@ -45,6 +45,11 @@ public class SmsCountdownBiz extends CommonLifeBiz implements Handler.Callback {
         this.totalDuration = totalDuration;
         this.callBack = callBack;
         sendMessageToHandler(2, null);
+    }
+
+    //设置倒计时长
+    public void setTotalDuration(int totalDuration) {
+        this.totalDuration = totalDuration;
     }
 
     //请求服务器
