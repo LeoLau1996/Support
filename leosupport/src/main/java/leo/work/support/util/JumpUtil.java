@@ -200,11 +200,11 @@ public class JumpUtil {
     }
 
     //打开网页
-    public static void openURL(Activity activity, String url) {
+    public static void openURL(Activity activity, String url, String chooserTitle) {
         try {
             Uri uri = Uri.parse(url);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            activity.startActivity(intent);
+            activity.startActivity(Intent.createChooser(intent, chooserTitle));
         } catch (Exception e) {
 
         }
