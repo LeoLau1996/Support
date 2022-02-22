@@ -36,6 +36,8 @@ public class SmsCountdownBiz extends CommonLifeBiz implements Handler.Callback {
     private final OnSmsCountdownBizCallBack callBack;
     //点击发送短信的按钮
     private final View view;
+    //View
+    private boolean viewClickable;
     //
     private Handler handler;
 
@@ -67,6 +69,10 @@ public class SmsCountdownBiz extends CommonLifeBiz implements Handler.Callback {
             return;
         }
         startCountdown();
+    }
+
+    public boolean isViewClickable() {
+        return viewClickable;
     }
 
     //开始倒计时
@@ -129,8 +135,9 @@ public class SmsCountdownBiz extends CommonLifeBiz implements Handler.Callback {
                 break;
             }
             case 3: {
+                viewClickable = (Boolean) message.obj;
                 if (view != null) {
-                    view.setClickable((Boolean) message.obj);
+                    view.setClickable(viewClickable);
                 }
                 break;
             }
