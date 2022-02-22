@@ -44,6 +44,7 @@ public class SmsCountdownBiz extends CommonLifeBiz implements Handler.Callback {
     public SmsCountdownBiz(LifeControlInterface lifeControlInterface, View view, int totalDuration, OnSmsCountdownBizCallBack callBack) {
         super(lifeControlInterface);
         this.view = view;
+        this.viewClickable = this.view != null ? this.view.isClickable() : true;
         this.totalDuration = totalDuration;
         this.callBack = callBack;
         sendMessageToHandler(2, null);
