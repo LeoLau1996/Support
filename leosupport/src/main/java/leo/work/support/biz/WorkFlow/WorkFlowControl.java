@@ -78,33 +78,23 @@ public class WorkFlowControl {
 
     // 获取下一个任务
     private WorkFlowTask getWorkFlowTask() {
-        if (workFlowTaskList == null || workFlowTaskList.isEmpty()) {
+        if (workFlowTaskList == null || workFlowTaskIndex >= workFlowTaskList.size()) {
             return null;
         }
-        WorkFlowTask task = workFlowTaskList.get(0);
-        workFlowTaskList.remove(0);
+        WorkFlowTask task = workFlowTaskList.get(workFlowTaskIndex);
+        workFlowTaskIndex++;
         return task;
     }
 
     // 获取指定Id的任务
     private WorkFlowTask getWorkFlowTaskById(long id) {
-        if (workFlowTaskList == null || workFlowTaskList.isEmpty()) {
+        if (workFlowTaskList == null) {
             return null;
         }
-        Iterator<WorkFlowTask> iterator = workFlowTaskList.iterator();
-        while (iterator.hasNext()) {
-            WorkFlowTask task = iterator.next();
-            iterator.remove();
-            if (task.getTaskId() == id) {
-                return task;
-            }
-        }
-
         for (int i = 0; i < workFlowTaskList.size(); i++) {
-            WorkFlowTask task = workFlowTaskList.get(i);
-            if (task.getTaskId() == id) {
-                workFlowTaskList.remove(i);
-                return task;
+            if (workFlowTaskList.get(i).getTaskId() == id) {
+                workFlowTaskIndex = i + 1;
+                return workFlowTaskList.get(i);
             }
         }
         return null;
