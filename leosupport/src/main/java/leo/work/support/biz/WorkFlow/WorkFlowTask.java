@@ -13,7 +13,10 @@ package leo.work.support.biz.WorkFlow;
  **/
 public abstract class WorkFlowTask {
 
+    // 任务Id
     private long taskId;
+    // 拓展字段，你可以用来保存数据
+    private Object data;
 
     public WorkFlowTask() {
         this(System.currentTimeMillis());
@@ -23,7 +26,7 @@ public abstract class WorkFlowTask {
         this.taskId = taskId;
     }
 
-    public abstract void doTask(WorkFlowControl control);
+    public abstract void doTask(WorkFlowTask lastWorkFlowTask, WorkFlowControl control);
 
     public long getTaskId() {
         return taskId;
@@ -31,5 +34,13 @@ public abstract class WorkFlowTask {
 
     public void setTaskId(long taskId) {
         this.taskId = taskId;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 }

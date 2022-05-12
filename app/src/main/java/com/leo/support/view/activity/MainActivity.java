@@ -22,28 +22,23 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         new CommonWorkFlowBiz(control -> {
-            Log.d("liu0512", "beforeToDo: 1");
             control.doNextTask();
         }).addWorkFlowTask(new WorkFlowTask(1) {
             @Override
-            public void doTask(WorkFlowControl control) {
-                Log.d("liu0512", "WorkFlowControl: 1");
-                control.doNextTask();
+            public void doTask(WorkFlowTask lastWorkFlowTask, WorkFlowControl control) {
+                control.doTaskById(3);
             }
         }).addWorkFlowTask(new WorkFlowTask(2) {
             @Override
-            public void doTask(WorkFlowControl control) {
-                Log.d("liu0512", "WorkFlowControl: 2");
+            public void doTask(WorkFlowTask lastWorkFlowTask, WorkFlowControl control) {
                 control.doNextTask();
             }
         }).addWorkFlowTask(new WorkFlowTask(3) {
             @Override
-            public void doTask(WorkFlowControl control) {
-                Log.d("liu0512", "WorkFlowControl: 3");
+            public void doTask(WorkFlowTask lastWorkFlowTask, WorkFlowControl control) {
                 control.doNextTask();
             }
         }).startTask(() -> {
-            Log.d("liu0512", "endToDo: 1");
         });
     }
 
