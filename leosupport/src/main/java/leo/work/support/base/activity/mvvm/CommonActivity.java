@@ -23,14 +23,16 @@ import leo.work.support.util.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonMVVMActivity<T extends ViewDataBinding> extends CommonAbstractActivity {
+public abstract class CommonActivity<T extends ViewDataBinding> extends CommonAbstractActivity {
 
     //Activity
-    public CommonMVVMActivity activity;
+    public CommonActivity activity;
     //ViewDataBinding
     public T binding;
     //当前页面是否在前台
     public boolean hasFront = false;
+    //
+    private Configuration config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +109,9 @@ public abstract class CommonMVVMActivity<T extends ViewDataBinding> extends Comm
     @Override
     public Resources getResources() {
         Resources resources = super.getResources();
-        Configuration config = new Configuration();
+        if (config == null) {
+            config = new Configuration();
+        }
         config.setToDefaults();
         resources.updateConfiguration(config, resources.getDisplayMetrics());
         return resources;
