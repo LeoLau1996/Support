@@ -80,6 +80,10 @@ public abstract class CommonActivity extends AppCompatActivity implements LifeCo
         for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
             lifeBizList.get(i).onDestroy();
         }
+        if (lifeBizList != null) {
+            lifeBizList.clear();
+        }
+        lifeBizList = null;
     }
 
     @Override
