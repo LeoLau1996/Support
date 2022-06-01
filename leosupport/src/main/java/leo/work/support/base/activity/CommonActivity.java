@@ -1,4 +1,4 @@
-package leo.work.support.base.activity.mvvm;
+package leo.work.support.base.activity;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -9,7 +9,6 @@ import androidx.databinding.ViewDataBinding;
 
 import android.os.Bundle;
 
-import leo.work.support.base.activity.CommonAbstractActivity;
 import leo.work.support.util.LogUtil;
 
 /**
