@@ -1,117 +1,120 @@
 package leo.work.support.base.fragment;
 
-import android.content.Intent;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import leo.work.support.base.LifeControlInterface;
-import leo.work.support.base.biz.CommonLifeBiz;
+import leo.work.support.base.fragment.CommonAbstractFragment;
+import leo.work.support.util.LogUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------
  * 功能描述:
  * ---------------------------------------------------------------------------------------------
- * 时　　间: 2018/4/19.
+ * 时　　间:  2021/4/29
  * ---------------------------------------------------------------------------------------------
  * 代码创建: 刘桂安
  * ---------------------------------------------------------------------------------------------
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonFragment extends Fragment implements LifeControlInterface {
+public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAbstractFragment {
 
-    private List<CommonLifeBiz> lifeBizList;
+    public Context context;
+    public Activity activity;
 
+    private boolean hasResume = false;//是否前台（不保证正在显示该页面）
+    public boolean hasFront = false;//当前页面是否在前台
+    public boolean hidden = false;//Fragment显示/隐藏状态
+
+    public T binding;
+
+    @Nullable
     @Override
-    public void addLifeCallBackList(CommonLifeBiz biz) {
-        if (lifeBizList == null) {
-            lifeBizList = new ArrayList<>();
-        }
-        if (biz == null) {
-            return;
-        }
-        lifeBizList.add(biz);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        LogUtil.e("=======================>" + this.getClass().getName());
+        binding = DataBindingUtil.inflate(inflater, setLayout(), container, false);
+        return binding.getRoot();
     }
 
     @Override
-    public void removeLifeCallBackList(CommonLifeBiz biz) {
-        if (lifeBizList == null) {
-            return;
-        }
-        if (biz == null) {
-            return;
-        }
-        lifeBizList.remove(biz);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        context = getContext();
+        activity = getActivity();
+
+        initData(savedInstanceState);
+        initViews(savedInstanceState);
+        loadData();
+        initListener();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
-            lifeBizList.get(i).onStart();
-        }
+    protected abstract int setLayout();
+
+    /**
+     * 初始化数据
+     */
+    protected abstract void initData(Bundle savedInstanceState);
+
+    /**
+     * 加载View
+     *
+     * @param savedInstanceState
+     */
+    protected abstract void initViews(Bundle savedInstanceState);
+
+    /**
+     * 加载数据，如：网络请求
+     */
+    protected void loadData() {
+
     }
 
+    /**
+     * 初始化监听器
+     */
+    protected void initListener() {
+
+    }
+
+
+    /**
+     * 使用时应该写在这上面
+     * ....
+     * super.onResume();
+     * 不应该写在super下面
+     */
     @Override
     public void onResume() {
         super.onResume();
-        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
-            lifeBizList.get(i).onResume();
-        }
+        hasResume = true;
+        hasFront = !hidden;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
-            lifeBizList.get(i).onPause();
-        }
+        hasResume = false;
+        hasFront = false;
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
-            lifeBizList.get(i).onStop();
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        this.hidden = hidden;
+        if (hasResume) {
+            this.hasFront = !hidden;
+        } else {
+            this.hasFront = false;
         }
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
-            lifeBizList.get(i).onDestroy();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
-            lifeBizList.get(i).onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
-            lifeBizList.get(i).onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
-            lifeBizList.get(i).onSaveInstanceState(outState);
-        }
-    }
-
 
 }
