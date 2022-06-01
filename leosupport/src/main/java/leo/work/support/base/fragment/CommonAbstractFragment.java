@@ -87,6 +87,10 @@ public abstract class CommonAbstractFragment extends Fragment implements LifeCon
         for (int i = 0; lifeBizList != null && i < lifeBizList.size(); i++) {
             lifeBizList.get(i).onDestroy();
         }
+        if (lifeBizList != null) {
+            lifeBizList.clear();
+        }
+        lifeBizList = null;
     }
 
     @Override
