@@ -10,11 +10,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import leo.work.support.base.activity.CommonActivity;
+import leo.work.support.base.activity.CommonAbstractActivity;
 import leo.work.support.util.LogUtil;
 
 
-public abstract class CommonMVPActivity<V extends ActivityView, B extends ActivityBiz> extends CommonActivity {
+public abstract class CommonMVPActivity<V extends ActivityView, B extends ActivityBiz> extends CommonAbstractActivity {
 
     //Activity对象
     public Activity activity;

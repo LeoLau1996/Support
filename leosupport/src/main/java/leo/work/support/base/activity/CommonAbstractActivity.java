@@ -16,7 +16,7 @@ import leo.work.support.base.biz.CommonLifeBiz;
 import leo.work.support.util.CommonUtil;
 
 
-public abstract class CommonActivity extends AppCompatActivity implements LifeControlInterface {
+public abstract class CommonAbstractActivity extends AppCompatActivity implements LifeControlInterface {
 
     private List<CommonLifeBiz> lifeBizList;
 

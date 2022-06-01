@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import leo.work.support.base.activity.CommonActivity;
+import leo.work.support.base.activity.CommonAbstractActivity;
 import leo.work.support.base.biz.CommonLifeBiz;
 
 /**
@@ -24,9 +24,9 @@ public class SelectFragmentBiz extends CommonLifeBiz {
     public FragmentManager fragmentManager;
     public Fragment fragment = null;
 
-    public SelectFragmentBiz(CommonActivity commonActivity) {
-        super(commonActivity);
-        fragmentManager = commonActivity.getSupportFragmentManager();
+    public SelectFragmentBiz(CommonAbstractActivity activity) {
+        super(activity);
+        fragmentManager = activity.getSupportFragmentManager();
     }
 
     @Override
