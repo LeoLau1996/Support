@@ -1,11 +1,16 @@
 package leo.work.support.base.adapter;
 
 import android.content.Context;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,19 +26,19 @@ import java.util.List;
  * ---------------------------------------------------------------------------------------------
  **/
 
-public abstract class CommonMultiRecyclerAdapter<T> extends RecyclerView.Adapter {
+public abstract class CommonMultiRecyclerAdapter<M, H extends CommonRecyclerViewHolder, B extends ViewDataBinding, C> extends RecyclerView.Adapter {
+
     public Context context;
     public LayoutInflater layoutInflater;
-    public List<T> mList;
+    public List<M> mList;
+    public C callBack;
 
 
-    public CommonMultiRecyclerAdapter(Context context, List<T> mList) {
-        /**
-         * 基本传值
-         */
+    public CommonMultiRecyclerAdapter(Context context, C callBack) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(this.context);
-        this.mList = mList;
+        this.mList = new ArrayList<>();
+        this.callBack = callBack;
     }
 
     @Override
@@ -44,33 +49,32 @@ public abstract class CommonMultiRecyclerAdapter<T> extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
+        if (mList == null) {
+            return 0;
+        }
         return mList.size();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return setViewHolder(layoutInflater.inflate(setLayout(viewType), parent, false), viewType);
+        int layout = setLayout(viewType);
+        B binding = DataBindingUtil.inflate(layoutInflater, layout, parent, false);
+        return setViewHolder(binding, viewType, callBack);
     }
-
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        /**
-         * 操作
-         */
-        initView(holder, position, mList.get(position));
-        initListener(holder, position, mList.get(position));
+        H viewHolder = (H) holder;
+        viewHolder.setList(mList);
+        viewHolder.initView(position, mList.get(position));
+        viewHolder.initListener(position, mList.get(position));
     }
 
     protected abstract int setItemType(int position);
 
     protected abstract int setLayout(int viewType);
 
-    protected abstract RecyclerView.ViewHolder setViewHolder(View itemView, int viewType);
-
-    protected abstract void initView(final Object holder, int position, T t);
-
-    protected abstract void initListener(final Object holder, int position, T t);
+    protected abstract H setViewHolder(B binding, int viewType, C callBack);
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
