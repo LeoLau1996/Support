@@ -1,14 +1,13 @@
 package leo.work.support.base.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,7 @@ public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolde
 
     public Context context;
     public LayoutInflater layoutInflater;
-    public List<M> mList;
+    private List<M> mList;
     public C callBack;
 
     public CommonRecyclerAdapter(Context context, C callBack) {
@@ -67,4 +66,38 @@ public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolde
 
     protected abstract H setViewHolder(B binding, C callBack);
 
+    public void addData(M model) {
+        mList.add(model);
+        notifyItemInserted(mList.size());
+    }
+
+    public void addData(int index, M model) {
+        mList.add(index, model);
+        notifyItemRangeInserted(index, 1);
+    }
+
+    public void addData(List<M> list) {
+        mList.addAll(list);
+        notifyItemRangeInserted(mList.size(), list.size());
+    }
+
+    public void addData(int index, List<M> list) {
+        mList.addAll(index, list);
+        notifyItemRangeInserted(index, list.size());
+    }
+
+    public List<M> getData() {
+        return mList;
+    }
+
+    public void remove(int index) {
+        mList.remove(index);
+        notifyItemRemoved(index);
+    }
+
+    public void removeAll() {
+        int size = mList.size();
+        mList.clear();
+        notifyItemRangeRemoved(0, size);
+    }
 }
