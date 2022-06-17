@@ -27,7 +27,7 @@ public abstract class CommonListViewAdapter<M, H extends CommonViewHolder, B ext
 
     public Context context;
     public LayoutInflater layoutInflater;
-    public List<M> mList;
+    private List<M> mList;
     public C callBack;
 
     public CommonListViewAdapter(Context context, List<M> mList, C callBack) {
@@ -79,4 +79,80 @@ public abstract class CommonListViewAdapter<M, H extends CommonViewHolder, B ext
 
     protected abstract H setViewHolder(B binding, C callBack);
 
+    public void addData(M model) {
+        addData(model, true);
+    }
+
+    public void addData(int index, M model) {
+        addData(index, model, true);
+    }
+
+    public void addData(List<M> list) {
+        addData(list, true);
+    }
+
+    public void addData(int index, List<M> list) {
+        addData(index, list, true);
+    }
+
+    public void removeData(int index) {
+        removeData(index, true);
+    }
+
+    public void removeAllData() {
+        removeAllData(true);
+    }
+
+    public void addData(M model, boolean notify) {
+        mList.add(model);
+        if (!notify) {
+            return;
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addData(int index, M model, boolean notify) {
+        mList.add(index, model);
+        if (!notify) {
+            return;
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addData(List<M> list, boolean notify) {
+        mList.addAll(list);
+        if (!notify) {
+            return;
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addData(int index, List<M> list, boolean notify) {
+        mList.addAll(index, list);
+        if (!notify) {
+            return;
+        }
+        notifyDataSetChanged();
+    }
+
+    public void removeData(int index, boolean notify) {
+        mList.remove(index);
+        if (!notify) {
+            return;
+        }
+        notifyDataSetChanged();
+    }
+
+    public void removeAllData(boolean notify) {
+        int size = mList.size();
+        mList.clear();
+        if (!notify) {
+            return;
+        }
+        notifyDataSetChanged();
+    }
+
+    public List<M> getData() {
+        return mList;
+    }
 }
