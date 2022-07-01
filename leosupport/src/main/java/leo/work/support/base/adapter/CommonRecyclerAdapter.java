@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,9 +48,7 @@ public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolde
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        int layout = setLayout();
-        B binding = DataBindingUtil.inflate(layoutInflater, layout, parent, false);
-        return setViewHolder(binding, callBack);
+        return getViewHolder(parent, viewType);
     }
 
     @Override
@@ -62,9 +59,7 @@ public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolde
         viewHolder.initListener(position, mList.get(position));
     }
 
-    protected abstract int setLayout();
-
-    protected abstract H setViewHolder(B binding, C callBack);
+    protected abstract H getViewHolder(ViewGroup parent, int viewType);
 
     public void addData(M model) {
         addData(model, true);

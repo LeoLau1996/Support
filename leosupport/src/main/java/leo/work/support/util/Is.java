@@ -56,24 +56,17 @@ public class Is extends BaseUtil {
         return true;
     }
 
-    /**
-     * 判断手机是否安装某个应用
-     *
-     * @param appPackageName 应用包名
-     * @return true：安装，false：未安装
-     */
-    public static boolean isAnstallApp(String appPackageName) {
-        PackageManager packageManager = getContext().getPackageManager();// 获取packagemanager
-        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
-        if (pinfo != null) {
-            for (int i = 0; i < pinfo.size(); i++) {
-                String pn = pinfo.get(i).packageName;
-                if (appPackageName.equals(pn)) {
-                    return true;
-                }
-            }
+    // 判断是否安装某个应用
+    public static boolean isInstallApp(String pkgName) {
+        if (Is.isEmpty(pkgName)) {
+            return false;
         }
-        return false;
+        try {
+            getContext().getPackageManager().getPackageInfo(pkgName, 0);
+        } catch (Exception x) {
+            return false;
+        }
+        return true;
     }
 
     //是否在主线程
