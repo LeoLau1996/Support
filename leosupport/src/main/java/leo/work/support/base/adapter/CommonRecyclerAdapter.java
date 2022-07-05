@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,7 +49,9 @@ public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolde
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return getViewHolder(parent, viewType);
+        int layout = setLayout();
+        B binding = DataBindingUtil.inflate(layoutInflater, layout, parent, false);
+        return setViewHolder(binding, callBack);
     }
 
     @Override
@@ -59,83 +62,42 @@ public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolde
         viewHolder.initListener(position, mList.get(position));
     }
 
-    protected abstract H getViewHolder(ViewGroup parent, int viewType);
+    protected abstract int setLayout();
+
+    protected abstract H setViewHolder(B binding, C callBack);
 
     public void addData(M model) {
-        addData(model, true);
-    }
-
-    public void addData(int index, M model) {
-        addData(index, model, true);
-    }
-
-    public void addData(List<M> list) {
-        addData(list, true);
-    }
-
-    public void addData(int index, List<M> list) {
-        addData(index, list, true);
-    }
-
-    public void removeData(int index) {
-        removeData(index, true);
-    }
-
-    public void removeAllData() {
-        removeAllData(true);
-    }
-
-    public void addData(M model, boolean notify) {
         mList.add(model);
-        if (!notify) {
-            return;
-        }
         notifyItemInserted(mList.size());
     }
 
-    public void addData(int index, M model, boolean notify) {
+    public void addData(int index, M model) {
         mList.add(index, model);
-        if (!notify) {
-            return;
-        }
         notifyItemRangeInserted(index, 1);
     }
 
-    public void addData(List<M> list, boolean notify) {
+    public void addData(List<M> list) {
         mList.addAll(list);
-        if (!notify) {
-            return;
-        }
         notifyItemRangeInserted(mList.size(), list.size());
     }
 
-    public void addData(int index, List<M> list, boolean notify) {
+    public void addData(int index, List<M> list) {
         mList.addAll(index, list);
-        if (!notify) {
-            return;
-        }
         notifyItemRangeInserted(index, list.size());
-    }
-
-    public void removeData(int index, boolean notify) {
-        mList.remove(index);
-        if (!notify) {
-            return;
-        }
-        notifyItemRemoved(index);
-    }
-
-    public void removeAllData(boolean notify) {
-        int size = mList.size();
-        mList.clear();
-        if (!notify) {
-            return;
-        }
-        notifyItemRangeRemoved(0, size);
     }
 
     public List<M> getData() {
         return mList;
     }
 
+    public void remove(int index) {
+        mList.remove(index);
+        notifyItemRemoved(index);
+    }
+
+    public void removeAll() {
+        int size = mList.size();
+        mList.clear();
+        notifyItemRangeRemoved(0, size);
+    }
 }
