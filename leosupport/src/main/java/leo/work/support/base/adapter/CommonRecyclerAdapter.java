@@ -67,37 +67,80 @@ public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolde
     protected abstract H setViewHolder(B binding, C callBack);
 
     public void addData(M model) {
-        mList.add(model);
-        notifyItemInserted(mList.size());
+        addData(model, true);
     }
 
     public void addData(int index, M model) {
-        mList.add(index, model);
-        notifyItemRangeInserted(index, 1);
+        addData(index, model, true);
     }
 
     public void addData(List<M> list) {
-        mList.addAll(list);
-        notifyItemRangeInserted(mList.size(), list.size());
+        addData(list, true);
     }
 
     public void addData(int index, List<M> list) {
+        addData(index, list, true);
+    }
+
+    public void removeData(int index) {
+        removeData(index, true);
+    }
+
+    public void removeAllData() {
+        removeAllData(true);
+    }
+
+    public void addData(M model, boolean notify) {
+        mList.add(model);
+        if (!notify) {
+            return;
+        }
+        notifyItemInserted(mList.size());
+    }
+
+    public void addData(int index, M model, boolean notify) {
+        mList.add(index, model);
+        if (!notify) {
+            return;
+        }
+        notifyItemRangeInserted(index, 1);
+    }
+
+    public void addData(List<M> list, boolean notify) {
+        mList.addAll(list);
+        if (!notify) {
+            return;
+        }
+        notifyItemRangeInserted(mList.size(), list.size());
+    }
+
+    public void addData(int index, List<M> list, boolean notify) {
         mList.addAll(index, list);
+        if (!notify) {
+            return;
+        }
         notifyItemRangeInserted(index, list.size());
+    }
+
+    public void removeData(int index, boolean notify) {
+        mList.remove(index);
+        if (!notify) {
+            return;
+        }
+        notifyItemRemoved(index);
+    }
+
+    public void removeAllData(boolean notify) {
+        int size = mList.size();
+        mList.clear();
+        if (!notify) {
+            return;
+        }
+        notifyItemRangeRemoved(0, size);
     }
 
     public List<M> getData() {
         return mList;
     }
 
-    public void remove(int index) {
-        mList.remove(index);
-        notifyItemRemoved(index);
-    }
-
-    public void removeAll() {
-        int size = mList.size();
-        mList.clear();
-        notifyItemRangeRemoved(0, size);
-    }
 }
