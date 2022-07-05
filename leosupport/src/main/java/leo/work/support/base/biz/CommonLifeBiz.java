@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import leo.work.support.base.LifeControlInterface;
@@ -97,10 +98,10 @@ public class CommonLifeBiz {
     }
 
     //获取Activity
-    public Activity getActivity() {
-        Activity activity;
-        if (lifeControlInterface instanceof Activity) {
-            activity = (Activity) lifeControlInterface;
+    public AppCompatActivity getActivity() {
+        AppCompatActivity activity;
+        if (lifeControlInterface instanceof AppCompatActivity) {
+            activity = (AppCompatActivity) lifeControlInterface;
         } else {
             throw new RuntimeException("lifeControlInterface 不是Activity");
         }
