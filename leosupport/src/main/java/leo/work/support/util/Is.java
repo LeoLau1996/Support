@@ -56,6 +56,21 @@ public class Is extends BaseUtil {
         return true;
     }
 
+    // 是否数组越界
+    public static boolean isIndexOutOf(List list, int position) {
+        // 如果数组是空的
+        if (list == null || list.isEmpty()) {
+            return true;
+        }
+        if (position < 0) {
+            return true;
+        }
+        if (position >= list.size()) {
+            return true;
+        }
+        return false;
+    }
+
     // 判断是否安装某个应用
     public static boolean isInstallApp(String pkgName) {
         if (Is.isEmpty(pkgName)) {
