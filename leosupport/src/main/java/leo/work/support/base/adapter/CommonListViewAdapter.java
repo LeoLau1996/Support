@@ -152,6 +152,18 @@ public abstract class CommonListViewAdapter<M, H extends CommonViewHolder, B ext
         notifyDataSetChanged();
     }
 
+    public void setData(List<M> list) {
+        setData(list, true);
+    }
+
+    public void setData(List<M> list, boolean notify) {
+        this.mList = list;
+        if (!notify) {
+            return;
+        }
+        notifyDataSetChanged();
+    }
+
     public List<M> getData() {
         return mList;
     }
