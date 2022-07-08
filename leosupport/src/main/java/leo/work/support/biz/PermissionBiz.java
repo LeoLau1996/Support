@@ -44,17 +44,17 @@ public class PermissionBiz extends CommonLifeBiz {
     //检查权限
     public void checkPermission(String[] permissions, int requestCode, OnPermissionBizCallBack callBack) {
         //只接受Activity、Fragment
-        if (!(lifeControlInterface instanceof Activity) && !(lifeControlInterface instanceof Fragment)) {
+        if (!isActivity() && !isFragment()) {
             return;
         }
         //如果没有权限
         if (!hasPermissions(permissions)) {
             addCallBack(requestCode, callBack);
             //获取权限
-            if (lifeControlInterface instanceof Activity) {
-                PermissionsUtil.getPermissions((Activity) lifeControlInterface, requestCode, permissions);
-            } else if (lifeControlInterface instanceof Fragment) {
-                PermissionsUtil.getPermissions((Fragment) lifeControlInterface, requestCode, permissions);
+            if (isActivity()) {
+                PermissionsUtil.getPermissions(getActivity(), requestCode, permissions);
+            } else if (isFragment()) {
+                PermissionsUtil.getPermissions(getFragment(), requestCode, permissions);
             }
             return;
         }

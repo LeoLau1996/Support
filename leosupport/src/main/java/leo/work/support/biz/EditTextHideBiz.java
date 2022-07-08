@@ -32,14 +32,14 @@ public class EditTextHideBiz extends CommonLifeBiz {
         if (event.getAction() != MotionEvent.ACTION_DOWN) {
             return;
         }
-        if (!(lifeControlInterface instanceof Activity)) {
+        if (!isActivity()) {
             return;
         }
-        View view = ((Activity) lifeControlInterface).getCurrentFocus();
+        View view = getActivity().getCurrentFocus();
         if (!Is.isShouldHideInput(view, event)) {
             return;
         }
-        CommonUtil.hideKeyboard((Activity) lifeControlInterface, view);
+        CommonUtil.hideKeyboard(getActivity(), view);
     }
 
 }

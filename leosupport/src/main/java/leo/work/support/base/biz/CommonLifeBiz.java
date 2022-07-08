@@ -24,7 +24,8 @@ import leo.work.support.base.LifeControlInterface;
  **/
 public class CommonLifeBiz {
 
-    public LifeControlInterface lifeControlInterface;
+    // 生命周期控制接口
+    private LifeControlInterface lifeControlInterface;
 
     public CommonLifeBiz(LifeControlInterface lifeControlInterface) {
         this.lifeControlInterface = lifeControlInterface;
@@ -89,34 +90,51 @@ public class CommonLifeBiz {
 
     //获取Context
     public Context getContext() {
+        Context context = null;
         if (lifeControlInterface == null) {
-            return null;
+            return context;
         }
-        Context context;
         if (lifeControlInterface instanceof Activity) {
             context = (Context) lifeControlInterface;
         } else if (lifeControlInterface instanceof Fragment) {
             context = ((Fragment) lifeControlInterface).getContext();
-        } else {
-            throw new RuntimeException("lifeControlInterface 不是Activity,也不是Fragment");
         }
         return context;
     }
 
     //获取Activity
     public AppCompatActivity getActivity() {
+        AppCompatActivity activity = null;
         if (lifeControlInterface == null) {
-            return null;
+            return activity;
         }
-        AppCompatActivity activity;
         if (lifeControlInterface instanceof AppCompatActivity) {
             activity = (AppCompatActivity) lifeControlInterface;
         } else if (lifeControlInterface instanceof Fragment) {
             activity = (AppCompatActivity) ((Fragment) lifeControlInterface).getActivity();
-        } else {
-            throw new RuntimeException("lifeControlInterface 不是AppCompatActivity,也不是Fragment");
         }
         return activity;
+    }
+
+    public Fragment getFragment() {
+        if (!isFragment()) {
+            return null;
+        }
+        return (Fragment) lifeControlInterface;
+    }
+
+    public boolean isActivity() {
+        if (lifeControlInterface == null) {
+            return false;
+        }
+        return lifeControlInterface instanceof Activity;
+    }
+
+    public boolean isFragment() {
+        if (lifeControlInterface == null) {
+            return false;
+        }
+        return lifeControlInterface instanceof Fragment;
     }
 
 }

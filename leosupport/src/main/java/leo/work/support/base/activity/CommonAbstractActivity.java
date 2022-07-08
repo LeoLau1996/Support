@@ -2,6 +2,7 @@ package leo.work.support.base.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
@@ -39,7 +40,9 @@ public abstract class CommonAbstractActivity extends AppCompatActivity implement
         if (biz == null) {
             return;
         }
+        Log.e("liu0708", "Activity    准备删除生命周期对象    lifeBizList = " + lifeBizList.size());
         lifeBizList.remove(biz);
+        Log.e("liu0708", "Activity    删除完成生命周期对象    lifeBizList = " + lifeBizList.size());
     }
 
     @Override
