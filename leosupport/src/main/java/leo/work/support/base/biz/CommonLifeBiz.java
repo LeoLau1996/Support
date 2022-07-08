@@ -41,6 +41,9 @@ public class CommonLifeBiz {
 
     //删除
     private void removeLifeCallBackList() {
+        if (lifeControlInterface == null) {
+            return;
+        }
         lifeControlInterface.removeLifeCallBackList(this);
     }
 
@@ -86,6 +89,9 @@ public class CommonLifeBiz {
 
     //获取Context
     public Context getContext() {
+        if (lifeControlInterface == null) {
+            return null;
+        }
         Context context;
         if (lifeControlInterface instanceof Activity) {
             context = (Context) lifeControlInterface;
@@ -99,11 +105,16 @@ public class CommonLifeBiz {
 
     //获取Activity
     public AppCompatActivity getActivity() {
+        if (lifeControlInterface == null) {
+            return null;
+        }
         AppCompatActivity activity;
         if (lifeControlInterface instanceof AppCompatActivity) {
             activity = (AppCompatActivity) lifeControlInterface;
+        } else if (lifeControlInterface instanceof Fragment) {
+            activity = (AppCompatActivity) ((Fragment) lifeControlInterface).getActivity();
         } else {
-            throw new RuntimeException("lifeControlInterface 不是Activity");
+            throw new RuntimeException("lifeControlInterface 不是AppCompatActivity,也不是Fragment");
         }
         return activity;
     }
