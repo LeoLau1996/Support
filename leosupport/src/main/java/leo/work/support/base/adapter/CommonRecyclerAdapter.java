@@ -33,9 +33,13 @@ public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolde
     public C callBack;
 
     public CommonRecyclerAdapter(Context context, C callBack) {
+        this(context, new ArrayList<>(), callBack);
+    }
+
+    public CommonRecyclerAdapter(Context context, List<M> mList, C callBack) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(this.context);
-        this.mList = new ArrayList<>();
+        this.mList = mList;
         this.callBack = callBack;
     }
 
