@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import leo.work.support.base.LifeControlInterface;
@@ -79,11 +80,15 @@ public abstract class CommonAbstractActivity extends AppCompatActivity implement
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        for (int i = 0; bizList != null && i < bizList.size(); i++) {
-            bizList.get(i).onDestroy();
-        }
         if (bizList != null) {
-            bizList.clear();
+            Iterator<CommonLifeBiz> iterator = bizList.iterator();
+            while (iterator.hasNext()) {
+                CommonLifeBiz biz = iterator.next();
+                biz.onDestroy();
+                Log.e("liu0708", "Activity    准备删除生命周期对象    lifeBizList = " + bizList.size());
+                iterator.remove();
+                Log.e("liu0708", "Activity    删除完成生命周期对象    lifeBizList = " + bizList.size());
+            }
         }
         bizList = null;
     }

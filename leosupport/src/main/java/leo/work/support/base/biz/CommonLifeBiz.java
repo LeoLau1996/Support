@@ -40,7 +40,7 @@ public class CommonLifeBiz {
         lifeControlInterface.addLifeCallBackList(this);
     }
 
-    //删除
+    //删除 (不要在for循环中使用这个删除)
     private void removeLifeCallBackList() {
         if (lifeControlInterface == null) {
             return;
@@ -65,7 +65,7 @@ public class CommonLifeBiz {
     }
 
     public void onDestroy() {
-        removeLifeCallBackList();
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

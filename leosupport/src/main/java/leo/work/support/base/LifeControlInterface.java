@@ -18,7 +18,7 @@ public interface LifeControlInterface {
     //添加生命周期监听
     void addLifeCallBackList(CommonLifeBiz biz);
 
-    //删除生命周期监听
+    //删除生命周期监听(不要在for循环中使用这个删除)
     void removeLifeCallBackList(CommonLifeBiz biz);
 
 }
