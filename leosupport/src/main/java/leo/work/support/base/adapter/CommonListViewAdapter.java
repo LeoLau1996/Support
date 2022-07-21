@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,6 +30,10 @@ public abstract class CommonListViewAdapter<M, H extends CommonViewHolder, B ext
     public LayoutInflater layoutInflater;
     private List<M> mList;
     public C callBack;
+
+    public CommonListViewAdapter(Context context, C callBack) {
+        this(context, new ArrayList<>(), callBack);
+    }
 
     public CommonListViewAdapter(Context context, List<M> mList, C callBack) {
         this.context = context;
