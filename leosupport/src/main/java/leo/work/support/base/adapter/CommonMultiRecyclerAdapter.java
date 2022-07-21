@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,11 +28,11 @@ public abstract class CommonMultiRecyclerAdapter<M, C> extends RecyclerView.Adap
     private List<M> mList;
     public C callBack;
 
+    public CommonMultiRecyclerAdapter(Context context, C callBack) {
+        this(context, new ArrayList<>(), callBack);
+    }
 
     public CommonMultiRecyclerAdapter(Context context, List<M> mList, C callBack) {
-        /**
-         * 基本传值
-         */
         this.context = context;
         this.layoutInflater = LayoutInflater.from(this.context);
         this.mList = mList;
