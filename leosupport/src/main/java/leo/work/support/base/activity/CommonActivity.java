@@ -102,17 +102,4 @@ public abstract class CommonActivity<T extends ViewDataBinding> extends CommonAb
         hasFront = false;
     }
 
-    /**
-     * 设置 app 不随着系统字体的调整而变化
-     */
-    @Override
-    public Resources getResources() {
-        Resources resources = super.getResources();
-        if (config == null) {
-            config = new Configuration();
-        }
-        config.setToDefaults();
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
-        return resources;
-    }
 }

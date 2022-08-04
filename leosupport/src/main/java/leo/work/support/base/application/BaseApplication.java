@@ -43,15 +43,4 @@ public abstract class BaseApplication extends Application {
         return application.getApplicationContext();
     }
 
-    /**
-     * 设置 app 不随着系统字体的调整而变化
-     */
-    @Override
-    public Resources getResources() {
-        Resources resources = super.getResources();
-        Configuration config = new Configuration();
-        config.setToDefaults();
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
-        return resources;
-    }
 }
