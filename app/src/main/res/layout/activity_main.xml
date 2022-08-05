@@ -18,4 +18,12 @@
 
     </leo.work.support.widget.bar.TitleBar>
 
+
+    <leo.work.support.widget.TrapezoidImageView
+        android:layout_width="93dp"
+
+        android:scaleType="centerCrop"
+        android:layout_height="93dp"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/image1" />
 </RelativeLayout>
