@@ -1,6 +1,7 @@
 package leo.work.support.base.biz;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -127,6 +128,13 @@ public class CommonLifeBiz {
         return (Fragment) lifeControlInterface;
     }
 
+    public Dialog getDialog() {
+        if (!isDialog()) {
+            return null;
+        }
+        return (Dialog) lifeControlInterface;
+    }
+
     public boolean isActivity() {
         if (lifeControlInterface == null) {
             return false;
@@ -139,6 +147,13 @@ public class CommonLifeBiz {
             return false;
         }
         return lifeControlInterface instanceof Fragment;
+    }
+
+    public boolean isDialog() {
+        if (lifeControlInterface == null) {
+            return false;
+        }
+        return lifeControlInterface instanceof Dialog;
     }
 
     public LifeControlInterface getLifeControlInterface() {
