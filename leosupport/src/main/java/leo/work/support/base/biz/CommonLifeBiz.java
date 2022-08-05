@@ -88,6 +88,10 @@ public class CommonLifeBiz {
 
     }
 
+    public void onDialogDismiss() {
+
+    }
+
     //获取Context
     public Context getContext() {
         Context context = null;

@@ -57,29 +57,18 @@ public abstract class CommonActivity<T extends ViewDataBinding> extends CommonAb
 
     protected abstract int setLayout();
 
-    /**
-     * 初始化数据
-     */
+    // 初始化数据
     protected abstract void initData(Bundle savedInstanceState);
 
-
-    /**
-     * 加载View
-     *
-     * @param savedInstanceState
-     */
+    // 加载View
     protected abstract void initViews(Bundle savedInstanceState);
 
-    /**
-     * 加载数据，如：网络请求
-     */
+    // 加载数据，如：网络请求
     protected void loadData() {
 
     }
 
-    /**
-     * 初始化监听器
-     */
+    // 初始化监听器
     protected void initListener() {
 
     }
