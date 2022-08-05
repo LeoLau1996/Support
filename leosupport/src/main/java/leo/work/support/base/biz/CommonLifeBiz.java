@@ -137,4 +137,7 @@ public class CommonLifeBiz {
         return lifeControlInterface instanceof Fragment;
     }
 
+    public LifeControlInterface getLifeControlInterface() {
+        return lifeControlInterface;
+    }
 }
