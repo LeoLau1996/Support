@@ -103,6 +103,8 @@ public class CommonLifeBiz {
             context = (Context) lifeControlInterface;
         } else if (lifeControlInterface instanceof Fragment) {
             context = ((Fragment) lifeControlInterface).getContext();
+        } else if (lifeControlInterface instanceof Dialog) {
+            context = ((Dialog) lifeControlInterface).getContext();
         }
         return context;
     }
@@ -117,6 +119,11 @@ public class CommonLifeBiz {
             activity = (AppCompatActivity) lifeControlInterface;
         } else if (lifeControlInterface instanceof Fragment) {
             activity = (AppCompatActivity) ((Fragment) lifeControlInterface).getActivity();
+        } else if (lifeControlInterface instanceof Dialog) {
+            Context context = ((Dialog) lifeControlInterface).getContext();
+            if (context instanceof AppCompatActivity) {
+                activity = (AppCompatActivity) context;
+            }
         }
         return activity;
     }
