@@ -22,8 +22,8 @@ import leo.work.support.util.LogUtil;
  **/
 public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbstractDialog {
 
-    private T binding;
-    private Context context;
+    public T binding;
+    public Context context;
 
     public CommonDialog(@NonNull Context context) {
         super(context);
