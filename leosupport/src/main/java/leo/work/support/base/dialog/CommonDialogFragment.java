@@ -1,46 +1,45 @@
-package leo.work.support.base.fragment;
+package leo.work.support.base.dialog;
 
-import android.app.Activity;
-import android.content.Context;
+import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.DialogFragment;
 
-import leo.work.support.base.fragment.CommonAbstractFragment;
-import leo.work.support.util.LogUtil;
+import leo.work.support.R;
 
 /**
  * ---------------------------------------------------------------------------------------------
  * 功能描述:
  * ---------------------------------------------------------------------------------------------
- * 时　　间:  2021/4/29
+ * 时　　间: 2022/8/10
  * ---------------------------------------------------------------------------------------------
- * 代码创建: 刘桂安
+ * 代码创建: Leo
  * ---------------------------------------------------------------------------------------------
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAbstractFragment {
-
-    public Context context;
-    public Activity activity;
-
-    private boolean hasResume = false;//是否前台（不保证正在显示该页面）
-    public boolean hasFront = false;//当前页面是否在前台
-    public boolean hidden = false;//Fragment显示/隐藏状态
+public abstract class CommonDialogFragment<T extends ViewDataBinding> extends CommonAbstractDialogFragment {
 
     public T binding;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.CommonDialogFragmentFullScreen);
+    }
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LogUtil.e("=======================>" + this.getClass().getName());
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, setLayout(), container, false);
         return binding.getRoot();
     }
@@ -48,14 +47,12 @@ public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAb
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        context = getContext();
-        activity = getActivity();
-
         initData(savedInstanceState);
         initViews(savedInstanceState);
         loadData();
         initListener();
     }
+
 
     protected abstract int setLayout();
 
@@ -75,36 +72,18 @@ public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAb
 
     }
 
-
-    /**
-     * 使用时应该写在这上面
-     * ....
-     * super.onResume();
-     * 不应该写在super下面
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        hasResume = true;
-        hasFront = !hidden;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        hasResume = false;
-        hasFront = false;
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        this.hidden = hidden;
-        if (hasResume) {
-            this.hasFront = !hidden;
-        } else {
-            this.hasFront = false;
+    // 设置背景颜色
+    public void setDialogBackgroundColor(int color) {
+        Dialog dialog = getDialog();
+        if (dialog == null) {
+            return;
         }
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+        ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(color));
+        window.setBackgroundDrawable(colorDrawable);
     }
 
 }

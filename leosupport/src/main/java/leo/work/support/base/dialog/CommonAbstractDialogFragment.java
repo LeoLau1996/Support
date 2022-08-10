@@ -1,11 +1,9 @@
-package leo.work.support.base.fragment;
+package leo.work.support.base.dialog;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.DialogInterface;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,14 +16,14 @@ import leo.work.support.base.biz.CommonLifeBiz;
  * ---------------------------------------------------------------------------------------------
  * 功能描述:
  * ---------------------------------------------------------------------------------------------
- * 时　　间: 2018/4/19.
+ * 时　　间: 2022/8/10
  * ---------------------------------------------------------------------------------------------
- * 代码创建: 刘桂安
+ * 代码创建: Leo
  * ---------------------------------------------------------------------------------------------
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonAbstractFragment extends Fragment implements LifeControlInterface {
+public class CommonAbstractDialogFragment extends DialogFragment implements LifeControlInterface {
 
     private List<CommonLifeBiz> bizList;
 
@@ -48,9 +46,9 @@ public abstract class CommonAbstractFragment extends Fragment implements LifeCon
         if (biz == null) {
             return;
         }
-        Log.e("liu0708","Fragment    准备删除生命周期对象    lifeBizList = "+ bizList.size());
+        Log.e("liu0708", "Dialog    准备删除生命周期对象    lifeBizList = " + bizList.size());
         bizList.remove(biz);
-        Log.e("liu0708","Fragment    删除完成生命周期对象    lifeBizList = "+ bizList.size());
+        Log.e("liu0708", "Dialog    删除完成生命周期对象    lifeBizList = " + bizList.size());
     }
 
     @Override
@@ -66,6 +64,14 @@ public abstract class CommonAbstractFragment extends Fragment implements LifeCon
         super.onResume();
         for (int i = 0; bizList != null && i < bizList.size(); i++) {
             bizList.get(i).onResume();
+        }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        for (int i = 0; bizList != null && i < bizList.size(); i++) {
+            bizList.get(i).onDialogDismiss();
         }
     }
 
@@ -100,30 +106,4 @@ public abstract class CommonAbstractFragment extends Fragment implements LifeCon
         }
         bizList = null;
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        for (int i = 0; bizList != null && i < bizList.size(); i++) {
-            bizList.get(i).onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (int i = 0; bizList != null && i < bizList.size(); i++) {
-            bizList.get(i).onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        for (int i = 0; bizList != null && i < bizList.size(); i++) {
-            bizList.get(i).onSaveInstanceState(outState);
-        }
-    }
-
-
 }
