@@ -1,6 +1,7 @@
 package leo.work.support.base.dialog;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,11 @@ public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbst
     public CommonDialog(@NonNull Context context) {
         super(context);
         this.context = context;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         //打印Log
         LogUtil.e("=======================>" + this.getClass().getName());
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), setLayout(), null, false);
