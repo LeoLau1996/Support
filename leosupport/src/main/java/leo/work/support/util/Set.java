@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -50,5 +52,24 @@ public class Set {
             linearParams.height = height;
         }
         view.setLayoutParams(linearParams);
+    }
+
+    // 设置外边距
+    public static void setMargins(View view, int left, int top, int right, int bottom) {
+        if (view == null) {
+            return;
+        }
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        if (layoutParams == null) {
+            return;
+        }
+        if (layoutParams instanceof RelativeLayout.LayoutParams) {
+            ((RelativeLayout.LayoutParams) layoutParams).setMargins(left, top, right, bottom);
+        }
+        if (layoutParams instanceof LinearLayout.LayoutParams) {
+            ((LinearLayout.LayoutParams) layoutParams).setMargins(left, top, right, bottom);
+        }
+        //
+        view.setLayoutParams(layoutParams);
     }
 }
