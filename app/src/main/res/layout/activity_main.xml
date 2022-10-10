@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <leo.work.support.widget.bar.TitleBar
-        android:id="@+id/mTitleBar"
+    <data>
+
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="今天"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+        <leo.work.support.widget.bar.TitleBar
+            android:id="@+id/mTitleBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </leo.work.support.widget.bar.TitleBar>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="今天"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </leo.work.support.widget.bar.TitleBar>
 
 
-    <leo.work.support.widget.TrapezoidImageView
-        android:layout_width="93dp"
+        <leo.work.support.widget.TrapezoidImageView
+            android:layout_width="93dp"
 
-        android:scaleType="centerCrop"
-        android:layout_height="93dp"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/image1" />
-</RelativeLayout>
+            android:scaleType="centerCrop"
+            android:layout_height="93dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/image1" />
+    </RelativeLayout>
+</layout>
