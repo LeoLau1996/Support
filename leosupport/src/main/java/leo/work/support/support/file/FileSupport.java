@@ -4,6 +4,7 @@ import android.os.Environment;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import leo.work.support.util.Get;
@@ -68,6 +69,27 @@ public class FileSupport {
             outStream.close();
         } catch (Exception e) {
 
+        }
+    }
+
+    // 写入数据到指定路径
+    public static void writeBytes(String path, boolean append, byte[] data) {
+        FileOutputStream fileOutputStream = null;
+        try {
+            // 打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
+            fileOutputStream = new FileOutputStream(path, append);
+            fileOutputStream.write(data);
+            fileOutputStream.write('\n');
+        } catch (IOException e) {
+
+        } finally {
+            try {
+                if (fileOutputStream != null) {
+                    fileOutputStream.close();
+                }
+            } catch (IOException e) {
+
+            }
         }
     }
 
