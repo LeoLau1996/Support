@@ -38,6 +38,7 @@ import leo.work.support.support.file.FileSupport;
  * <uses-permission android:name="android.permission.CAMERA" />
  * <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
  * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+ * <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
  * ---------------------------------------------------------------------------------------------
  **/
 public class MediaProjectionBiz extends CommonLifeBiz {

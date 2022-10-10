@@ -10,27 +10,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <leo.work.support.widget.bar.TitleBar
-            android:id="@+id/mTitleBar"
+        <SurfaceView
+            android:id="@+id/mSurfaceView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent" />
 
-            <TextView
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnPlay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="今天"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:text="录制视频" />
 
-        </leo.work.support.widget.bar.TitleBar>
+            <Button
+                android:id="@+id/btnRecord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="录制视频" />
 
+        </LinearLayout>
 
-        <leo.work.support.widget.TrapezoidImageView
-            android:layout_width="93dp"
-
-            android:scaleType="centerCrop"
-            android:layout_height="93dp"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/image1" />
     </RelativeLayout>
 </layout>
