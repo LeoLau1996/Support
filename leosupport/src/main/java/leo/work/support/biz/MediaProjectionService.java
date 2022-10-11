@@ -46,6 +46,7 @@ public class MediaProjectionService extends Service {
 
     public static void startService(Activity activity, String path, int width, int height, int resultCode, Intent data) {
         Intent intent = new Intent(activity, MediaProjectionService.class);
+        intent.setAction(ACTION_START);
         intent.putExtra("path", path);
         intent.putExtra("width", width);
         intent.putExtra("height", height);
@@ -53,6 +54,18 @@ public class MediaProjectionService extends Service {
         intent.putExtra("data", data);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             activity.startForegroundService(intent);
+        } else {
+            activity.startService(intent);
+        }
+    }
+
+    public static void stop(Activity activity) {
+        Intent intent = new Intent(activity, MediaProjectionService.class);
+        intent.setAction(ACTION_END);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            activity.startForegroundService(intent);
+        } else {
+            activity.startService(intent);
         }
     }
 
@@ -67,33 +80,48 @@ public class MediaProjectionService extends Service {
     // 视频宽高
     private int width, height;
 
+    // 开始录频
+    private static final String ACTION_START = "ACTION_START";
+    // 结束录频
+    private static final String ACTION_END = "ACTION_END";
     private String NOTIFICATION_CHANNEL_NAME = "NOTIFICATION_CHANNEL_NAME";
     private String NOTIFICATION_CHANNEL_ID = "MediaProjection";
     private String NOTIFICATION_TICKER = "NOTIFICATION_TICKER";
     private String NOTIFICATION_CHANNEL_DESC = "NOTIFICATION_CHANNEL_DESC";
     private int NOTIFICATION_ID = 12345;
     private final String TAG = MediaProjectionService.class.getSimpleName();
+    private volatile boolean recording;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate() {
         super.onCreate();
         NotifyUtils.createNotifyChannel(this, NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME);
-
-        // 创建录频实例
-        manager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        notification();
-        path = intent.getStringExtra("path");
-        width = intent.getIntExtra("width", 0);
-        height = intent.getIntExtra("height", 0);
-        int resultCode = intent.getIntExtra("resultCode", 0);
-        Intent data = intent.getParcelableExtra("data");
-        record(resultCode, data);
+        switch (intent.getAction()) {
+            // 开始录频
+            case ACTION_START: {
+                recording = true;
+                notification();
+                path = intent.getStringExtra("path");
+                width = intent.getIntExtra("width", 0);
+                height = intent.getIntExtra("height", 0);
+                int resultCode = intent.getIntExtra("resultCode", 0);
+                Intent data = intent.getParcelableExtra("data");
+                record(resultCode, data);
+                break;
+            }
+            // 结束录频
+            case ACTION_END: {
+                recording = false;
+                break;
+            }
+        }
+
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -136,8 +164,9 @@ public class MediaProjectionService extends Service {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void record(int resultCode, Intent data) {
+        // 创建录频实例
         if (manager == null) {
-            return;
+            manager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
         }
         //
         mediaProjection = manager.getMediaProjection(resultCode, data);
@@ -201,28 +230,35 @@ public class MediaProjectionService extends Service {
 
             MediaCodec.BufferInfo info = new MediaCodec.BufferInfo();
             // 这里输出即可 输入数据的过程谷歌已经帮我们实现了
-            while (true) {
-                try {
-                    // 获得输出下标
-                    int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(info, 100 * 1000);
-                    if (dequeueOutputBufferIndex < 0) {
-                        continue;
-                    }
-                    // 获得输出内容
-                    ByteBuffer byteBuffer = mediaCodec.getOutputBuffer(dequeueOutputBufferIndex);
-                    // 提取数据保存到data数组
-                    byte[] data = new byte[info.size];
-                    byteBuffer.get(data);
-                    Log.e(TAG, String.format("写入数据    dequeueOutputBufferIndex = %s    写入长度 = %s", dequeueOutputBufferIndex, data.length));
-                    // 把data写到本地文件
-                    FileSupport.writeBytes(path, true, data);
-
-                    // xxxx
-                    mediaCodec.releaseOutputBuffer(dequeueOutputBufferIndex, false);
-                } catch (Exception e) {
-                    Log.e(TAG, "异常：" + e.getMessage());
+            while (recording) {
+                // 获得输出下标
+                int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(info, 100 * 1000);
+                if (dequeueOutputBufferIndex < 0) {
+                    continue;
                 }
+                // 获得输出内容
+                ByteBuffer byteBuffer = mediaCodec.getOutputBuffer(dequeueOutputBufferIndex);
+                // 提取数据保存到data数组
+                byte[] data = new byte[info.size];
+                byteBuffer.get(data);
+                Log.e(TAG, String.format("写入数据    dequeueOutputBufferIndex = %s    写入长度 = %s", dequeueOutputBufferIndex, data.length));
+                // 把data写到本地文件
+                FileSupport.writeBytes(path, true, data);
+
+                // xxxx
+                mediaCodec.releaseOutputBuffer(dequeueOutputBufferIndex, false);
             }
+
+            mediaProjection.stop();
+
+            mediaCodec.stop();
+            mediaCodec.release();
+
+            NotifyUtils.cancelNotification(this, NOTIFICATION_ID);
+
+
         }).start();
     }
+
+
 }

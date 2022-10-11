@@ -52,7 +52,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
     protected void initListener() {
         super.initListener();
         binding.btnPlay.setOnClickListener(v -> {
-            String path = "/storage/emulated/0/Android/data/com.leo.support/files/Download/case/record_1665479216149.h264";
+            String path = binding.etPath.getText().toString();
             Media264Play media264Play = new Media264Play(path, holder.getSurface());
             media264Play.play();
         });
@@ -61,6 +61,12 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
                 mediaProjectionBiz = new MediaProjectionBiz(this);
             }
             mediaProjectionBiz.start(String.format("%srecord_%s.h264", AppPath.getAppCache(), System.currentTimeMillis()), 720, 1280);
+        });
+        binding.btnStopRecord.setOnClickListener(v -> {
+            if (mediaProjectionBiz == null) {
+                mediaProjectionBiz = new MediaProjectionBiz(this);
+            }
+            mediaProjectionBiz.stop();
         });
     }
 

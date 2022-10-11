@@ -84,6 +84,10 @@ public class MediaProjectionBiz extends CommonLifeBiz {
         });
     }
 
+    public void stop() {
+        MediaProjectionService.stop(getActivity());
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

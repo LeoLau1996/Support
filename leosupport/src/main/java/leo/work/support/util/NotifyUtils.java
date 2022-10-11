@@ -42,4 +42,16 @@ public class NotifyUtils {
         notificationManager.createNotificationChannel(channel);
     }
 
+    // 取消通知
+    public static void cancelAllNotification(Context context) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+    }
+
+    // 取消通知
+    public static void cancelNotification(Context context, int id) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(id);
+    }
+
 }

@@ -15,17 +15,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:background="@color/Red"
-            android:layout_height="50dp"
-            android:layout_centerInParent="true" />
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_alignParentBottom="true"
             android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etPath"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:background="@color/Red"
+                android:hint="请输入播放路径" />
 
             <Button
                 android:id="@+id/btnPlay"
@@ -38,6 +40,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="录制视频" />
+
+            <Button
+                android:id="@+id/btnStopRecord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="停止录制视频" />
 
         </LinearLayout>
 
