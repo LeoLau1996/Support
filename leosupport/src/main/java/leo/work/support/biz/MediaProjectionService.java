@@ -170,30 +170,10 @@ public class MediaProjectionService extends Service {
         }
         //
         mediaProjection = manager.getMediaProjection(resultCode, data);
-        // 录制
-        initRecord();
-    }
-
-    // 开始录频 生成一个H264
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void initRecord() {
+        // 初始化
         initMediaCodec();
-        if (mediaProjection == null || mediaCodec == null) {
-            return;
-        }
-
-
-        // 名称保持唯一即可，不为空
-        String name = "ttttt";
-        // 越大越清晰
-        int dpi = 2;
-        // 公开的
-        int flags = DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC;
-        // 创建一个虚拟的屏幕
-        Surface surface = mediaCodec.createInputSurface();
-        mediaProjection.createVirtualDisplay(name, width, height, dpi, flags, surface, null, null);
-
-        startRecord();
+        // 录制
+        inPut();
     }
 
     // 初始化编解码器
@@ -221,9 +201,28 @@ public class MediaProjectionService extends Service {
         mediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
     }
 
-    // 开始录制 异步线程
+    // 输入内容
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void startRecord() {
+    private void inPut() {
+        if (mediaProjection == null || mediaCodec == null) {
+            return;
+        }
+        // 名称保持唯一即可，不为空
+        String name = String.format("record_%s", System.currentTimeMillis());
+        // 越大越清晰
+        int dpi = 2;
+        // 公开的
+        int flags = DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC;
+        // 请求 Surface 用作编码器的输入，以代替输入缓冲区。
+        Surface surface = mediaCodec.createInputSurface();
+        mediaProjection.createVirtualDisplay(name, width, height, dpi, flags, surface, null, null);
+
+        outPut();
+    }
+
+    // 输出内容
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void outPut() {
         new Thread(() -> {
             // xxx
             mediaCodec.start();
