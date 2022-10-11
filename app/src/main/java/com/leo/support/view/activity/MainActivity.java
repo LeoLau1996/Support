@@ -16,6 +16,7 @@ import com.leo.support.info.AppPath;
 
 import leo.work.support.base.activity.CommonActivity;
 import leo.work.support.biz.MediaProjectionBiz;
+import leo.work.support.biz.MediaProjectionService;
 import leo.work.support.biz.PermissionBiz;
 import leo.work.support.biz.WorkFlow.CommonWorkFlowBiz;
 import leo.work.support.biz.WorkFlow.WorkFlowControl;
@@ -58,7 +59,8 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
     protected void initListener() {
         super.initListener();
         binding.btnPlay.setOnClickListener(v -> {
-
+            Intent intent = new Intent(activity, MediaProjectionService.class);
+            startService(intent);
         });
         binding.btnRecord.setOnClickListener(v -> {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {

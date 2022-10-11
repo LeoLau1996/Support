@@ -3,5 +3,6 @@
     <application>
 
 
+        <service android:name=".biz.MediaProjectionService" />
     </application>
 </manifest>
