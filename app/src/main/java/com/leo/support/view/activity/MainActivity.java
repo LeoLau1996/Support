@@ -8,8 +8,10 @@ import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.SurfaceHolder;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
@@ -29,6 +31,7 @@ import leo.work.support.support.toolSupport.LeoSupport;
 public class MainActivity extends CommonActivity<ActivityMainBinding> {
 
     private MediaProjectionBiz mediaProjectionBiz;
+    private SurfaceHolder holder;
 
     @Override
     protected int setLayout() {
@@ -42,14 +45,16 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-
+        initSurface();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
         binding.btnPlay.setOnClickListener(v -> {
-
+            String path = "/storage/emulated/0/Android/data/com.leo.support/files/Download/case/record_1665479216149.h264";
+            Media264Play media264Play = new Media264Play(path, holder.getSurface());
+            media264Play.play();
         });
         binding.btnRecord.setOnClickListener(v -> {
             if (mediaProjectionBiz == null) {
@@ -57,5 +62,27 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
             }
             mediaProjectionBiz.start(String.format("%srecord_%s.h264", AppPath.getAppCache(), System.currentTimeMillis()), 720, 1280);
         });
+    }
+
+    private void initSurface() {
+        SurfaceHolder surfaceHolder = binding.mSurfaceView.getHolder();
+        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
+                Log.e("liu1004", "surfaceCreated");
+                holder = surfaceHolder;
+            }
+
+            @Override
+            public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+                Log.e("liu1004", String.format("surfaceChanged    %s %s %s", i, i1, i2));
+            }
+
+            @Override
+            public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
+                Log.e("liu1004", "surfaceDestroyed");
+            }
+        });
+
     }
 }

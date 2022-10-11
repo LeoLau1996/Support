@@ -202,18 +202,26 @@ public class MediaProjectionService extends Service {
             MediaCodec.BufferInfo info = new MediaCodec.BufferInfo();
             // 这里输出即可 输入数据的过程谷歌已经帮我们实现了
             while (true) {
-                // 获得输出下标
-                int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(info, 100 * 1000);
-                if (dequeueOutputBufferIndex < 0) {
-                    continue;
+                try {
+                    // 获得输出下标
+                    int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(info, 100 * 1000);
+                    if (dequeueOutputBufferIndex < 0) {
+                        continue;
+                    }
+                    // 获得输出内容
+                    ByteBuffer byteBuffer = mediaCodec.getOutputBuffer(dequeueOutputBufferIndex);
+                    // 提取数据保存到data数组
+                    byte[] data = new byte[info.size];
+                    byteBuffer.get(data);
+                    Log.e(TAG, String.format("写入数据    dequeueOutputBufferIndex = %s    写入长度 = %s", dequeueOutputBufferIndex, data.length));
+                    // 把data写到本地文件
+                    FileSupport.writeBytes(path, true, data);
+
+                    // xxxx
+                    mediaCodec.releaseOutputBuffer(dequeueOutputBufferIndex, false);
+                } catch (Exception e) {
+                    Log.e(TAG, "异常：" + e.getMessage());
                 }
-                // 获得输出内容
-                ByteBuffer byteBuffer = mediaCodec.getOutputBuffer(dequeueOutputBufferIndex);
-                // 提取数据保存到data数组
-                byte[] data = new byte[info.size];
-                byteBuffer.get(data);
-                // 把data写到本地文件
-                FileSupport.writeBytes(path, true, data);
             }
         }).start();
     }

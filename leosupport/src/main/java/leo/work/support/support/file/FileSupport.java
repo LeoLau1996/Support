@@ -1,8 +1,12 @@
 package leo.work.support.support.file;
 
+import static java.lang.System.in;
+
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -81,15 +85,43 @@ public class FileSupport {
             fileOutputStream.write(data);
             fileOutputStream.write('\n');
         } catch (IOException e) {
-
+            Log.e("TAG", "1    异常：" + e.getMessage());
         } finally {
             try {
                 if (fileOutputStream != null) {
                     fileOutputStream.close();
                 }
             } catch (IOException e) {
-
+                Log.e("TAG", "2    异常：" + e.getMessage());
             }
+        }
+    }
+
+    public static byte[] readFileToByteArray(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            return null;
+        }
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            long inSize = fileInputStream.getChannel().size();//判断FileInputStream中是否有内容
+            if (inSize == 0) {
+                return null;
+            }
+
+            byte[] buffer = new byte[fileInputStream.available()];//in.available() 表示要读取的文件中的数据长度
+            int x = fileInputStream.read(buffer);  //将文件中的数据读到buffer中
+            return buffer;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                in.close();
+            } catch (IOException e) {
+                return null;
+            }
+            //或IoUtils.closeQuietly(in);
         }
     }
 
