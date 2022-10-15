@@ -27,6 +27,7 @@ import leo.work.support.biz.WorkFlow.CommonWorkFlowBiz;
 import leo.work.support.biz.WorkFlow.WorkFlowControl;
 import leo.work.support.biz.WorkFlow.WorkFlowTask;
 import leo.work.support.support.toolSupport.LeoSupport;
+import leo.work.support.util.JumpUtil;
 
 public class MainActivity extends CommonActivity<ActivityMainBinding> {
 
@@ -53,6 +54,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
         super.initListener();
         binding.btnPlay.setOnClickListener(v -> {
             String path = binding.etPath.getText().toString();
+            path = "/storage/emulated/0/Android/data/com.leo.support/files/Download/case/camera_1665567722897.h264";
             Media264Play media264Play = new Media264Play(path, holder.getSurface());
             media264Play.play();
         });
@@ -67,6 +69,12 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
                 mediaProjectionBiz = new MediaProjectionBiz(this);
             }
             mediaProjectionBiz.stop();
+        });
+        binding.btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JumpUtil.go(activity, CameraActivity.class);
+            }
         });
     }
 

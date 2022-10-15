@@ -47,6 +47,12 @@
                 android:layout_height="wrap_content"
                 android:text="停止录制视频" />
 
+            <Button
+                android:id="@+id/btnCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Camera" />
+
         </LinearLayout>
 
     </RelativeLayout>
