@@ -78,7 +78,14 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
             }
         });
         binding.btnOpenSocket.setOnClickListener(v -> {
-            new SocketUtils().openWebSocket();
+            SocketUtils.getInstance().openWebSocket();
+        });
+        binding.btnConnectSocket.setOnClickListener(v -> {
+            SocketUtils.getInstance().connect();
+        });
+        binding.btnSendTest.setOnClickListener(v -> {
+            byte[] bytes = {1, 2, 3};
+            SocketUtils.getInstance().send(bytes);
         });
     }
 

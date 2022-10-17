@@ -79,6 +79,19 @@
                     android:layout_height="wrap_content"
                     android:text="打开Socket端口" />
 
+
+                <Button
+                    android:id="@+id/btnConnectSocket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="连接到Socket" />
+
+                <Button
+                    android:id="@+id/btnSendTest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="测试发送" />
+
             </LinearLayout>
 
         </LinearLayout>
