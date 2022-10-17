@@ -41,7 +41,7 @@ public class SocketUtils {
     private WebSocketServer webSocketServer;
     private WebSocketClient webSocketClient;
 
-    public void openWebSocket() {
+    public void openWebSocket(OnSocketUtilsCallBack callBack) {
         Log.e(TAG, "openWebSocket");
         webSocketServer = new WebSocketServer(new InetSocketAddress(9007)) {
             @Override
@@ -60,9 +60,10 @@ public class SocketUtils {
             }
 
             @Override
-            public void onMessage(WebSocket conn, ByteBuffer message) {
-                super.onMessage(conn, message);
-                Log.e(TAG, String.format("WebSocketServer ---- onMessage    ByteBuffer    message长度 = %s", message.remaining()));
+            public void onMessage(WebSocket conn, ByteBuffer byteBuffer) {
+                super.onMessage(conn, byteBuffer);
+                Log.e(TAG, String.format("WebSocketServer ---- onMessage    ByteBuffer    message长度 = %s", byteBuffer.remaining()));
+                callBack.onMessage(byteBuffer);
             }
 
             @Override
@@ -140,5 +141,9 @@ public class SocketUtils {
             return false;
         }
         return true;
+    }
+
+    public interface OnSocketUtilsCallBack {
+        void onMessage(ByteBuffer byteBuffer);
     }
 }

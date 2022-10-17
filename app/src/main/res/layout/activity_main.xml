@@ -79,6 +79,12 @@
                     android:layout_height="wrap_content"
                     android:text="打开Socket端口" />
 
+                <Button
+                    android:id="@+id/btnInit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="初始化" />
+
 
                 <Button
                     android:id="@+id/btnConnectSocket"

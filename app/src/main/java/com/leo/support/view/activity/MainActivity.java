@@ -11,6 +11,8 @@ import com.leo.support.R;
 import com.leo.support.databinding.ActivityMainBinding;
 import com.leo.support.info.AppPath;
 
+import java.nio.ByteBuffer;
+
 import leo.work.support.base.activity.CommonActivity;
 import leo.work.support.biz.MediaProjectionBiz;
 import leo.work.support.support.toolSupport.LeoSupport;
@@ -21,6 +23,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
 
     private MediaProjectionBiz mediaProjectionBiz;
     private SurfaceHolder holder;
+    private Media264Play media264Play;
 
     @Override
     protected int setLayout() {
@@ -43,7 +46,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
         binding.btnPlay.setOnClickListener(v -> {
             String path = binding.etPath.getText().toString();
             path = "/storage/emulated/0/Android/data/com.leo.support/files/Download/case/camera_1665567722897.h264";
-            Media264Play media264Play = new Media264Play(path, holder.getSurface());
+            media264Play = new Media264Play(path, holder.getSurface());
             media264Play.play();
         });
         binding.btnRecord.setOnClickListener(v -> {
@@ -65,7 +68,18 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
             }
         });
         binding.btnOpenSocket.setOnClickListener(v -> {
-            SocketUtils.getInstance().openWebSocket();
+            SocketUtils.getInstance().openWebSocket(byteBuffer -> {
+                if (media264Play == null) {
+                    return;
+                }
+                media264Play.play(byteBuffer);
+            });
+        });
+        binding.btnInit.setOnClickListener(v -> {
+            if (media264Play != null) {
+                return;
+            }
+            media264Play = new Media264Play(holder.getSurface());
         });
         binding.btnConnectSocket.setOnClickListener(v -> {
             SocketUtils.getInstance().connect();

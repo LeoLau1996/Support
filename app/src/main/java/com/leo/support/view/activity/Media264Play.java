@@ -18,8 +18,13 @@ public class Media264Play implements Runnable {
     private Surface surface;
     // 编解码
     private MediaCodec mediaCodec;
+    private MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();
 
     private static final String TAG = Media264Play.class.getSimpleName();
+
+    public Media264Play(Surface surface) {
+        this("", surface);
+    }
 
     public Media264Play(String path, Surface surface) {
         this.path = path;
@@ -35,7 +40,6 @@ public class Media264Play implements Runnable {
             return;
         }
         Log.e(TAG, String.format("bytes %s", bytes.length));
-        MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();
         //
         int startIndex = 0;
         while (true) {
@@ -100,6 +104,33 @@ public class Media264Play implements Runnable {
     // 开启异步线程
     public void play() {
         new Thread(this).start();
+    }
+
+    // 播放
+    public void play(ByteBuffer byteBuffer) {
+        // 获取输入队列下标，最多等待100毫秒
+        int index = mediaCodec.dequeueInputBuffer(100 * 1000);
+        if (index < 0) {
+            return;
+        }
+        // 填数据
+        ByteBuffer inputBuffer = mediaCodec.getInputBuffer(index);
+        Log.e(TAG, String.format("index    %s", index));
+        byte[] data = new byte[byteBuffer.remaining()];
+        byteBuffer.get(data);
+        inputBuffer.put(data);
+
+        // 入队
+        mediaCodec.queueInputBuffer(index, 0, byteBuffer.remaining(), 0, 0);
+
+
+        // 获取输出队列下标，最多等待100毫秒
+        int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 100 * 1000);
+        if (dequeueOutputBufferIndex < 0) {
+            return;
+        }
+        // xxxx
+        mediaCodec.releaseOutputBuffer(dequeueOutputBufferIndex, true);
     }
 
     // 获取帧数
