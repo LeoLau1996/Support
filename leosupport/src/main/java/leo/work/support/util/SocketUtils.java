@@ -110,7 +110,7 @@ public class SocketUtils {
             };
             webSocketClient.connect();
         } catch (URISyntaxException e) {
-
+            Log.e(TAG, String.format("URISyntaxException    e = %s", e.getMessage()));
         }
     }
 
