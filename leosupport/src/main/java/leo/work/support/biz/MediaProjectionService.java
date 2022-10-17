@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.hardware.display.DisplayManager;
+import android.hardware.display.VirtualDisplay;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
@@ -215,7 +216,8 @@ public class MediaProjectionService extends Service {
         int flags = DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC;
         // 请求 Surface 用作编码器的输入，以代替输入缓冲区。
         Surface surface = mediaCodec.createInputSurface();
-        mediaProjection.createVirtualDisplay(name, width, height, dpi, flags, surface, null, null);
+        // 创建场地
+        VirtualDisplay virtualDisplay = mediaProjection.createVirtualDisplay(name, width, height, dpi, flags, surface, null, null);
 
         outPut();
     }
