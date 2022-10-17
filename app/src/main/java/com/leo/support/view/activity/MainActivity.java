@@ -1,34 +1,21 @@
 package com.leo.support.view.activity;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.media.projection.MediaProjectionManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import com.leo.support.R;
 import com.leo.support.databinding.ActivityMainBinding;
 import com.leo.support.info.AppPath;
-import com.leo.support.utils.SocketUtils;
 
 import leo.work.support.base.activity.CommonActivity;
 import leo.work.support.biz.MediaProjectionBiz;
-import leo.work.support.biz.MediaProjectionService;
-import leo.work.support.biz.PermissionBiz;
-import leo.work.support.biz.WorkFlow.CommonWorkFlowBiz;
-import leo.work.support.biz.WorkFlow.WorkFlowControl;
-import leo.work.support.biz.WorkFlow.WorkFlowTask;
 import leo.work.support.support.toolSupport.LeoSupport;
 import leo.work.support.util.JumpUtil;
+import leo.work.support.util.SocketUtils;
 
 public class MainActivity extends CommonActivity<ActivityMainBinding> {
 

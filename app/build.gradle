@@ -46,6 +46,4 @@ dependencies {
     //Support
     implementation project(':leosupport')
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
-    // WebSocket
-    implementation "org.java-websocket:Java-WebSocket:1.4.0"
 }

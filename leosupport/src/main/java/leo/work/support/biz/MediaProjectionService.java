@@ -17,6 +17,7 @@ import android.media.MediaFormat;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Surface;
@@ -31,6 +32,7 @@ import java.nio.ByteBuffer;
 import leo.work.support.R;
 import leo.work.support.support.file.FileSupport;
 import leo.work.support.util.NotifyUtils;
+import leo.work.support.util.SocketUtils;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -83,12 +85,6 @@ public class MediaProjectionService extends Service {
     private int width, height;
     // 配置帧缓存
     private byte[] configFrameCase;
-    // VPS缓存
-    private byte[] vpsCase;
-    // SPS缓存
-    private byte[] spsCase;
-    // PPS缓存
-    private byte[] ppsCase;
 
     // 开始录频
     private static final String ACTION_START = "ACTION_START";
@@ -252,7 +248,7 @@ public class MediaProjectionService extends Service {
                 byte[] data = new byte[info.size];
                 byteBuffer.get(data);
                 Log.e(TAG, String.format("写入数据    dequeueOutputBufferIndex = %s    写入长度 = %s", dequeueOutputBufferIndex, data.length));
-                xxxx(data);
+                handlerData(data);
                 // xxxx
                 mediaCodec.releaseOutputBuffer(dequeueOutputBufferIndex, false);
             }
@@ -271,7 +267,7 @@ public class MediaProjectionService extends Service {
     private static final int NAL_I = 5;
     private static final int NAL_SPS = 7;
 
-    private void xxxx(byte[] data) {
+    public void handlerData(byte[] data) {
         // 把data写到本地文件
         //FileSupport.writeBytes(path, true, data);
         int index = 4;
@@ -281,6 +277,7 @@ public class MediaProjectionService extends Service {
         }
 
         int type = (data[index] & 0x1f); // 0x1f 也就是0001 1111 通过与运算就可以得到类型
+        Log.e("liu1017", String.format("type = %s", type));
         switch (type) {
             // 配置帧
             case NAL_SPS: {
@@ -291,12 +288,15 @@ public class MediaProjectionService extends Service {
             // I帧
             case NAL_I: {
                 byte[] newData = new byte[configFrameCase.length + data.length];
-                System.arraycopy(configFrameCase, 0, newData, 0, spsCase.length);
-                System.arraycopy(data, 0, newData, spsCase.length, data.length);
+                Log.e("liu1017", String.format("configFrameCase = %s    data = %s    newData = %s", configFrameCase.length, data.length, newData.length));
+                System.arraycopy(configFrameCase, 0, newData, 0, configFrameCase.length);
+                System.arraycopy(data, 0, newData, configFrameCase.length, data.length);
+                SocketUtils.getInstance().send(newData);
                 break;
             }
             //
             default: {
+                SocketUtils.getInstance().send(data);
                 break;
             }
         }

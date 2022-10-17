@@ -63,5 +63,7 @@ dependencies {
     implementation files('libs/BASE64Encoder.jar')
     //多包
     implementation 'androidx.multidex:multidex:2.0.1'
+    // WebSocket
+    implementation "org.java-websocket:Java-WebSocket:1.4.0"
 
 }

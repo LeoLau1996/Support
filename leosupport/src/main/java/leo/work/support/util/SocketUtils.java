@@ -1,4 +1,4 @@
-package com.leo.support.utils;
+package leo.work.support.util;
 
 import android.util.Log;
 
@@ -12,8 +12,6 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
-
-import leo.work.support.biz.SingleThreadBiz;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -116,7 +114,7 @@ public class SocketUtils {
     }
 
     public void send(byte[] bytes) {
-        if (canSend()) {
+        if (!canSend()) {
             Log.e(TAG, "发送拦截");
             return;
         }
@@ -125,8 +123,20 @@ public class SocketUtils {
     }
 
     public boolean canSend() {
-        if (webSocketClient == null || webSocketClient.isClosing() || webSocketClient.isClosed() || !webSocketClient.isOpen()) {
-            Log.e(TAG, "发送拦截");
+        if (webSocketClient == null) {
+            Log.e(TAG, "发送拦截1");
+            return false;
+        }
+        if (webSocketClient.isClosing()) {
+            Log.e(TAG, "发送拦截2");
+            return false;
+        }
+        if (webSocketClient.isClosed()) {
+            Log.e(TAG, "发送拦截3");
+            return false;
+        }
+        if (!webSocketClient.isOpen()) {
+            Log.e(TAG, "发送拦截4");
             return false;
         }
         return true;
