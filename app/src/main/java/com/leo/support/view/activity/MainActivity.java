@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import com.leo.support.R;
 import com.leo.support.databinding.ActivityMainBinding;
 import com.leo.support.info.AppPath;
+import com.leo.support.utils.SocketUtils;
 
 import leo.work.support.base.activity.CommonActivity;
 import leo.work.support.biz.MediaProjectionBiz;
@@ -75,6 +76,9 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
             public void onClick(View v) {
                 JumpUtil.go(activity, CameraActivity.class);
             }
+        });
+        binding.btnOpenSocket.setOnClickListener(v -> {
+            new SocketUtils().openWebSocket();
         });
     }
 
