@@ -41,6 +41,7 @@ import leo.work.support.util.NotifyUtils;
  * 代码创建: Leo
  * ---------------------------------------------------------------------------------------------
  * 代码备注: <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+ * 帧类型：https://blog.csdn.net/zhaoyun_zzz/article/details/87302600
  * ---------------------------------------------------------------------------------------------
  **/
 public class MediaProjectionService extends Service {
@@ -80,6 +81,14 @@ public class MediaProjectionService extends Service {
     private String path;
     // 视频宽高
     private int width, height;
+    // 配置帧缓存
+    private byte[] configFrameCase;
+    // VPS缓存
+    private byte[] vpsCase;
+    // SPS缓存
+    private byte[] spsCase;
+    // PPS缓存
+    private byte[] ppsCase;
 
     // 开始录频
     private static final String ACTION_START = "ACTION_START";
@@ -243,9 +252,7 @@ public class MediaProjectionService extends Service {
                 byte[] data = new byte[info.size];
                 byteBuffer.get(data);
                 Log.e(TAG, String.format("写入数据    dequeueOutputBufferIndex = %s    写入长度 = %s", dequeueOutputBufferIndex, data.length));
-                // 把data写到本地文件
-                FileSupport.writeBytes(path, true, data);
-
+                xxxx(data);
                 // xxxx
                 mediaCodec.releaseOutputBuffer(dequeueOutputBufferIndex, false);
             }
@@ -259,6 +266,41 @@ public class MediaProjectionService extends Service {
 
 
         }).start();
+    }
+
+    private static final int NAL_I = 5;
+    private static final int NAL_SPS = 7;
+
+    private void xxxx(byte[] data) {
+        // 把data写到本地文件
+        //FileSupport.writeBytes(path, true, data);
+        int index = 4;
+        // 适配：有些分隔符是00 00 01
+        if (data[2] == 0x01) {
+            index = 3;
+        }
+
+        int type = (data[index] & 0x1f); // 0x1f 也就是0001 1111 通过与运算就可以得到类型
+        switch (type) {
+            // 配置帧
+            case NAL_SPS: {
+                // 缓存配置帧
+                configFrameCase = data;
+                break;
+            }
+            // I帧
+            case NAL_I: {
+                byte[] newData = new byte[configFrameCase.length + data.length];
+                System.arraycopy(configFrameCase, 0, newData, 0, spsCase.length);
+                System.arraycopy(data, 0, newData, spsCase.length, data.length);
+                break;
+            }
+            //
+            default: {
+                break;
+            }
+        }
+
     }
 
 
