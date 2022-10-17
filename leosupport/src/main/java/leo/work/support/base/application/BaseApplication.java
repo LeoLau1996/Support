@@ -30,10 +30,7 @@ public abstract class BaseApplication extends Application {
             return;
         }
         application = this;
-        init();
     }
-
-    protected abstract void init();
 
     public static BaseApplication getApplication() {
         return application;
