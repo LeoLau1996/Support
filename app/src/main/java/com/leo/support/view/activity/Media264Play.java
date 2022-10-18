@@ -50,7 +50,7 @@ public class Media264Play implements Runnable {
                 return;
             }
             // 获取输入队列下标，最多等待100毫秒
-            int index = mediaCodec.dequeueInputBuffer(100 * 1000);
+            int index = mediaCodec.dequeueInputBuffer(10 * 1000);
             if (index < 0) {
                 continue;
             }
@@ -66,7 +66,7 @@ public class Media264Play implements Runnable {
             startIndex = nextIndex;
 
             // 获取输出队列下标，最多等待100毫秒
-            int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 100 * 1000);
+            int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 10 * 1000);
             if (dequeueOutputBufferIndex < 0) {
                 continue;
             }
@@ -89,7 +89,7 @@ public class Media264Play implements Runnable {
             // 创建视频格式 这里的宽高设置错误其实也没关系，解码器会从sps中解析到真实数据，但是如果sps解析异常 这个参数就非常重要
             MediaFormat mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_AVC, 1080, 2400);
             // 设置解码帧数
-            mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 30);
+            mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 60);
             // 设置编解码器配置信息
             // crypto 加密的意思  不需要加密直接传null
             mediaCodec.configure(mediaFormat, surface, null, 0);
@@ -109,7 +109,7 @@ public class Media264Play implements Runnable {
     // 播放
     public void play(ByteBuffer byteBuffer) {
         // 获取输入队列下标，最多等待100毫秒
-        int inputBufferIndex = mediaCodec.dequeueInputBuffer(100 * 1000);
+        int inputBufferIndex = mediaCodec.dequeueInputBuffer(10 * 1000);
         if (inputBufferIndex >= 0) {
             // 填数据
             ByteBuffer inputBuffer = mediaCodec.getInputBuffer(inputBufferIndex);
@@ -124,7 +124,7 @@ public class Media264Play implements Runnable {
 
 
         // 获取输出队列下标，最多等待100毫秒
-        for (int outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 100 * 1000); outputBufferIndex >= 0; outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 100 * 1000)) {
+        for (int outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 10 * 1000); outputBufferIndex >= 0; outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 10 * 1000)) {
             mediaCodec.releaseOutputBuffer(outputBufferIndex, true);
         }
     }

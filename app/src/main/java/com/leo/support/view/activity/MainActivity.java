@@ -82,7 +82,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
             media264Play = new Media264Play(holder.getSurface());
         });
         binding.btnConnectSocket.setOnClickListener(v -> {
-            SocketUtils.getInstance().connect("ws://192.168.31.24:9007");
+            SocketUtils.getInstance().connect("ws://192.168.0.183:9007");
         });
         binding.btnSendTest.setOnClickListener(v -> {
             byte[] bytes = {1, 2, 3};
