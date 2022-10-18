@@ -196,9 +196,9 @@ public class MediaProjectionService extends Service {
         // 录制信息 这些信息都会保存到配置帧sps
         MediaFormat mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_AVC, width, height);
         // 录制信息 ---- 帧率（实际上帧率可以随便传，他只是会在PTS上按照帧率的时间间隔递增比如20帧也就是间隔(1000/20 = 50ms) PTS就会按照50ms递增）
-        mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 60);
+        mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 20);
         // 设置I帧间隔
-        mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 30);
+        mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
         // 设置码率(一般就是宽*高) 你可以理解码率位压缩等级  码率越高质量越好
         mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, width * height);
         // 数据来源
