@@ -41,9 +41,9 @@ public class SocketUtils {
     private WebSocketServer webSocketServer;
     private WebSocketClient webSocketClient;
 
-    public void openWebSocket(OnSocketUtilsCallBack callBack) {
+    public void openWebSocket(int port,OnSocketUtilsCallBack callBack) {
         Log.e(TAG, "openWebSocket");
-        webSocketServer = new WebSocketServer(new InetSocketAddress(9007)) {
+        webSocketServer = new WebSocketServer(new InetSocketAddress(port)) {
             @Override
             public void onOpen(WebSocket conn, ClientHandshake handshake) {
                 Log.e(TAG, "WebSocketServer ---- onOpen");
@@ -79,9 +79,9 @@ public class SocketUtils {
         webSocketServer.start();
     }
 
-    public void connect() {
+    public void connect(String url) {
         try {
-            webSocketClient = new WebSocketClient(new URI("ws://192.168.0.183:9007")) {
+            webSocketClient = new WebSocketClient(new URI(url)) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                     Log.e(TAG, "WebSocketClient ---- onOpen");

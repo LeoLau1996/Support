@@ -196,7 +196,7 @@ public class MediaProjectionService extends Service {
         // 录制信息 这些信息都会保存到配置帧sps
         MediaFormat mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_AVC, width, height);
         // 录制信息 ---- 帧率（实际上帧率可以随便传，他只是会在PTS上按照帧率的时间间隔递增比如20帧也就是间隔(1000/20 = 50ms) PTS就会按照50ms递增）
-        mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 20);
+        mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 60);
         // 设置I帧间隔
         mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 30);
         // 设置码率(一般就是宽*高) 你可以理解码率位压缩等级  码率越高质量越好
@@ -223,7 +223,6 @@ public class MediaProjectionService extends Service {
         Surface surface = mediaCodec.createInputSurface();
         // 创建场地
         VirtualDisplay virtualDisplay = mediaProjection.createVirtualDisplay(name, width, height, dpi, flags, surface, null, null);
-
         outPut();
     }
 
@@ -238,8 +237,9 @@ public class MediaProjectionService extends Service {
             // 这里输出即可 输入数据的过程谷歌已经帮我们实现了
             while (recording) {
                 // 获得输出下标
-                int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(info, 100 * 1000);
+                int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(info, 10 * 1000);
                 if (dequeueOutputBufferIndex < 0) {
+
                     continue;
                 }
                 // 获得输出内容

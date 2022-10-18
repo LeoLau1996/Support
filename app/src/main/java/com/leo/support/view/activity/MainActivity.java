@@ -68,7 +68,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
             }
         });
         binding.btnOpenSocket.setOnClickListener(v -> {
-            SocketUtils.getInstance().openWebSocket(byteBuffer -> {
+            SocketUtils.getInstance().openWebSocket(9007, byteBuffer -> {
                 if (media264Play == null) {
                     return;
                 }
@@ -82,7 +82,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
             media264Play = new Media264Play(holder.getSurface());
         });
         binding.btnConnectSocket.setOnClickListener(v -> {
-            SocketUtils.getInstance().connect();
+            SocketUtils.getInstance().connect("ws://192.168.31.24:9007");
         });
         binding.btnSendTest.setOnClickListener(v -> {
             byte[] bytes = {1, 2, 3};
