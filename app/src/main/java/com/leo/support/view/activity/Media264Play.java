@@ -111,7 +111,7 @@ public class Media264Play implements Runnable {
     // 播放
     public void play(ByteBuffer byteBuffer) {
         // 获取输入队列下标，最多等待100毫秒
-        int inputBufferIndex = mediaCodec.dequeueInputBuffer(100000);
+        int inputBufferIndex = mediaCodec.dequeueInputBuffer(0);
         if (inputBufferIndex >= 0) {
             // 填数据
             ByteBuffer inputBuffer = mediaCodec.getInputBuffer(inputBufferIndex);
@@ -126,7 +126,7 @@ public class Media264Play implements Runnable {
 
 
         // 获取输出队列下标，最多等待100毫秒
-        for (int outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 10 * 1000); outputBufferIndex >= 0; outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0)) {
+        for (int outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0); outputBufferIndex >= 0; outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0)) {
             mediaCodec.releaseOutputBuffer(outputBufferIndex, true);
         }
     }
