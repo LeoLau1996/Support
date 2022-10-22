@@ -16,6 +16,7 @@ import java.nio.ByteBuffer;
 import leo.work.support.base.activity.CommonActivity;
 import leo.work.support.biz.MediaProjectionBiz;
 import leo.work.support.support.toolSupport.LeoSupport;
+import leo.work.support.util.A2BSupport;
 import leo.work.support.util.JumpUtil;
 import leo.work.support.util.SocketUtils;
 
@@ -38,14 +39,19 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         initSurface();
+        binding.etPath.setText(AppPath.getAppCache());
+        binding.etPort.setText("9007");
+        binding.etSocketAddress.setText("ws://192.168.0.183:9007");
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+        binding.btnMenu.setOnClickListener(v -> {
+            binding.llManu.setVisibility(binding.llManu.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+        });
         binding.btnPlay.setOnClickListener(v -> {
             String path = binding.etPath.getText().toString();
-            path = "/storage/emulated/0/Android/data/com.leo.support/files/Download/case/camera_1665567722897.h264";
             media264Play = new Media264Play(path, holder.getSurface());
             media264Play.play();
         });
@@ -61,32 +67,19 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
             }
             mediaProjectionBiz.stop();
         });
-        binding.btnCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                JumpUtil.go(activity, CameraActivity.class);
-            }
+        binding.btnCamera.setOnClickListener(v -> {
+            JumpUtil.go(activity, CameraActivity.class);
         });
         binding.btnOpenSocket.setOnClickListener(v -> {
-            SocketUtils.getInstance().openWebSocket(9007, byteBuffer -> {
+            SocketUtils.getInstance().openWebSocket(A2BSupport.String2int(binding.etPort.getText().toString()), byteBuffer -> {
                 if (media264Play == null) {
-                    return;
+                    media264Play = new Media264Play(holder.getSurface());
                 }
                 media264Play.play(byteBuffer);
             });
         });
-        binding.btnInit.setOnClickListener(v -> {
-            if (media264Play != null) {
-                return;
-            }
-            media264Play = new Media264Play(holder.getSurface());
-        });
         binding.btnConnectSocket.setOnClickListener(v -> {
-            SocketUtils.getInstance().connect("ws://192.168.0.183:9007");
-        });
-        binding.btnSendTest.setOnClickListener(v -> {
-            byte[] bytes = {1, 2, 3};
-            SocketUtils.getInstance().send(bytes);
+            SocketUtils.getInstance().connect(binding.etSocketAddress.getText().toString());
         });
     }
 

@@ -132,7 +132,7 @@ public class LocalSurfaceView extends SurfaceView implements Camera.PreviewCallb
     }
 
     /**
-     * @param data   NV21格式数据 只有Android支持NV21c
+     * @param data   NV21格式数据 只有Android支持NV21
      * @param camera
      */
     @Override
@@ -140,17 +140,28 @@ public class LocalSurfaceView extends SurfaceView implements Camera.PreviewCallb
         Log.e(TAG, String.format("onPreviewFrame    data = %s", data.length));
         if (mediaCodec == null || !record) {
             return;
-         }
+        }
         encode(data);
         //
         mCamera.addCallbackBuffer(data);
     }
 
-    // 编码
+    /**
+     * 编码
+     * NV21转NV12与画面旋转
+     * https://blog.csdn.net/chailongger/article/details/84675574
+     *
+     * @param data
+     */
     private void encode(byte[] data) {
         if (mediaCodec == null) {
             return;
         }
+
+        //NV21 ----> NV12(YUV420)
+
+        // 旋转
+
         // 输入
         int dequeueInputBufferIndex = mediaCodec.dequeueInputBuffer(100 * 1000);
         if (dequeueInputBufferIndex < 0) {

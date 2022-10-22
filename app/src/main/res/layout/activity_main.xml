@@ -15,16 +15,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <Button
+            android:id="@+id/btnMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="菜单" />
+
         <LinearLayout
+            android:id="@+id/llManu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical">
+            android:background="#80000000"
+            android:orientation="vertical"
+            android:padding="15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/btnPlay"
@@ -34,18 +44,20 @@
 
                 <EditText
                     android:id="@+id/etPath"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_centerInParent="true"
-                    android:layout_weight="1"
-                    android:background="@color/Red"
-                    android:hint="请输入播放路径" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:hint="请输入播放路径"
+                    android:padding="16dp"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <Button
@@ -66,24 +78,37 @@
                 android:id="@+id/btnCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Camera" />
+                android:layout_marginTop="8dp"
+                android:text="录制摄像头画面" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/btnOpenSocket"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="打开Socket端口" />
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btnInit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="初始化" />
+                    <Button
+                        android:id="@+id/btnOpenSocket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="打开Socket端口" />
+
+                    <EditText
+                        android:id="@+id/etPort"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:hint="请输入端口号"
+                        android:padding="16dp"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
 
                 <Button
@@ -92,11 +117,15 @@
                     android:layout_height="wrap_content"
                     android:text="连接到Socket" />
 
-                <Button
-                    android:id="@+id/btnSendTest"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/etSocketAddress"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="测试发送" />
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:hint="请输入Socket地址与端口号"
+                    android:padding="16dp"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
