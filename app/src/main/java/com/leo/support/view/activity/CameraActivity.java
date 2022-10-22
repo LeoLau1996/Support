@@ -1,12 +1,15 @@
 package com.leo.support.view.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.leo.support.R;
 import com.leo.support.databinding.ActivityCameraBinding;
 
 import leo.work.support.base.activity.CommonActivity;
+import leo.work.support.support.toolSupport.LeoSupport;
+import leo.work.support.util.CommonUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -40,17 +43,13 @@ public class CameraActivity extends CommonActivity<ActivityCameraBinding> {
     @Override
     protected void initListener() {
         super.initListener();
-        binding.btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.mLocalSurfaceView.startRecording();
-            }
+        binding.btnStart.setOnClickListener(v -> {
+            binding.mLocalSurfaceView.startRecording();
         });
-        binding.btnStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.mLocalSurfaceView.stopRecord();
-            }
+        binding.btnStop.setOnClickListener(v -> {
+            String path = binding.mLocalSurfaceView.stopRecord();
+            CommonUtil.copy(activity, path);
+            Log.e("liu1022", "path = " + path);
         });
     }
 }
