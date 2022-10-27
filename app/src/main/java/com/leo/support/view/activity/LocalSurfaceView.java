@@ -179,6 +179,8 @@ public class LocalSurfaceView extends SurfaceView implements Camera.PreviewCallb
         mediaCodec.queueInputBuffer(dequeueInputBufferIndex, 0, yuv.length, pts, 0);
 
         // 输出
+        //int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(info, 100 * 1000);
+        //if (dequeueOutputBufferIndex >= 0) {
         for (int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(info, 100 * 1000); dequeueOutputBufferIndex >= 0; dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(info, 100 * 1000)) {
             ByteBuffer outputByteBuffer = mediaCodec.getOutputBuffer(dequeueOutputBufferIndex);
             if (outputBytes == null || outputBytes.length != info.size) {

@@ -87,10 +87,10 @@ public class Media264Play implements Runnable {
             // 解码器
             mediaCodec = MediaCodec.createDecoderByType(MediaFormat.MIMETYPE_VIDEO_AVC);
             // 创建视频格式 这里的宽高设置错误其实也没关系，解码器会从sps中解析到真实数据，但是如果sps解析异常 这个参数就非常重要
-            MediaFormat mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_AVC, 720, 1280);
+            MediaFormat mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_AVC, 1080, 1920);
             // 设置解码帧数
             mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 20);
-            mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, 720 * 1280);
+            mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, 1080 * 1920);
             mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
             // 设置编解码器配置信息
             // crypto 加密的意思  不需要加密直接传null
