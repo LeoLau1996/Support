@@ -21,7 +21,7 @@ import leo.work.support.support.file.FileSupport;
 
 /**
  * ---------------------------------------------------------------------------------------------
- * 功能描述:
+ * 功能描述: 预览摄像头并录制
  * ---------------------------------------------------------------------------------------------
  * 时　　间: 2022/10/12
  * ---------------------------------------------------------------------------------------------
@@ -32,15 +32,14 @@ import leo.work.support.support.file.FileSupport;
  * 官方API文档：https://developer.android.com/reference/android/hardware/Camera
  * ---------------------------------------------------------------------------------------------
  **/
-public class LocalSurfaceView extends SurfaceView implements Camera.PreviewCallback {
+public class CameraRecordedView extends SurfaceView implements Camera.PreviewCallback {
 
     // 摄像头
     private Camera mCamera;
     private Camera.Size size;
     // 编解码器
     private MediaCodec mediaCodec;
-    // 录制路径
-    private String path;
+    // xxx
     private MediaCodec.BufferInfo info = new MediaCodec.BufferInfo();
     // 录制状态
     private volatile boolean record;
@@ -52,14 +51,16 @@ public class LocalSurfaceView extends SurfaceView implements Camera.PreviewCallb
     private byte[] nv12, yuv, outputBytes;
     // 当前帧
     private int index;
+    // 回调接口
+    private OnCameraRecordedViewCallBack callBack;
     // 日志
-    private final String TAG = LocalSurfaceView.class.getSimpleName();
+    private final String TAG = CameraRecordedView.class.getSimpleName();
 
-    public LocalSurfaceView(Context context) {
+    public CameraRecordedView(Context context) {
         super(context);
     }
 
-    public LocalSurfaceView(Context context, AttributeSet attrs) {
+    public CameraRecordedView(Context context, AttributeSet attrs) {
         super(context, attrs);
         Log.e(TAG, "LocalSurfaceView");
         getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -81,7 +82,7 @@ public class LocalSurfaceView extends SurfaceView implements Camera.PreviewCallb
         });
     }
 
-    public LocalSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CameraRecordedView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -187,8 +188,10 @@ public class LocalSurfaceView extends SurfaceView implements Camera.PreviewCallb
                 outputBytes = new byte[info.size];
             }
             outputByteBuffer.get(outputBytes);
-            // 保存数据到本地
-            FileSupport.writeBytes(path, true, outputBytes);
+            // 回调处理
+            if (callBack != null) {
+                callBack.onOutPutBytes(outputBytes);
+            }
             mediaCodec.releaseOutputBuffer(dequeueOutputBufferIndex, false);
         }
     }
@@ -199,15 +202,23 @@ public class LocalSurfaceView extends SurfaceView implements Camera.PreviewCallb
             return;
         }
         record = true;
-        path = String.format("%scamera_%s.h264", AppPath.getAppCache(), System.currentTimeMillis());
         index = 0;
         // xxx
         mCamera.addCallbackBuffer(new byte[size.width * size.height * 3 / 2]);
     }
 
-    public String stopRecord() {
+    public void stopRecord() {
         record = false;
-        return path;
+    }
+
+    public void setCallBack(OnCameraRecordedViewCallBack callBack) {
+        this.callBack = callBack;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        this.callBack = null;
     }
 
     // NV21转NV12
@@ -226,7 +237,7 @@ public class LocalSurfaceView extends SurfaceView implements Camera.PreviewCallb
         return nv12;
     }
 
-    //暂时理解到这里
+    // 暂时理解到这里
     public static byte[] portraitData2Raw(byte[] data, byte[] output, int width, int height) {
         int bufferLength = width * height * 3 / 2;
         if (output == null || output.length != bufferLength) {
@@ -249,5 +260,9 @@ public class LocalSurfaceView extends SurfaceView implements Camera.PreviewCallb
         return output;
     }
 
+    public interface OnCameraRecordedViewCallBack {
 
+        void onOutPutBytes(byte[] outputBytes);
+
+    }
 }

@@ -6,8 +6,10 @@ import android.view.View;
 
 import com.leo.support.R;
 import com.leo.support.databinding.ActivityCameraBinding;
+import com.leo.support.info.AppPath;
 
 import leo.work.support.base.activity.CommonActivity;
+import leo.work.support.support.file.FileSupport;
 import leo.work.support.support.toolSupport.LeoSupport;
 import leo.work.support.util.CommonUtil;
 
@@ -24,6 +26,8 @@ import leo.work.support.util.CommonUtil;
  * ---------------------------------------------------------------------------------------------
  **/
 public class CameraActivity extends CommonActivity<ActivityCameraBinding> {
+
+    private String path;
 
     @Override
     protected int setLayout() {
@@ -44,12 +48,19 @@ public class CameraActivity extends CommonActivity<ActivityCameraBinding> {
     protected void initListener() {
         super.initListener();
         binding.btnStart.setOnClickListener(v -> {
-            binding.mLocalSurfaceView.startRecording();
+            path = String.format("%scamera_%s.h264", AppPath.getAppCache(), System.currentTimeMillis());
+            binding.mCameraRecordedView.startRecording();
         });
         binding.btnStop.setOnClickListener(v -> {
-            String path = binding.mLocalSurfaceView.stopRecord();
+            binding.mCameraRecordedView.stopRecord();
             CommonUtil.copy(activity, path);
             Log.e("liu1022", "path = " + path);
+        });
+
+
+        binding.mCameraRecordedView.setCallBack(outputBytes -> {
+            // 保存数据到本地
+            FileSupport.writeBytes(path, true, outputBytes);
         });
     }
 }
