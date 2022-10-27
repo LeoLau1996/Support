@@ -164,11 +164,18 @@ public class CameraRecordedView extends SurfaceView implements Camera.PreviewCal
             return;
         }
 
+        /**
+         * 预处理数据
+         */
         // NV21 ----> NV12(YUV420)
         nv12 = nv21toNV12(nv21Bytes, nv12);
         // 旋转
         yuv = portraitData2Raw(nv12, yuv, size.width, size.height);
-        // 输入
+
+
+        /**
+         * 输入
+         */
         int dequeueInputBufferIndex = mediaCodec.dequeueInputBuffer(100 * 1000);
         if (dequeueInputBufferIndex < 0) {
             return;
@@ -179,7 +186,9 @@ public class CameraRecordedView extends SurfaceView implements Camera.PreviewCal
         int pts = 1000000 / frameRate * index;
         mediaCodec.queueInputBuffer(dequeueInputBufferIndex, 0, yuv.length, pts, 0);
 
-        // 输出
+        /**
+         * 输出
+         */
         //int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(info, 100 * 1000);
         //if (dequeueOutputBufferIndex >= 0) {
         for (int dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(info, 100 * 1000); dequeueOutputBufferIndex >= 0; dequeueOutputBufferIndex = mediaCodec.dequeueOutputBuffer(info, 100 * 1000)) {
