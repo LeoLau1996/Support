@@ -83,7 +83,6 @@ public class FileSupport {
             // 打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
             fileOutputStream = new FileOutputStream(path, append);
             fileOutputStream.write(data);
-            fileOutputStream.write('\n');
         } catch (IOException e) {
             Log.e("TAG", "1    异常：" + e.getMessage());
         } finally {

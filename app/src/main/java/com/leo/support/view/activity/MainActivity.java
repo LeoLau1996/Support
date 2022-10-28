@@ -12,8 +12,10 @@ import com.leo.support.databinding.ActivityMainBinding;
 import com.leo.support.info.AppPath;
 
 import leo.work.support.base.activity.CommonActivity;
+import leo.work.support.biz.AudioRecordBiz;
 import leo.work.support.biz.MediaProjectionBiz;
 import leo.work.support.biz.MediaProjectionService;
+import leo.work.support.support.file.FileSupport;
 import leo.work.support.support.toolSupport.LeoSupport;
 import leo.work.support.util.A2BSupport;
 import leo.work.support.util.JumpUtil;
@@ -24,6 +26,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
     private MediaProjectionBiz mediaProjectionBiz;
     private SurfaceHolder holder;
     private Media264Play media264Play;
+    private AudioRecordBiz audioRecordBiz;
 
     @Override
     protected int setLayout() {
@@ -87,6 +90,21 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
         });
         binding.btnLiveClient.setOnClickListener(v -> {
             LiveActivity.go(activity, MediaProjectionService.SOCKE_TYPE_CLIENT);
+        });
+        binding.btnAudioRecord.setOnClickListener(v -> {
+            if (audioRecordBiz == null) {
+                audioRecordBiz = new AudioRecordBiz(this);
+            }
+            if (audioRecordBiz.isRecording()) {
+                audioRecordBiz.endRecord();
+                binding.btnAudioRecord.setText("开始录音");
+                return;
+            }
+            binding.btnAudioRecord.setText("停止录音");
+            String path = String.format("%srecord_%s.pcm", AppPath.getAppCache(), System.currentTimeMillis());
+            audioRecordBiz.startRecord(data -> {
+                FileSupport.writeBytes(path, true, data);
+            });
         });
     }
 
