@@ -48,6 +48,7 @@ public class MediaProjectionBiz extends CommonLifeBiz {
 
     private static final String TAG = MediaProjectionBiz.class.getSimpleName();
     private PermissionBiz permissionBiz;
+    private int socketType;
     // 保存路径
     private String path;
     // 视频宽高
@@ -57,10 +58,11 @@ public class MediaProjectionBiz extends CommonLifeBiz {
         super(lifeControlInterface);
     }
 
-    public void start(String path, int width, int height) {
+    public void start(int socketType, String path, int width, int height) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return;
         }
+        this.socketType = socketType;
         this.path = path;
         this.width = width;
         this.height = height;
@@ -96,7 +98,7 @@ public class MediaProjectionBiz extends CommonLifeBiz {
         }
         switch (requestCode) {
             case 10001: {
-                MediaProjectionService.startService(getActivity(), path, width, height, resultCode, data);
+                MediaProjectionService.startService(getActivity(), socketType, path, width, height, resultCode, data);
                 break;
             }
         }

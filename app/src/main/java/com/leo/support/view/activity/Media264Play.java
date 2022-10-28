@@ -110,24 +110,28 @@ public class Media264Play implements Runnable {
 
     // 播放
     public void play(ByteBuffer byteBuffer) {
-        // 获取输入队列下标，最多等待100毫秒
-        int inputBufferIndex = mediaCodec.dequeueInputBuffer(0);
-        if (inputBufferIndex >= 0) {
-            // 填数据
-            ByteBuffer inputBuffer = mediaCodec.getInputBuffer(inputBufferIndex);
-            inputBuffer.clear();
-            byte[] data = new byte[byteBuffer.remaining()];
-            byteBuffer.get(data);
-            inputBuffer.put(data);
+        try {
+            // 获取输入队列下标，最多等待100毫秒
+            int inputBufferIndex = mediaCodec.dequeueInputBuffer(15000);
+            if (inputBufferIndex >= 0) {
+                // 填数据
+                ByteBuffer inputBuffer = mediaCodec.getInputBuffer(inputBufferIndex);
+                inputBuffer.clear();
+                byte[] data = new byte[byteBuffer.remaining()];
+                byteBuffer.get(data);
+                inputBuffer.put(data);
 
-            // 入队
-            mediaCodec.queueInputBuffer(inputBufferIndex, 0, data.length, System.currentTimeMillis(), 0);
-        }
+                // 入队
+                mediaCodec.queueInputBuffer(inputBufferIndex, 0, data.length, System.currentTimeMillis(), 0);
+            }
 
 
-        // 获取输出队列下标，最多等待100毫秒
-        for (int outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0); outputBufferIndex >= 0; outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0)) {
-            mediaCodec.releaseOutputBuffer(outputBufferIndex, true);
+            // 获取输出队列下标，最多等待100毫秒
+            for (int outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0); outputBufferIndex >= 0; outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0)) {
+                mediaCodec.releaseOutputBuffer(outputBufferIndex, true);
+            }
+        } catch (Exception exception) {
+            Log.e(TAG, "play    Exception:" + exception.getMessage());
         }
     }
 
@@ -144,19 +148,7 @@ public class Media264Play implements Runnable {
         return -1;
     }
 
-    public static String byteToHexString(Byte b) {
-        final String HEX = "0123456789abcdef";
-        StringBuilder sb = new StringBuilder();
-        /**
-         * 为什么要与0xof运算 因为0xof的二进制是0000 1111，同时1&运算得出原数，0&运算得出0
-         */
-        // 1.取出字节b的高四位的数值并追加
-        // 把高四位向右移四位，与 0x0f运算得出高四位的数值
-        sb.append(HEX.charAt((b >> 4) & 0x0f));
-        // 2.取出低四位的值并追加
-        // 直接与 0x0f运算得出低四位的数值
-        sb.append(HEX.charAt(b & 0x0f));
-        return sb.toString();
+    public void release() {
+        mediaCodec.release();
     }
-
 }

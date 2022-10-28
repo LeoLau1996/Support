@@ -41,7 +41,7 @@ public class SocketUtils {
     private WebSocketServer webSocketServer;
     private WebSocketClient webSocketClient;
 
-    public void openWebSocket(int port,OnSocketUtilsCallBack callBack) {
+    public void openWebSocket(int port, OnSocketUtilsCallBack callBack) {
         Log.e(TAG, "openWebSocket");
         webSocketServer = new WebSocketServer(new InetSocketAddress(port)) {
             @Override
@@ -79,7 +79,7 @@ public class SocketUtils {
         webSocketServer.start();
     }
 
-    public void connect(String url) {
+    public void clientConnect(String url, OnSocketUtilsCallBack callBack) {
         try {
             webSocketClient = new WebSocketClient(new URI(url)) {
                 @Override
@@ -96,11 +96,13 @@ public class SocketUtils {
                 public void onMessage(ByteBuffer bytes) {
                     super.onMessage(bytes);
                     Log.e(TAG, String.format("WebSocketClient ---- onMessage    ByteBuffer    bytes长度 = %s", bytes.remaining()));
+                    callBack.onMessage(bytes);
                 }
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
                     Log.e(TAG, String.format("WebSocketClient ---- onClose    code = %s    reason = %s    remote = %s", code, reason, remote));
+                    clientReconnect();
                 }
 
                 @Override
@@ -114,30 +116,54 @@ public class SocketUtils {
         }
     }
 
-    public void send(byte[] bytes) {
-        if (!canSend()) {
-            Log.e(TAG, "发送拦截");
+    // 重连
+    public void clientReconnect() {
+        if (webSocketClient == null) {
             return;
         }
-        Log.e(TAG, String.format("发送数据    bytes = %s", bytes.length));
+        webSocketClient.reconnect();
+    }
+
+    // xxx
+    public void serverSend(byte[] bytes) {
+        if (webSocketServer == null) {
+            Log.i(TAG, "serverSend    发送拦截");
+            return;
+        }
+
+        for (WebSocket webSocket : webSocketServer.getConnections()) {
+            if (!webSocket.isOpen()) {
+                continue;
+            }
+            Log.i(TAG, String.format("serverSend    发送数据    bytes = %s", bytes.length));
+            webSocket.send(bytes);
+        }
+    }
+
+    public void clientSend(byte[] bytes) {
+        if (!clientCanSend()) {
+            Log.i(TAG, "clientSend    发送拦截");
+            return;
+        }
+        Log.i(TAG, String.format("clientSend    发送数据    bytes = %s", bytes.length));
         webSocketClient.send(bytes);
     }
 
-    public boolean canSend() {
+    public boolean clientCanSend() {
         if (webSocketClient == null) {
-            Log.e(TAG, "发送拦截1");
+            Log.i(TAG, "发送拦截1");
             return false;
         }
         if (webSocketClient.isClosing()) {
-            Log.e(TAG, "发送拦截2");
+            Log.i(TAG, "发送拦截2");
             return false;
         }
         if (webSocketClient.isClosed()) {
-            Log.e(TAG, "发送拦截3");
+            Log.i(TAG, "发送拦截3");
             return false;
         }
         if (!webSocketClient.isOpen()) {
-            Log.e(TAG, "发送拦截4");
+            Log.i(TAG, "发送拦截4");
             return false;
         }
         return true;

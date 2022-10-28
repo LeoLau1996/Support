@@ -17,7 +17,6 @@ import android.media.MediaFormat;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
 import android.os.Build;
-import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Surface;
@@ -31,6 +30,7 @@ import java.nio.ByteBuffer;
 
 import leo.work.support.R;
 import leo.work.support.support.file.FileSupport;
+import leo.work.support.util.Is;
 import leo.work.support.util.NotifyUtils;
 import leo.work.support.util.SocketUtils;
 
@@ -48,9 +48,10 @@ import leo.work.support.util.SocketUtils;
  **/
 public class MediaProjectionService extends Service {
 
-    public static void startService(Activity activity, String path, int width, int height, int resultCode, Intent data) {
+    public static void startService(Activity activity, int socketType, String path, int width, int height, int resultCode, Intent data) {
         Intent intent = new Intent(activity, MediaProjectionService.class);
         intent.setAction(ACTION_START);
+        intent.putExtra("socketType", socketType);
         intent.putExtra("path", path);
         intent.putExtra("width", width);
         intent.putExtra("height", height);
@@ -85,6 +86,8 @@ public class MediaProjectionService extends Service {
     private int width, height;
     // 配置帧缓存
     private byte[] configFrameCase;
+    // xxx
+    private VirtualDisplay virtualDisplay;
 
     // 开始录频
     private static final String ACTION_START = "ACTION_START";
@@ -96,7 +99,14 @@ public class MediaProjectionService extends Service {
     private String NOTIFICATION_CHANNEL_DESC = "NOTIFICATION_CHANNEL_DESC";
     private int NOTIFICATION_ID = 12345;
     private final String TAG = MediaProjectionService.class.getSimpleName();
+    // 录制状态
     private volatile boolean recording;
+    // 类型
+    private int socketType;
+    // 服务端
+    public static int SOCKE_TYPE_SERVICE = 0;
+    // 客户端
+    public static int SOCKE_TYPE_CLIENT = 1;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -113,6 +123,7 @@ public class MediaProjectionService extends Service {
             case ACTION_START: {
                 recording = true;
                 notification();
+                socketType = intent.getIntExtra("socketType", SOCKE_TYPE_SERVICE);
                 path = intent.getStringExtra("path");
                 width = intent.getIntExtra("width", 0);
                 height = intent.getIntExtra("height", 0);
@@ -222,7 +233,7 @@ public class MediaProjectionService extends Service {
         // 请求 Surface 用作编码器的输入，以代替输入缓冲区。
         Surface surface = mediaCodec.createInputSurface();
         // 创建场地
-        VirtualDisplay virtualDisplay = mediaProjection.createVirtualDisplay(name, width, height, dpi, flags, surface, null, null);
+        virtualDisplay = mediaProjection.createVirtualDisplay(name, width, height, dpi, flags, surface, null, null);
         outPut();
     }
 
@@ -253,6 +264,8 @@ public class MediaProjectionService extends Service {
                 mediaCodec.releaseOutputBuffer(dequeueOutputBufferIndex, false);
             }
 
+            virtualDisplay.release();
+
             mediaProjection.stop();
 
             mediaCodec.stop();
@@ -269,7 +282,10 @@ public class MediaProjectionService extends Service {
 
     public void handlerData(byte[] data) {
         // 把data写到本地文件
-        //FileSupport.writeBytes(path, true, data);
+        if (Is.isEmpty(path)) {
+            FileSupport.writeBytes(path, true, data);
+            return;
+        }
         int index = 4;
         // 适配：有些分隔符是00 00 01
         if (data[2] == 0x01) {
@@ -291,12 +307,20 @@ public class MediaProjectionService extends Service {
                 Log.e("liu1017", String.format("configFrameCase = %s    data = %s    newData = %s", configFrameCase.length, data.length, newData.length));
                 System.arraycopy(configFrameCase, 0, newData, 0, configFrameCase.length);
                 System.arraycopy(data, 0, newData, configFrameCase.length, data.length);
-                SocketUtils.getInstance().send(newData);
+                if (socketType == SOCKE_TYPE_SERVICE) {
+                    SocketUtils.getInstance().serverSend(newData);
+                } else {
+                    SocketUtils.getInstance().clientSend(newData);
+                }
                 break;
             }
             //
             default: {
-                SocketUtils.getInstance().send(data);
+                if (socketType == SOCKE_TYPE_SERVICE) {
+                    SocketUtils.getInstance().serverSend(data);
+                } else {
+                    SocketUtils.getInstance().clientSend(data);
+                }
                 break;
             }
         }

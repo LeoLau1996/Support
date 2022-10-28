@@ -11,10 +11,9 @@ import com.leo.support.R;
 import com.leo.support.databinding.ActivityMainBinding;
 import com.leo.support.info.AppPath;
 
-import java.nio.ByteBuffer;
-
 import leo.work.support.base.activity.CommonActivity;
 import leo.work.support.biz.MediaProjectionBiz;
+import leo.work.support.biz.MediaProjectionService;
 import leo.work.support.support.toolSupport.LeoSupport;
 import leo.work.support.util.A2BSupport;
 import leo.work.support.util.JumpUtil;
@@ -59,7 +58,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
             if (mediaProjectionBiz == null) {
                 mediaProjectionBiz = new MediaProjectionBiz(this);
             }
-            mediaProjectionBiz.start(String.format("%srecord_%s.h264", AppPath.getAppCache(), System.currentTimeMillis()), 720, 1280);
+            mediaProjectionBiz.start(0, String.format("%srecord_%s.h264", AppPath.getAppCache(), System.currentTimeMillis()), 720, 1280);
         });
         binding.btnStopRecord.setOnClickListener(v -> {
             if (mediaProjectionBiz == null) {
@@ -79,7 +78,15 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
             });
         });
         binding.btnConnectSocket.setOnClickListener(v -> {
-            SocketUtils.getInstance().connect(binding.etSocketAddress.getText().toString());
+            SocketUtils.getInstance().clientConnect(binding.etSocketAddress.getText().toString(), byteBuffer -> {
+
+            });
+        });
+        binding.btnLiveService.setOnClickListener(v -> {
+            LiveActivity.go(activity, MediaProjectionService.SOCKE_TYPE_SERVICE);
+        });
+        binding.btnLiveClient.setOnClickListener(v -> {
+            LiveActivity.go(activity, MediaProjectionService.SOCKE_TYPE_CLIENT);
         });
     }
 
