@@ -13,11 +13,13 @@ import com.leo.support.info.AppPath;
 
 import leo.work.support.base.activity.CommonActivity;
 import leo.work.support.biz.AudioRecordBiz;
+import leo.work.support.biz.AudioTrackBiz;
 import leo.work.support.biz.MediaProjectionBiz;
 import leo.work.support.biz.MediaProjectionService;
 import leo.work.support.support.file.FileSupport;
 import leo.work.support.support.toolSupport.LeoSupport;
 import leo.work.support.util.A2BSupport;
+import leo.work.support.util.CommonUtil;
 import leo.work.support.util.JumpUtil;
 import leo.work.support.util.SocketUtils;
 
@@ -102,9 +104,13 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
             }
             binding.btnAudioRecord.setText("停止录音");
             String path = String.format("%srecord_%s.pcm", AppPath.getAppCache(), System.currentTimeMillis());
+            CommonUtil.copy(activity, path);
             audioRecordBiz.startRecord(data -> {
                 FileSupport.writeBytes(path, true, data);
             });
+        });
+        binding.btnPlayAudioRecord.setOnClickListener(v -> {
+
         });
     }
 

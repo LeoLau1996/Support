@@ -159,9 +159,25 @@
                     android:id="@+id/btnAudioRecord"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="录音" />
+                    android:text="开始录音" />
+
+                <Button
+                    android:id="@+id/btnPlayAudioRecord"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="播放录音" />
 
             </LinearLayout>
+
+            <EditText
+                android:id="@+id/etAudioRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:hint="请输入播放路径"
+                android:padding="16dp"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
