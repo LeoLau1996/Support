@@ -2,6 +2,7 @@ package com.leo.support.view.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
@@ -27,7 +28,7 @@ import leo.work.support.util.SocketUtils;
  * ---------------------------------------------------------------------------------------------
  * 代码创建: Leo
  * ---------------------------------------------------------------------------------------------
- * 代码备注:
+ * 代码备注: String.format("%srecord_%s.h264", AppPath.getAppCache(), System.currentTimeMillis())
  * ---------------------------------------------------------------------------------------------
  **/
 public class LiveActivity extends CommonActivity<ActivityLiveBinding> {
@@ -67,7 +68,9 @@ public class LiveActivity extends CommonActivity<ActivityLiveBinding> {
         if (mediaProjectionBiz == null) {
             mediaProjectionBiz = new MediaProjectionBiz(this);
         }
-        mediaProjectionBiz.start(socketType, String.format("%srecord_%s.h264", AppPath.getAppCache(), System.currentTimeMillis()), 720, 1280);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        mediaProjectionBiz.start(socketType, null, 720, 1280, metrics.densityDpi);
 
         // 初始化Socket
         if (socketType == MediaProjectionService.SOCKE_TYPE_SERVICE) {

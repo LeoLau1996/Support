@@ -14,8 +14,6 @@ public class Media264Play implements Runnable {
 
     // xxx
     private String path;
-    // xxx
-    private Surface surface;
     // 编解码
     private MediaCodec mediaCodec;
     private MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();
@@ -23,13 +21,28 @@ public class Media264Play implements Runnable {
     private static final String TAG = Media264Play.class.getSimpleName();
 
     public Media264Play(Surface surface) {
-        this("", surface);
+        this("", surface, 1080, 1920);
     }
 
-    public Media264Play(String path, Surface surface) {
+    public Media264Play(String path, Surface surface, int width, int height) {
         this.path = path;
-        this.surface = surface;
-        initMediaCodec();
+        try {
+            // 解码器
+            mediaCodec = MediaCodec.createDecoderByType(MediaFormat.MIMETYPE_VIDEO_AVC);
+            // 创建视频格式 这里的宽高设置错误其实也没关系，解码器会从sps中解析到真实数据，但是如果sps解析异常 这个参数就非常重要
+            MediaFormat mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_AVC, width, height);
+            // 设置解码帧数
+            mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 20);
+            mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, 1080 * 1920);
+            mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
+            // 设置编解码器配置信息
+            // crypto 加密的意思  不需要加密直接传null
+            mediaCodec.configure(mediaFormat, surface, null, 0);
+            // 编码器开始工作
+            mediaCodec.start();
+        } catch (IOException e) {
+            Log.e(TAG, String.format("IOException    %s", e.getMessage()));
+        }
     }
 
     @Override
@@ -81,28 +94,6 @@ public class Media264Play implements Runnable {
         }
     }
 
-    // 初始化编解码器
-    private void initMediaCodec() {
-        try {
-            // 解码器
-            mediaCodec = MediaCodec.createDecoderByType(MediaFormat.MIMETYPE_VIDEO_AVC);
-            // 创建视频格式 这里的宽高设置错误其实也没关系，解码器会从sps中解析到真实数据，但是如果sps解析异常 这个参数就非常重要
-            MediaFormat mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_AVC, 1080, 1920);
-            // 设置解码帧数
-            mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 20);
-            mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, 1080 * 1920);
-            mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
-            // 设置编解码器配置信息
-            // crypto 加密的意思  不需要加密直接传null
-            mediaCodec.configure(mediaFormat, surface, null, 0);
-            // 编码器开始工作
-            mediaCodec.start();
-            Log.e(TAG, "initMediaCodec    end");
-        } catch (IOException e) {
-            Log.e(TAG, String.format("IOException    %s", e.getMessage()));
-        }
-    }
-
     // 开启异步线程
     public void play() {
         new Thread(this).start();
@@ -135,6 +126,11 @@ public class Media264Play implements Runnable {
         }
     }
 
+    // 释放
+    public void release() {
+        mediaCodec.release();
+    }
+
     // 获取帧数
     private int findNextFrameIndex(int startIndex, byte[] data) {
         for (int i = startIndex; i < data.length - 4; i++) {
@@ -146,9 +142,5 @@ public class Media264Play implements Runnable {
             }
         }
         return -1;
-    }
-
-    public void release() {
-        mediaCodec.release();
     }
 }

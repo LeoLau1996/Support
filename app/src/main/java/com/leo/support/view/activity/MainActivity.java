@@ -51,14 +51,14 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
         });
         binding.btnPlay.setOnClickListener(v -> {
             String path = binding.etPath.getText().toString();
-            media264Play = new Media264Play(path, holder.getSurface());
+            media264Play = new Media264Play(path, holder.getSurface(), 1080, 1920);
             media264Play.play();
         });
         binding.btnRecord.setOnClickListener(v -> {
             if (mediaProjectionBiz == null) {
                 mediaProjectionBiz = new MediaProjectionBiz(this);
             }
-            mediaProjectionBiz.start(0, String.format("%srecord_%s.h264", AppPath.getAppCache(), System.currentTimeMillis()), 720, 1280);
+            mediaProjectionBiz.start(0, String.format("%srecord_%s.h264", AppPath.getAppCache(), System.currentTimeMillis()), 720, 1280, 420);
         });
         binding.btnStopRecord.setOnClickListener(v -> {
             if (mediaProjectionBiz == null) {

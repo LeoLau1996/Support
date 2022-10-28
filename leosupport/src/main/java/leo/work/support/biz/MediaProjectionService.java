@@ -44,17 +44,19 @@ import leo.work.support.util.SocketUtils;
  * ---------------------------------------------------------------------------------------------
  * 代码备注: <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
  * 帧类型：https://blog.csdn.net/zhaoyun_zzz/article/details/87302600
+ * MediaProjection：https://developer.android.google.cn/reference/android/media/projection/MediaProjection
  * ---------------------------------------------------------------------------------------------
  **/
 public class MediaProjectionService extends Service {
 
-    public static void startService(Activity activity, int socketType, String path, int width, int height, int resultCode, Intent data) {
+    public static void startService(Activity activity, int socketType, String path, int width, int height, int dpi, int resultCode, Intent data) {
         Intent intent = new Intent(activity, MediaProjectionService.class);
         intent.setAction(ACTION_START);
         intent.putExtra("socketType", socketType);
         intent.putExtra("path", path);
         intent.putExtra("width", width);
         intent.putExtra("height", height);
+        intent.putExtra("dpi", dpi);
         intent.putExtra("resultCode", resultCode);
         intent.putExtra("data", data);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -84,6 +86,7 @@ public class MediaProjectionService extends Service {
     private String path;
     // 视频宽高
     private int width, height;
+    private int dpi;
     // 配置帧缓存
     private byte[] configFrameCase;
     // xxx
@@ -127,6 +130,7 @@ public class MediaProjectionService extends Service {
                 path = intent.getStringExtra("path");
                 width = intent.getIntExtra("width", 0);
                 height = intent.getIntExtra("height", 0);
+                dpi = intent.getIntExtra("dpi", 120);
                 int resultCode = intent.getIntExtra("resultCode", 0);
                 Intent data = intent.getParcelableExtra("data");
                 record(resultCode, data);
@@ -226,8 +230,6 @@ public class MediaProjectionService extends Service {
         }
         // 名称保持唯一即可，不为空
         String name = String.format("record_%s", System.currentTimeMillis());
-        // 越大越清晰
-        int dpi = 2;
         // 公开的
         int flags = DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC;
         // 请求 Surface 用作编码器的输入，以代替输入缓冲区。
@@ -282,7 +284,7 @@ public class MediaProjectionService extends Service {
 
     public void handlerData(byte[] data) {
         // 把data写到本地文件
-        if (Is.isEmpty(path)) {
+        if (!Is.isEmpty(path)) {
             FileSupport.writeBytes(path, true, data);
             return;
         }
