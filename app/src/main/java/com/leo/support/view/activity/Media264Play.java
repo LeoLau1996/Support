@@ -113,7 +113,7 @@ public class Media264Play implements Runnable {
                 inputBuffer.put(data);
 
                 // 入队
-                mediaCodec.queueInputBuffer(inputBufferIndex, 0, data.length, System.currentTimeMillis(), 0);
+                mediaCodec.queueInputBuffer(inputBufferIndex, 1, data.length - 1, System.currentTimeMillis(), 0);
             }
 
 

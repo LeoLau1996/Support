@@ -132,14 +132,7 @@ public class SocketUtils {
             Log.i(TAG, "serverSend    发送拦截");
             return;
         }
-        //webSocketServer.broadcast(bytes);
-        for (WebSocket webSocket : webSocketServer.getConnections()) {
-            if (!webSocket.isOpen()) {
-                continue;
-            }
-            Log.i(TAG, String.format("serverSend    发送数据    bytes = %s", bytes.length));
-            webSocket.send(bytes);
-        }
+        webSocketServer.broadcast(bytes);
     }
 
     // 客户端 ---- 发送数据

@@ -75,17 +75,33 @@ public class LiveActivity extends CommonActivity<ActivityLiveBinding> {
         // 初始化Socket
         if (socketType == MediaProjectionService.SOCKE_TYPE_SERVICE) {
             SocketUtils.getInstance().openWebSocket(A2BSupport.String2int("8081"), byteBuffer -> {
-                if (media264Play == null) {
-                    media264Play = new Media264Play(surfaceHolder1.getSurface());
+                int type = byteBuffer.get(0);
+                // 视频
+                if (type == MediaProjectionService.TYPE_VIDEO) {
+                    if (media264Play == null) {
+                        media264Play = new Media264Play(surfaceHolder1.getSurface());
+                    }
+                    media264Play.play(byteBuffer);
                 }
-                media264Play.play(byteBuffer);
+                // 音频
+                else if (type == MediaProjectionService.TYPE_AUDIO) {
+
+                }
             });
         } else {
-            SocketUtils.getInstance().clientConnect("ws://192.168.0.185:8081", byteBuffer -> {
-                if (media264Play == null) {
-                    media264Play = new Media264Play(surfaceHolder1.getSurface());
+            SocketUtils.getInstance().clientConnect("ws://192.168.31.41:8081", byteBuffer -> {
+                int type = byteBuffer.get(0);
+                // 视频
+                if (type == MediaProjectionService.TYPE_VIDEO) {
+                    if (media264Play == null) {
+                        media264Play = new Media264Play(surfaceHolder1.getSurface());
+                    }
+                    media264Play.play(byteBuffer);
                 }
-                media264Play.play(byteBuffer);
+                // 音频
+                else if (type == MediaProjectionService.TYPE_AUDIO) {
+
+                }
             });
         }
     }
