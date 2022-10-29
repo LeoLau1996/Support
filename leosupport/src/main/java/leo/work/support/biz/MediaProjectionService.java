@@ -76,6 +76,10 @@ public class MediaProjectionService extends Service {
         }
     }
 
+    // 媒体类型 ---- 视频
+    public static int TYPE_VIDEO = 0;
+    // 媒体类型 ---- 音频
+    public static int TYPE_AUDIO = 1;
     // 录频实例
     private MediaProjectionManager manager;
     // 数据源
@@ -305,10 +309,11 @@ public class MediaProjectionService extends Service {
             }
             // I帧
             case NAL_I: {
-                byte[] newData = new byte[configFrameCase.length + data.length];
+                byte[] newData = new byte[configFrameCase.length + data.length + 1];
                 Log.e("liu1017", String.format("configFrameCase = %s    data = %s    newData = %s", configFrameCase.length, data.length, newData.length));
-                System.arraycopy(configFrameCase, 0, newData, 0, configFrameCase.length);
-                System.arraycopy(data, 0, newData, configFrameCase.length, data.length);
+                newData[0] = (byte) TYPE_VIDEO;
+                System.arraycopy(configFrameCase, 0, newData, 1, configFrameCase.length);
+                System.arraycopy(data, 0, newData, (1 + configFrameCase.length), data.length);
                 if (socketType == SOCKE_TYPE_SERVICE) {
                     SocketUtils.getInstance().serverSend(newData);
                 } else {
@@ -318,10 +323,13 @@ public class MediaProjectionService extends Service {
             }
             //
             default: {
+                byte[] newData = new byte[data.length + 1];
+                newData[0] = (byte) TYPE_VIDEO;
+                System.arraycopy(data, 0, newData, 1, data.length);
                 if (socketType == SOCKE_TYPE_SERVICE) {
-                    SocketUtils.getInstance().serverSend(data);
+                    SocketUtils.getInstance().serverSend(newData);
                 } else {
-                    SocketUtils.getInstance().clientSend(data);
+                    SocketUtils.getInstance().clientSend(newData);
                 }
                 break;
             }

@@ -41,6 +41,7 @@ public class SocketUtils {
     private WebSocketServer webSocketServer;
     private WebSocketClient webSocketClient;
 
+    // 服务端 ---- 打开端口
     public void openWebSocket(int port, OnSocketUtilsCallBack callBack) {
         Log.e(TAG, "openWebSocket");
         webSocketServer = new WebSocketServer(new InetSocketAddress(port)) {
@@ -79,6 +80,7 @@ public class SocketUtils {
         webSocketServer.start();
     }
 
+    // 客户端 ---- 连接服务端
     public void clientConnect(String url, OnSocketUtilsCallBack callBack) {
         try {
             webSocketClient = new WebSocketClient(new URI(url)) {
@@ -116,7 +118,7 @@ public class SocketUtils {
         }
     }
 
-    // 重连
+    // 客户端 ---- 重连
     public void clientReconnect() {
         if (webSocketClient == null) {
             return;
@@ -124,13 +126,13 @@ public class SocketUtils {
         webSocketClient.reconnect();
     }
 
-    // xxx
+    // 服务端发送
     public void serverSend(byte[] bytes) {
         if (webSocketServer == null) {
             Log.i(TAG, "serverSend    发送拦截");
             return;
         }
-
+        //webSocketServer.broadcast(bytes);
         for (WebSocket webSocket : webSocketServer.getConnections()) {
             if (!webSocket.isOpen()) {
                 continue;
@@ -140,6 +142,7 @@ public class SocketUtils {
         }
     }
 
+    // 客户端 ---- 发送数据
     public void clientSend(byte[] bytes) {
         if (!clientCanSend()) {
             Log.i(TAG, "clientSend    发送拦截");
@@ -149,6 +152,7 @@ public class SocketUtils {
         webSocketClient.send(bytes);
     }
 
+    // 客户端 ---- 是否能发送
     public boolean clientCanSend() {
         if (webSocketClient == null) {
             Log.i(TAG, "发送拦截1");
