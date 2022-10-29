@@ -24,7 +24,7 @@ public class AudioTrackBiz {
 
     private AudioTrack audioTrack;
 
-    public void doPlay(byte[] mBuffer) {
+    public void doPlay(byte[] bytes) {
         if (audioTrack == null) {
             // 音乐类型,扬声器播放
             int streamType = AudioManager.STREAM_MUSIC;
@@ -45,7 +45,7 @@ public class AudioTrackBiz {
             }
             audioTrack.play();
         }
-        audioTrack.write(mBuffer, 1, mBuffer.length - 1);
+        audioTrack.write(bytes, 1, bytes.length - 1);
     }
 
     public void release() {

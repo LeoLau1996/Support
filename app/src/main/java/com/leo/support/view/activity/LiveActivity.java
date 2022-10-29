@@ -1,5 +1,7 @@
 package com.leo.support.view.activity;
 
+import static leo.work.support.biz.MediaProjectionService.SOCKE_TYPE_SERVICE;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -13,6 +15,8 @@ import com.leo.support.databinding.ActivityLiveBinding;
 import com.leo.support.info.AppPath;
 
 import leo.work.support.base.activity.CommonActivity;
+import leo.work.support.biz.AudioRecordBiz;
+import leo.work.support.biz.AudioTrackBiz;
 import leo.work.support.biz.MediaProjectionBiz;
 import leo.work.support.biz.MediaProjectionService;
 import leo.work.support.util.A2BSupport;
@@ -48,6 +52,8 @@ public class LiveActivity extends CommonActivity<ActivityLiveBinding> {
     // 屏幕录制
     private MediaProjectionBiz mediaProjectionBiz;
     private Media264Play media264Play;
+    private AudioRecordBiz audioRecordBiz;
+    private AudioTrackBiz audioTrackBiz;
     private SurfaceHolder surfaceHolder1, surfaceHolder2;
 
     /*********************
@@ -61,7 +67,7 @@ public class LiveActivity extends CommonActivity<ActivityLiveBinding> {
 
     @Override
     protected void initData(Bundle bundle) {
-        socketType = getIntent().getIntExtra("socketType", MediaProjectionService.SOCKE_TYPE_SERVICE);
+        socketType = getIntent().getIntExtra("socketType", SOCKE_TYPE_SERVICE);
 
 
         // 开始屏幕录制
@@ -72,8 +78,22 @@ public class LiveActivity extends CommonActivity<ActivityLiveBinding> {
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         mediaProjectionBiz.start(socketType, null, 720, 1280, metrics.densityDpi);
 
+        // 开始录音
+        if (audioRecordBiz == null) {
+            audioRecordBiz = new AudioRecordBiz(this);
+        }
+        audioRecordBiz.startRecord(data -> {
+            byte[] newData = new byte[data.length + 1];
+            newData[0] = MediaProjectionService.TYPE_AUDIO;
+            System.arraycopy(data, 0, newData, 1, data.length);
+            if (socketType == SOCKE_TYPE_SERVICE) {
+                SocketUtils.getInstance().serverSend(newData);
+            } else {
+                SocketUtils.getInstance().clientSend(newData);
+            }
+        });
         // 初始化Socket
-        if (socketType == MediaProjectionService.SOCKE_TYPE_SERVICE) {
+        if (socketType == SOCKE_TYPE_SERVICE) {
             SocketUtils.getInstance().openWebSocket(A2BSupport.String2int("8081"), byteBuffer -> {
                 int type = byteBuffer.get(0);
                 // 视频
@@ -85,7 +105,12 @@ public class LiveActivity extends CommonActivity<ActivityLiveBinding> {
                 }
                 // 音频
                 else if (type == MediaProjectionService.TYPE_AUDIO) {
-
+                    if (audioTrackBiz == null) {
+                        audioTrackBiz = new AudioTrackBiz();
+                    }
+                    byte[] audioBytes = new byte[byteBuffer.remaining()];
+                    byteBuffer.get(audioBytes);
+                    audioTrackBiz.doPlay(audioBytes);
                 }
             });
         } else {
@@ -100,7 +125,10 @@ public class LiveActivity extends CommonActivity<ActivityLiveBinding> {
                 }
                 // 音频
                 else if (type == MediaProjectionService.TYPE_AUDIO) {
-
+                    if (media264Play == null) {
+                        media264Play = new Media264Play(surfaceHolder1.getSurface());
+                    }
+                    media264Play.play(byteBuffer);
                 }
             });
         }
