@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
 
 import leo.work.support.util.LogUtil;
 
@@ -21,7 +23,7 @@ import leo.work.support.util.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbstractDialog {
+public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbstractDialog implements LifecycleObserver {
 
     public T binding;
     public Context context;
@@ -38,6 +40,11 @@ public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbst
         LogUtil.e("=======================>" + this.getClass().getName());
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), setLayout(), null, false);
         setContentView(binding.getRoot());
+
+        if (context instanceof LifecycleOwner) {
+            ((LifecycleOwner) context).getLifecycle().addObserver(this);
+        }
+
         //初始化数据
         initData();
         //加载View
