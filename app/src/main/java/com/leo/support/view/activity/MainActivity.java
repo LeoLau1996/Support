@@ -52,7 +52,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
     protected void initListener() {
         super.initListener();
         binding.btnMenu.setOnClickListener(v -> {
-            binding.llManu.setVisibility(binding.llManu.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+            TestActivity.go(activity);
         });
         binding.btnPlay.setOnClickListener(v -> {
             String path = binding.etPath.getText().toString();

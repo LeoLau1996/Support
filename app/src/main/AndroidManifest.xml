@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".view.activity.CameraActivity" />
         <activity android:name=".view.activity.LiveActivity" />
+        <activity android:name=".view.activity.TestActivity" />
     </application>
 
 

@@ -46,4 +46,5 @@ dependencies {
     //Support
     implementation project(':leosupport')
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 }
