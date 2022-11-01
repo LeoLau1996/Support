@@ -45,7 +45,7 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
 
     @Override
     protected void initData(Bundle bundle) {
-        TestDialog.showTestDialog(activity, null);
+        TestDialog.showTestDialog(getSupportFragmentManager(), null);
         new Handler().postDelayed(() -> {
             Log.e("liu1031","关闭");
             finish();
@@ -54,10 +54,14 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
 
     @Override
     protected void initViews(Bundle bundle) {
-        //activity.getLifecycle().addObserver();
 
+    }
 
-
+    @Override
+    protected void onDestroy() {
+        Log.e("liu1101","TestActivity    onDestroy1");
+        super.onDestroy();
+        Log.e("liu1101","TestActivity    onDestroy2");
     }
 
     /*********************

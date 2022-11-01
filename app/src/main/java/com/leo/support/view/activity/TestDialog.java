@@ -1,54 +1,48 @@
 package com.leo.support.view.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Window;
-import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
 
 import com.leo.support.R;
 import com.leo.support.databinding.DialogTestBinding;
 
-import leo.work.support.base.dialog.CommonDialog;
+
+import leo.work.support.base.dialog.CommonDialogFragment;
 
 /**
  * ---------------------------------------------------------------------------------------------
  * 功能描述:
  * ---------------------------------------------------------------------------------------------
- * 时　　间: 2022/10/31
+ * 时　　间: 2022/11/1
  * ---------------------------------------------------------------------------------------------
  * 代码创建: Leo
  * ---------------------------------------------------------------------------------------------
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class TestDialog extends CommonDialog<DialogTestBinding>  {
+public class TestDialog extends CommonDialogFragment<DialogTestBinding> {
 
     private static TestDialog instance;
 
-    public static synchronized void showTestDialog(Context context, OnTestDialogCallBack callBack) {
+    public static synchronized void showTestDialog(FragmentManager fragmentManager, OnTestDialogCallBack callBack) {
         dismissDialog();
-        instance = new TestDialog(context, callBack);
-        instance.show();
+        instance = new TestDialog();
+        instance.setCallBack(callBack);
+        String TAG = TestDialog.class.getSimpleName();
+        instance.show(fragmentManager, TAG);
     }
 
-    public static synchronized void dismissDialog() {
+    public static void dismissDialog() {
         try {
-            if ((instance != null) && instance.isShowing()) {
-                instance.dismiss();
+            if (instance == null || !instance.isVisible()) {
+                return;
             }
+            instance.dismissAllowingStateLoss();
         } catch (final Exception e) {
 
         } finally {
@@ -65,9 +59,9 @@ public class TestDialog extends CommonDialog<DialogTestBinding>  {
      *  生 命 周 期 方 法  *
      *********************/
 
-    public TestDialog(@NonNull Context context, OnTestDialogCallBack callBack) {
-        super(context);
-        this.callBack = callBack;
+    // 不要在构造方法中加入参数
+    public TestDialog() {
+
     }
 
     @Override
@@ -76,49 +70,30 @@ public class TestDialog extends CommonDialog<DialogTestBinding>  {
     }
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
 
     }
 
     @Override
-    protected void initViews() {
+    protected void initViews(Bundle savedInstanceState) {
 
-
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Window window = getWindow();
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        // 必须设置这两个,才能设置宽度
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        window.getDecorView().setBackgroundColor(Color.TRANSPARENT);
-        // 遮罩层透明度
-        //window.setDimAmount(0);
-        // 设置宽度
-        WindowManager.LayoutParams params = window.getAttributes();
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        params.gravity = Gravity.BOTTOM;
-        //params.windowAnimations = R.style.dialog_bottom_animation;
-        window.setAttributes(params);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     private void destroy() {
+        Log.e("liu1101","destroy");
         dismissDialog();
-    }
-
-    @Override
-    public void dismiss() {
-        super.dismiss();
     }
 
     /*********************
      *     业 务 方 法    *
      *********************/
+
+    // 设置回调
+    public void setCallBack(OnTestDialogCallBack callBack) {
+        this.callBack = callBack;
+    }
+
 
     public interface OnTestDialogCallBack {
 

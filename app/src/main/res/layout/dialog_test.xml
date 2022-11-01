@@ -4,5 +4,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/Red" />
+        android:background="@color/Red">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="你好啊" />
+
+    </RelativeLayout>
 </layout>

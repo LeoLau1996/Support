@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
 
 import leo.work.support.R;
 
@@ -27,7 +29,7 @@ import leo.work.support.R;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonDialogFragment<T extends ViewDataBinding> extends CommonAbstractDialogFragment {
+public abstract class CommonDialogFragment<T extends ViewDataBinding> extends CommonAbstractDialogFragment implements LifecycleObserver {
 
     public T binding;
 
@@ -47,6 +49,9 @@ public abstract class CommonDialogFragment<T extends ViewDataBinding> extends Co
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        getLifecycle().addObserver(this);
+
         initData(savedInstanceState);
         initViews(savedInstanceState);
         loadData();
