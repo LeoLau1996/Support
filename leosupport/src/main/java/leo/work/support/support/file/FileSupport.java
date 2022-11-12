@@ -5,10 +5,12 @@ import static java.lang.System.in;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import leo.work.support.util.Get;
@@ -26,6 +28,24 @@ import leo.work.support.util.Get;
  **/
 public class FileSupport {
 
+
+    public static String readFileToString(String path) {
+        StringBuilder stringBuffer = new StringBuilder();
+        try {
+            File urlFile = new File(path);
+            InputStreamReader isr = new InputStreamReader(new FileInputStream(urlFile), "UTF-8");
+            BufferedReader br = new BufferedReader(isr);
+
+            String mimeTypeLine = null;
+            while ((mimeTypeLine = br.readLine()) != null) {
+
+                stringBuffer.append(mimeTypeLine);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stringBuffer.toString();
+    }
 
     /**
      * 检测文件是否存在
