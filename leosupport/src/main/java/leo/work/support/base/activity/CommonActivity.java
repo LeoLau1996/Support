@@ -38,8 +38,6 @@ public abstract class CommonActivity<T extends ViewDataBinding> extends CommonAb
         super.onCreate(savedInstanceState);
         //打印Log
         LogUtil.e("=======================>" + this.getClass().getName());
-        //竖屏
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //
         activity = this;
         //
