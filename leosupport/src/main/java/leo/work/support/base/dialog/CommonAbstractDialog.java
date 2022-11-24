@@ -32,6 +32,9 @@ public class CommonAbstractDialog extends Dialog implements LifeControlInterface
         super(context);
     }
 
+    public CommonAbstractDialog(@NonNull Context context, int style) {
+        super(context, style);
+    }
 
     @Override
     public void addLifeCallBackList(CommonLifeBiz biz) {

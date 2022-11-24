@@ -10,6 +10,7 @@ import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
+import leo.work.support.R;
 import leo.work.support.util.LogUtil;
 
 /**
@@ -30,6 +31,11 @@ public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbst
 
     public CommonDialog(@NonNull Context context) {
         super(context);
+        this.context = context;
+    }
+
+    public CommonDialog(@NonNull Context context, int style) {
+        super(context, style);
         this.context = context;
     }
 
