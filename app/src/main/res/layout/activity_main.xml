@@ -22,6 +22,28 @@
             android:layout_margin="15dp"
             android:text="菜单" />
 
+
+        <!--<com.gongwen.marqueen.SimpleMarqueeView-->
+        <!--    android:id="@+id/mSimpleMarqueeView"-->
+        <!--    android:layout_width="match_parent"-->
+        <!--    android:layout_height="40dp"-->
+        <!--    android:layout_marginTop="80dp"-->
+        <!--    android:flipInterval="2500"-->
+        <!--    android:inAnimation="@anim/in_right"-->
+        <!--    android:outAnimation="@anim/out_left"-->
+        <!--    app:marqueeAnimDuration="2000"-->
+        <!--    app:smvTextColor="@color/white"-->
+        <!--    app:smvTextEllipsize="none"-->
+        <!--    app:smvTextGravity="center_vertical"-->
+        <!--    app:smvTextSingleLine="true"-->
+        <!--    app:smvTextSize="15sp" />-->
+        <com.leo.support.view.activity.MarqueeTextview
+            android:id="@+id/mMarqueeTextview"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="80dp"
+            android:background="@color/green" />
+
         <LinearLayout
             android:id="@+id/llManu"
             android:layout_width="match_parent"

@@ -13,7 +13,6 @@ import com.leo.support.info.AppPath;
 
 import leo.work.support.base.activity.CommonActivity;
 import leo.work.support.biz.AudioRecordBiz;
-import leo.work.support.biz.AudioTrackBiz;
 import leo.work.support.biz.MediaProjectionBiz;
 import leo.work.support.biz.MediaProjectionService;
 import leo.work.support.support.file.FileSupport;
@@ -51,13 +50,21 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
     @Override
     protected void initListener() {
         super.initListener();
+        binding.mMarqueeTextview.setCallBack(new MarqueeTextview.OnMarqueeTextviewCallBack() {
+            @Override
+            public void onPlayEnd() {
+                Log.e("liu1109", "onPlayEnd");
+            }
+        });
         binding.btnMenu.setOnClickListener(v -> {
-            TestActivity.go(activity);
+            //TestActivity.go(activity);
+            binding.mMarqueeTextview.start(1);
         });
         binding.btnPlay.setOnClickListener(v -> {
-            String path = binding.etPath.getText().toString();
-            media264Play = new Media264Play(path, holder.getSurface(), 1080, 1920);
-            media264Play.play();
+            binding.mMarqueeTextview.start(2);
+            //String path = binding.etPath.getText().toString();
+            //media264Play = new Media264Play(path, holder.getSurface(), 1080, 1920);
+            //media264Play.play();
         });
         binding.btnRecord.setOnClickListener(v -> {
             if (mediaProjectionBiz == null) {
