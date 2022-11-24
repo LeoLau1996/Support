@@ -55,13 +55,12 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    //V4和V7
-    implementation rootProject.ext.dependencies["appcompat-v7"]
-    implementation rootProject.ext.dependencies["recyclerview-v7"]
-    implementation rootProject.ext.dependencies["support-v4"]
-    //解析BASE64_JAR包
+    //
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.0'
+    // 解析BASE64_JAR包
     implementation files('libs/BASE64Encoder.jar')
-    //多包
+    // 多包
     implementation 'androidx.multidex:multidex:2.0.1'
     // WebSocket
     implementation "org.java-websocket:Java-WebSocket:1.4.0"
