@@ -31,6 +31,14 @@ public class CommonLifeBiz {
     public CommonLifeBiz(LifeControlInterface lifeControlInterface) {
         this.lifeControlInterface = lifeControlInterface;
         addCommonLifeCallBack();
+        // 初始化数据
+        initData();
+        // 加载View
+        initViews();
+        // 加载数据
+        loadData();
+        // 初始化监听器
+        initListener();
     }
 
     //添加
@@ -47,6 +55,22 @@ public class CommonLifeBiz {
             return;
         }
         lifeControlInterface.removeLifeCallBackList(this);
+    }
+
+    private void initData() {
+
+    }
+
+    private void initViews() {
+
+    }
+
+    public void loadData() {
+
+    }
+
+    public void initListener() {
+
     }
 
     public void onStart() {
