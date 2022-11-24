@@ -29,12 +29,16 @@ public class CommonLifeBiz {
     private LifeControlInterface lifeControlInterface;
 
     public CommonLifeBiz(LifeControlInterface lifeControlInterface) {
+        this(lifeControlInterface, null);
+    }
+
+    public CommonLifeBiz(LifeControlInterface lifeControlInterface, Bundle savedInstanceState) {
         this.lifeControlInterface = lifeControlInterface;
         addCommonLifeCallBack();
         // 初始化数据
-        initData();
+        initData(savedInstanceState);
         // 加载View
-        initViews();
+        initViews(savedInstanceState);
         // 加载数据
         loadData();
         // 初始化监听器
@@ -57,11 +61,11 @@ public class CommonLifeBiz {
         lifeControlInterface.removeLifeCallBackList(this);
     }
 
-    private void initData() {
+    private void initData(Bundle savedInstanceState) {
 
     }
 
-    private void initViews() {
+    private void initViews(Bundle savedInstanceState) {
 
     }
 
