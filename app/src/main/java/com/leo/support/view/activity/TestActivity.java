@@ -53,7 +53,7 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
     }
 
     @Override
-    protected void initViews(Bundle bundle) {
+    protected void initViews(Bundle bundle, int propertyId) {
 
     }
 

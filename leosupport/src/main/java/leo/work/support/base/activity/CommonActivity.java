@@ -9,6 +9,7 @@ import androidx.databinding.ViewDataBinding;
 
 import android.os.Bundle;
 
+import leo.work.support.BR;
 import leo.work.support.util.LogUtil;
 
 /**
@@ -45,7 +46,7 @@ public abstract class CommonActivity<T extends ViewDataBinding> extends CommonAb
         //初始化数据
         initData(savedInstanceState);
         //加载View
-        initViews(savedInstanceState);
+        initViews(savedInstanceState, BR._all);
         //加载数据
         loadData();
         //初始化监听器
@@ -59,7 +60,7 @@ public abstract class CommonActivity<T extends ViewDataBinding> extends CommonAb
     protected abstract void initData(Bundle savedInstanceState);
 
     // 加载View
-    protected abstract void initViews(Bundle savedInstanceState);
+    protected abstract void initViews(Bundle savedInstanceState, int propertyId);
 
     // 加载数据，如：网络请求
     protected void loadData() {
