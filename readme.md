@@ -1,4 +1,5 @@
 # 导入
+
 ```text
 
 android {
@@ -14,8 +15,11 @@ dependencies {
 }
 
 ```
+
 # 代码模板
+
 ## 头文件
+
 ```text
 /**
  * ---------------------------------------------------------------------------------------------
@@ -84,6 +88,7 @@ public class ${NAME} extends CommonActivity<#if (${BINDING_NAME} && ${BINDING_NA
 ```
 
 ## CommonFragment
+
 ```text
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
@@ -140,6 +145,7 @@ public class ${NAME} extends CommonFragment<#if (${BINDING_NAME} && ${BINDING_NA
 ```
 
 ## CommonDialog
+
 ```text
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
@@ -245,6 +251,7 @@ public class ${NAME} extends CommonDialog<#if (${BINDING_NAME} && ${BINDING_NAME
 ```
 
 ## CommonDialogFragment
+
 ```text
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
@@ -329,6 +336,7 @@ public class ${NAME} extends CommonDialogFragment<#if (${BINDING_NAME} && ${BIND
 ```
 
 ## CommonRecyclerAdapter
+
 ```text
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
@@ -380,6 +388,7 @@ public class ${NAME} extends CommonRecyclerAdapter<Object, ${NAME}.${NAME}Holder
 ```
 
 ## CommonMultiRecyclerAdapter
+
 ```text
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
@@ -475,6 +484,7 @@ public class ${NAME} extends CommonMultiRecyclerAdapter<Object, ${NAME}.On${NAME
 ```
 
 ## CommonListViewAdapter
+
 ```text
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
@@ -522,5 +532,49 @@ public class ${NAME} extends CommonListViewAdapter<Object, ${NAME}.${NAME}Holder
 
 
     }
+}
+```
+
+## ObservableGet 快速生成Get方法
+
+```text
+@Bindable
+#if($field.modifierStatic)
+static ##
+#end
+$field.type ##
+#if($field.recordComponent)
+  ${field.name}##
+#else
+#set($name = $StringUtil.capitalizeWithJavaBeanConvention($StringUtil.sanitizeJavaIdentifier($helper.getPropertyName($field, $project))))
+#if ($field.boolean && $field.primitive)
+  is##
+#else
+  get##
+#end
+${name}##
+#end
+() {
+  return $field.name;
+}
+```
+
+### ObservableSet 快速生成Set方法
+
+```text
+#set($paramName = $helper.getParamName($field, $project))
+#if($field.modifierStatic)
+static ##
+#end
+void set$StringUtil.capitalizeWithJavaBeanConvention($StringUtil.sanitizeJavaIdentifier($helper.getPropertyName($field, $project)))($field.type $paramName) {
+  #if ($field.name == $paramName)
+    #if (!$field.modifierStatic)
+      this.##
+    #else
+      $classname.##
+    #end
+  #end
+  $field.name = $paramName;
+  notifyPropertyChanged(BR.$field.name);
 }
 ```
