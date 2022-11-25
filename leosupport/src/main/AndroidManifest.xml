@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="leo.work.support">
+    package="com.surgery.scalpel">
 
     <!--前台服务-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -8,7 +8,7 @@
 
         <!--屏幕录制服务-->
         <service
-            android:name=".biz.MediaProjectionService"
+            android:name="com.surgery.scalpel.biz.MediaProjectionService"
             android:foregroundServiceType="mediaProjection" />
 
     </application>
