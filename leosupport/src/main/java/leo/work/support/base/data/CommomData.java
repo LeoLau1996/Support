@@ -34,21 +34,26 @@ public class CommomData<D extends BaseObservable> extends Observable.OnPropertyC
     // 回调方法
     private OnCommomDataCallBack callBack;
 
-    public CommomData(Object lifecycle) {
-        this(lifecycle, null, null);
+    public CommomData() {
+        this(null, null);
     }
 
-    public CommomData(Object lifecycle, D data) {
-        this(lifecycle, data, null);
+    public CommomData(Object user) {
+        this(null, user);
     }
 
-    public CommomData(Object lifecycle, OnCommomDataCallBack callBack) {
-        this(lifecycle, null, callBack);
+    public CommomData(D data) {
+        this(data, null);
     }
 
-    public CommomData(Object user, D data, OnCommomDataCallBack callBack) {
+    public CommomData(D data, Object user) {
         setData(data);
-        setCallBack(callBack);
+        if (user == null) {
+            return;
+        }
+        if (user instanceof OnCommomDataCallBack) {
+            setCallBack((OnCommomDataCallBack) user);
+        }
         if (user instanceof CommonActivity) {
             ((LifecycleOwner) user).getLifecycle().addObserver(this);
         } else if (user instanceof CommonFragment) {

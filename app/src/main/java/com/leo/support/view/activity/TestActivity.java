@@ -49,7 +49,7 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
 
     @Override
     protected void initData(Bundle bundle) {
-        testModel = new CommomData<>(this, new TestModel(), this);
+        testModel = new CommomData<>(new TestModel(), this);
     }
 
     @Override

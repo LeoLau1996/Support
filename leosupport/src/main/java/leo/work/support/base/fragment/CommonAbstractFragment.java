@@ -13,6 +13,7 @@ import java.util.List;
 
 import leo.work.support.base.LifeControlInterface;
 import leo.work.support.base.biz.CommonLifeBiz;
+import leo.work.support.base.data.CommomData;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -25,7 +26,7 @@ import leo.work.support.base.biz.CommonLifeBiz;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonAbstractFragment extends Fragment implements LifeControlInterface {
+public abstract class CommonAbstractFragment extends Fragment implements LifeControlInterface, CommomData.OnCommomDataCallBack {
 
     private List<CommonLifeBiz> bizList;
 
@@ -48,9 +49,14 @@ public abstract class CommonAbstractFragment extends Fragment implements LifeCon
         if (biz == null) {
             return;
         }
-        Log.e("liu0708","Fragment    准备删除生命周期对象    lifeBizList = "+ bizList.size());
+        Log.e("liu0708", "Fragment    准备删除生命周期对象    lifeBizList = " + bizList.size());
         bizList.remove(biz);
-        Log.e("liu0708","Fragment    删除完成生命周期对象    lifeBizList = "+ bizList.size());
+        Log.e("liu0708", "Fragment    删除完成生命周期对象    lifeBizList = " + bizList.size());
+    }
+
+    @Override
+    public void onDataPropertyChanged(Object data, int propertyId) {
+
     }
 
     @Override
