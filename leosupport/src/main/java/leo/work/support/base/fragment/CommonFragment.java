@@ -64,7 +64,7 @@ public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAb
     protected abstract void initData(Bundle savedInstanceState);
 
     // 加载View
-    protected abstract void initViews(Bundle savedInstanceState, int propertyId);
+    protected abstract void initViews(Object data, int propertyId);
 
     // 加载数据，如：网络请求
     protected void loadData() {
@@ -110,7 +110,7 @@ public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAb
 
     @Override
     public void onDataPropertyChanged(Object data, int propertyId) {
-        initViews(null, propertyId);
+        initViews(data, propertyId);
     }
 
 }

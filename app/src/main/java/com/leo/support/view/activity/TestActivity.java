@@ -53,8 +53,10 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
     }
 
     @Override
-    protected void initViews(Bundle bundle, int propertyId) {
-
+    protected void initViews(Object data, int propertyId) {
+        String text = new Gson().toJson(data);
+        Log.e("liu1125", String.format("onPropertyChanged    data = %s    propertyId = %s", text, propertyId));
+        binding.tvContent.setText(text);
     }
 
     @Override
@@ -77,11 +79,4 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
      *     业 务 方 法    *
      *********************/
 
-    @Override
-    public void onDataPropertyChanged(Object data, int propertyId) {
-        super.onDataPropertyChanged(data, propertyId);
-        String text = new Gson().toJson(data);
-        Log.e("liu1125", String.format("onPropertyChanged    data = %s    propertyId = %s", text, propertyId));
-        binding.tvContent.setText(text);
-    }
 }

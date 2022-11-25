@@ -40,7 +40,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
     }
 
     @Override
-    protected void initViews(Bundle savedInstanceState, int propertyId) {
+    protected void initViews(Object data, int propertyId) {
         initSurface();
         binding.etPath.setText(AppPath.getAppCache());
         binding.etPort.setText("9007");

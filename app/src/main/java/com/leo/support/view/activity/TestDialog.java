@@ -75,13 +75,13 @@ public class TestDialog extends CommonDialogFragment<DialogTestBinding> {
     }
 
     @Override
-    protected void initViews(Bundle savedInstanceState) {
+    protected void initViews(Object data, int propertyId) {
 
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     private void destroy() {
-        Log.e("liu1101","destroy");
+        Log.e("liu1101", "destroy");
         dismissDialog();
     }
 

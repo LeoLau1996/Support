@@ -40,7 +40,7 @@ public class CameraActivity extends CommonActivity<ActivityCameraBinding> {
     }
 
     @Override
-    protected void initViews(Bundle savedInstanceState, int propertyId) {
+    protected void initViews(Object data, int propertyId) {
 
     }
 
