@@ -38,8 +38,8 @@ dependencies {
 import android.app.Activity;
 import android.os.Bundle;
 
-import leo.work.support.base.activity.CommonActivity;
-import leo.work.support.util.JumpUtil;
+import com.surgery.scalpel.base.activity.CommonActivity;
+import com.surgery.scalpel.util.JumpUtil;
 
 
 
@@ -90,7 +90,7 @@ public class ${NAME} extends CommonActivity<#if (${BINDING_NAME} && ${BINDING_NA
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentManager;
-import leo.work.support.base.fragment.CommonFragment;
+import com.surgery.scalpel.base.fragment.CommonFragment;
 
 
 #parse("File Header.java")
@@ -254,7 +254,7 @@ import androidx.fragment.app.FragmentManager;
 
 import net.huidapay.live.R;
 
-import leo.work.support.base.dialog.CommonDialogFragment;
+import com.surgery.scalpel.base.dialog.CommonDialogFragment;
 
 #parse("File Header.java")
 public class ${NAME} extends CommonDialogFragment<#if (${BINDING_NAME} && ${BINDING_NAME} != "")${BINDING_NAME}#end#if (${BINDING_NAME} && ${BINDING_NAME} == "")Dialog(xxxBinding)#end> {
@@ -335,7 +335,7 @@ public class ${NAME} extends CommonDialogFragment<#if (${BINDING_NAME} && ${BIND
 import android.content.Context;
 import android.view.View;
 
-import leo.work.support.base.adapter.CommonRecyclerAdapter;
+import com.surgery.scalpel.base.adapter.CommonRecyclerAdapter;
 
 #parse("File Header.java")
 public class ${NAME} extends CommonRecyclerAdapter<Object, ${NAME}.${NAME}Holder,#if (${BINDING_NAME} && ${BINDING_NAME} != "") ${BINDING_NAME} #else ItemxxxBinding#end, ${NAME}.On${NAME}CallBack> {
@@ -390,8 +390,8 @@ import androidx.databinding.DataBindingUtil;
 
 import java.util.List;
 
-import leo.work.support.base.adapter.CommonMultiRecyclerAdapter;
-import leo.work.support.base.adapter.CommonRecyclerViewHolder;
+import com.surgery.scalpel.base.adapter.CommonMultiRecyclerAdapter;
+import com.surgery.scalpel.base.adapter.CommonRecyclerViewHolder;
 
 #parse("File Header.java")
 public class ${NAME} extends CommonMultiRecyclerAdapter<Object, ${NAME}.On${NAME}CallBack> {
@@ -480,8 +480,8 @@ public class ${NAME} extends CommonMultiRecyclerAdapter<Object, ${NAME}.On${NAME
 
 import android.content.Context;
 
-import leo.work.support.base.adapter.CommonListViewAdapter;
-import leo.work.support.base.adapter.CommonViewHolder;
+import com.surgery.scalpel.base.adapter.CommonListViewAdapter;
+import com.surgery.scalpel.base.adapter.CommonViewHolder;
 
 #parse("File Header.java")
 public class ${NAME} extends CommonListViewAdapter<Object, ${NAME}.${NAME}Holder, #if (${BINDING_NAME} && ${BINDING_NAME} != "") ${BINDING_NAME} #else ItemxxxBinding#end, ${NAME}.On${NAME}CallBack> {
