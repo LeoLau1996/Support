@@ -9,10 +9,10 @@ import com.leo.support.R;
 import com.leo.support.databinding.ActivityTestBinding;
 import com.leo.support.model.TestModel;
 
-import leo.work.support.base.activity.CommonActivity;
-import leo.work.support.base.data.CommomData;
-import leo.work.support.util.A2BSupport;
-import leo.work.support.util.JumpUtil;
+import com.surgery.scalpel.base.activity.CommonActivity;
+import com.surgery.scalpel.base.data.CommomData;
+import com.surgery.scalpel.util.A2BSupport;
+import com.surgery.scalpel.util.JumpUtil;
 
 
 /**

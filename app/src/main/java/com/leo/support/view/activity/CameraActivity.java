@@ -2,16 +2,14 @@ package com.leo.support.view.activity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import com.leo.support.R;
 import com.leo.support.databinding.ActivityCameraBinding;
 import com.leo.support.info.AppPath;
 
-import leo.work.support.base.activity.CommonActivity;
-import leo.work.support.support.file.FileSupport;
-import leo.work.support.support.toolSupport.LeoSupport;
-import leo.work.support.util.CommonUtil;
+import com.surgery.scalpel.base.activity.CommonActivity;
+import com.surgery.scalpel.support.file.FileSupport;
+import com.surgery.scalpel.util.CommonUtil;
 
 /**
  * ---------------------------------------------------------------------------------------------

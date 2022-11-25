@@ -1,6 +1,6 @@
 package com.leo.support.view.activity;
 
-import static leo.work.support.biz.MediaProjectionService.SOCKE_TYPE_SERVICE;
+import static com.surgery.scalpel.biz.MediaProjectionService.SOCKE_TYPE_SERVICE;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,16 +12,15 @@ import androidx.annotation.NonNull;
 
 import com.leo.support.R;
 import com.leo.support.databinding.ActivityLiveBinding;
-import com.leo.support.info.AppPath;
 
-import leo.work.support.base.activity.CommonActivity;
-import leo.work.support.biz.AudioRecordBiz;
-import leo.work.support.biz.AudioTrackBiz;
-import leo.work.support.biz.MediaProjectionBiz;
-import leo.work.support.biz.MediaProjectionService;
-import leo.work.support.util.A2BSupport;
-import leo.work.support.util.JumpUtil;
-import leo.work.support.util.SocketUtils;
+import com.surgery.scalpel.base.activity.CommonActivity;
+import com.surgery.scalpel.biz.AudioRecordBiz;
+import com.surgery.scalpel.biz.AudioTrackBiz;
+import com.surgery.scalpel.biz.MediaProjectionBiz;
+import com.surgery.scalpel.biz.MediaProjectionService;
+import com.surgery.scalpel.util.A2BSupport;
+import com.surgery.scalpel.util.JumpUtil;
+import com.surgery.scalpel.util.SocketUtils;
 
 
 /**

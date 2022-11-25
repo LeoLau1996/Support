@@ -1,6 +1,5 @@
 package com.leo.support.view.activity;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -12,7 +11,7 @@ import com.leo.support.R;
 import com.leo.support.databinding.DialogTestBinding;
 
 
-import leo.work.support.base.dialog.CommonDialogFragment;
+import com.surgery.scalpel.base.dialog.CommonDialogFragment;
 
 /**
  * ---------------------------------------------------------------------------------------------

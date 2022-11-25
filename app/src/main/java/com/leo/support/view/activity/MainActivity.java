@@ -3,7 +3,6 @@ package com.leo.support.view.activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 
@@ -11,16 +10,16 @@ import com.leo.support.R;
 import com.leo.support.databinding.ActivityMainBinding;
 import com.leo.support.info.AppPath;
 
-import leo.work.support.base.activity.CommonActivity;
-import leo.work.support.biz.AudioRecordBiz;
-import leo.work.support.biz.MediaProjectionBiz;
-import leo.work.support.biz.MediaProjectionService;
-import leo.work.support.support.file.FileSupport;
-import leo.work.support.support.toolSupport.LeoSupport;
-import leo.work.support.util.A2BSupport;
-import leo.work.support.util.CommonUtil;
-import leo.work.support.util.JumpUtil;
-import leo.work.support.util.SocketUtils;
+import com.surgery.scalpel.base.activity.CommonActivity;
+import com.surgery.scalpel.biz.AudioRecordBiz;
+import com.surgery.scalpel.biz.MediaProjectionBiz;
+import com.surgery.scalpel.biz.MediaProjectionService;
+import com.surgery.scalpel.support.file.FileSupport;
+import com.surgery.scalpel.support.toolSupport.LeoSupport;
+import com.surgery.scalpel.util.A2BSupport;
+import com.surgery.scalpel.util.CommonUtil;
+import com.surgery.scalpel.util.JumpUtil;
+import com.surgery.scalpel.util.SocketUtils;
 
 public class MainActivity extends CommonActivity<ActivityMainBinding> {
 
