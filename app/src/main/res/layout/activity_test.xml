@@ -3,9 +3,35 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="修改姓名" />
+
+        <EditText
+            android:id="@+id/etAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="修改年龄" />
 
 
     </LinearLayout>

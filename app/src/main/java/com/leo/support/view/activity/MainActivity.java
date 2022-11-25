@@ -57,8 +57,8 @@ public class MainActivity extends CommonActivity<ActivityMainBinding> {
             }
         });
         binding.btnMenu.setOnClickListener(v -> {
-            //TestActivity.go(activity);
-            binding.mMarqueeTextview.start(1);
+            TestActivity.go(activity);
+            //binding.mMarqueeTextview.start(1);
         });
         binding.btnPlay.setOnClickListener(v -> {
             binding.mMarqueeTextview.start(2);

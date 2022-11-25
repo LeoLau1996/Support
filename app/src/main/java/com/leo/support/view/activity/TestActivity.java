@@ -2,13 +2,16 @@ package com.leo.support.view.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.leo.support.R;
 import com.leo.support.databinding.ActivityTestBinding;
+import com.leo.support.model.TestModel;
 
 import leo.work.support.base.activity.CommonActivity;
+import leo.work.support.base.data.CommomData;
+import leo.work.support.util.A2BSupport;
 import leo.work.support.util.JumpUtil;
 
 
@@ -23,7 +26,7 @@ import leo.work.support.util.JumpUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class TestActivity extends CommonActivity<ActivityTestBinding> {
+public class TestActivity extends CommonActivity<ActivityTestBinding> implements CommomData.OnCommomDataCallBack<TestModel> {
 
     public static void go(Activity activity) {
         JumpUtil.go(activity, TestActivity.class);
@@ -32,7 +35,8 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
     /*********************
      *     全 局 变 量    *
      *********************/
-    //.....
+
+    private CommomData<TestModel> testModel;
 
     /*********************
      *  生 命 周 期 方 法  *
@@ -45,11 +49,7 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
 
     @Override
     protected void initData(Bundle bundle) {
-        TestDialog.showTestDialog(getSupportFragmentManager(), null);
-        new Handler().postDelayed(() -> {
-            Log.e("liu1031","关闭");
-            finish();
-        }, 5000);
+        testModel = new CommomData<>(getLifecycle(), new TestModel(), this);
     }
 
     @Override
@@ -58,15 +58,28 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
     }
 
     @Override
-    protected void onDestroy() {
-        Log.e("liu1101","TestActivity    onDestroy1");
-        super.onDestroy();
-        Log.e("liu1101","TestActivity    onDestroy2");
+    protected void initListener() {
+        super.initListener();
+        // 设置姓名
+        binding.btnName.setOnClickListener(v -> {
+            String name = binding.etName.getText().toString();
+            testModel.data.setName(name);
+        });
+        // 设置年龄
+        binding.btnAge.setOnClickListener(v -> {
+            String ageStr = binding.etAge.getText().toString();
+            int age = A2BSupport.String2int(ageStr);
+            testModel.data.setAge(age);
+        });
     }
 
     /*********************
      *     业 务 方 法    *
      *********************/
-    //.....
+
+    @Override
+    public void onDataPropertyChanged(TestModel data, int propertyId) {
+        Log.e("liu1125", String.format("onPropertyChanged    data = %s    propertyId = %s", new Gson().toJson(data), propertyId));
+    }
 
 }
