@@ -25,7 +25,7 @@ import leo.work.support.base.data.CommomData;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class CommonAbstractDialog extends Dialog implements LifeControlInterface, CommomData.OnCommomDataCallBack {
+public class CommonAbstractDialog extends Dialog implements LifeControlInterface{
 
     private List<CommonLifeBiz> bizList;
 
@@ -59,11 +59,6 @@ public class CommonAbstractDialog extends Dialog implements LifeControlInterface
         Log.e("liu0708", "Dialog    准备删除生命周期对象    lifeBizList = " + bizList.size());
         bizList.remove(biz);
         Log.e("liu0708", "Dialog    删除完成生命周期对象    lifeBizList = " + bizList.size());
-    }
-
-    @Override
-    public void onDataPropertyChanged(Object data, int propertyId) {
-
     }
 
     @Override

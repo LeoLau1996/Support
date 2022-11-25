@@ -12,7 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
-import leo.work.support.base.fragment.CommonAbstractFragment;
+import leo.work.support.BR;
+import leo.work.support.base.data.CommomData;
 import leo.work.support.util.LogUtil;
 
 /**
@@ -26,7 +27,7 @@ import leo.work.support.util.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAbstractFragment {
+public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAbstractFragment implements CommomData.OnCommomDataCallBack {
 
     public Context context;
     public Activity activity;
@@ -52,7 +53,7 @@ public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAb
         activity = getActivity();
 
         initData(savedInstanceState);
-        initViews(savedInstanceState);
+        initViews(savedInstanceState, BR._all);
         loadData();
         initListener();
     }
@@ -63,7 +64,7 @@ public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAb
     protected abstract void initData(Bundle savedInstanceState);
 
     // 加载View
-    protected abstract void initViews(Bundle savedInstanceState);
+    protected abstract void initViews(Bundle savedInstanceState, int propertyId);
 
     // 加载数据，如：网络请求
     protected void loadData() {
@@ -105,6 +106,11 @@ public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAb
         } else {
             this.hasFront = false;
         }
+    }
+
+    @Override
+    public void onDataPropertyChanged(Object data, int propertyId) {
+        initViews(null, propertyId);
     }
 
 }

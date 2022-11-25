@@ -16,7 +16,9 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
+import leo.work.support.BR;
 import leo.work.support.R;
+import leo.work.support.base.data.CommomData;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -29,7 +31,7 @@ import leo.work.support.R;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonDialogFragment<T extends ViewDataBinding> extends CommonAbstractDialogFragment implements LifecycleObserver {
+public abstract class CommonDialogFragment<T extends ViewDataBinding> extends CommonAbstractDialogFragment implements LifecycleObserver, CommomData.OnCommomDataCallBack {
 
     public T binding;
 
@@ -53,7 +55,7 @@ public abstract class CommonDialogFragment<T extends ViewDataBinding> extends Co
         getLifecycle().addObserver(this);
 
         initData(savedInstanceState);
-        initViews(savedInstanceState);
+        initViews(savedInstanceState, BR._all);
         loadData();
         initListener();
     }
@@ -65,7 +67,7 @@ public abstract class CommonDialogFragment<T extends ViewDataBinding> extends Co
     protected abstract void initData(Bundle savedInstanceState);
 
     // 加载View
-    protected abstract void initViews(Bundle savedInstanceState);
+    protected abstract void initViews(Bundle savedInstanceState, int propertyId);
 
     // 加载数据，如：网络请求
     protected void loadData() {
@@ -75,6 +77,11 @@ public abstract class CommonDialogFragment<T extends ViewDataBinding> extends Co
     // 初始化监听器
     protected void initListener() {
 
+    }
+
+    @Override
+    public void onDataPropertyChanged(Object data, int propertyId) {
+        initViews(null, propertyId);
     }
 
     // 设置背景颜色

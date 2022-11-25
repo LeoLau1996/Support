@@ -18,7 +18,7 @@ import leo.work.support.base.biz.CommonLifeBiz;
 import leo.work.support.base.data.CommomData;
 
 
-public abstract class CommonAbstractActivity extends AppCompatActivity implements LifeControlInterface, CommomData.OnCommomDataCallBack {
+public abstract class CommonAbstractActivity extends AppCompatActivity implements LifeControlInterface {
 
     private List<CommonLifeBiz> bizList;
 
@@ -44,11 +44,6 @@ public abstract class CommonAbstractActivity extends AppCompatActivity implement
         Log.e("liu0708", "Activity    准备删除生命周期对象    lifeBizList = " + bizList.size());
         bizList.remove(biz);
         Log.e("liu0708", "Activity    删除完成生命周期对象    lifeBizList = " + bizList.size());
-    }
-
-    @Override
-    public void onDataPropertyChanged(Object data, int propertyId) {
-
     }
 
     @Override

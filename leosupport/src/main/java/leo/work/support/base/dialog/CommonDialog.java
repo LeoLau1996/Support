@@ -10,7 +10,9 @@ import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
+import leo.work.support.BR;
 import leo.work.support.R;
+import leo.work.support.base.data.CommomData;
 import leo.work.support.util.LogUtil;
 
 /**
@@ -24,7 +26,7 @@ import leo.work.support.util.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbstractDialog implements LifecycleObserver {
+public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbstractDialog implements LifecycleObserver, CommomData.OnCommomDataCallBack {
 
     public T binding;
     public Context context;
@@ -54,7 +56,7 @@ public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbst
         //初始化数据
         initData();
         //加载View
-        initViews();
+        initViews(BR._all);
         //加载数据
         loadData();
         //初始化监听器
@@ -68,7 +70,7 @@ public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbst
     protected abstract void initData();
 
     // 加载View
-    protected abstract void initViews();
+    protected abstract void initViews(int propertyId);
 
     // 加载数据，如：网络请求
     protected void loadData() {
@@ -78,6 +80,11 @@ public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbst
     // 初始化监听器
     protected void initListener() {
 
+    }
+
+    @Override
+    public void onDataPropertyChanged(Object data, int propertyId) {
+        initViews(propertyId);
     }
 
 }

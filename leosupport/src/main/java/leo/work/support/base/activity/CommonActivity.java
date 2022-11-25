@@ -1,8 +1,6 @@
 package leo.work.support.base.activity;
 
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
@@ -10,6 +8,7 @@ import androidx.databinding.ViewDataBinding;
 import android.os.Bundle;
 
 import leo.work.support.BR;
+import leo.work.support.base.data.CommomData;
 import leo.work.support.util.LogUtil;
 
 /**
@@ -23,7 +22,7 @@ import leo.work.support.util.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonActivity<T extends ViewDataBinding> extends CommonAbstractActivity {
+public abstract class CommonActivity<T extends ViewDataBinding> extends CommonAbstractActivity implements CommomData.OnCommomDataCallBack {
 
     //Activity
     public CommonActivity activity;
@@ -88,6 +87,11 @@ public abstract class CommonActivity<T extends ViewDataBinding> extends CommonAb
     protected void onPause() {
         super.onPause();
         hasFront = false;
+    }
+
+    @Override
+    public void onDataPropertyChanged(Object data, int propertyId) {
+        initViews(null, propertyId);
     }
 
 }
