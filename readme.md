@@ -17,7 +17,7 @@ dependencies {
 # 代码模板
 ## CommonActivity
 
-```
+```text
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
 import android.app.Activity;
@@ -56,7 +56,7 @@ public class ${NAME} extends CommonActivity<#if (${BINDING_NAME} && ${BINDING_NA
     }
 
     @Override
-    protected void initViews(Bundle bundle) {
+    protected void initViews(Object data, int propertyId) {
         
     }
 
@@ -69,7 +69,7 @@ public class ${NAME} extends CommonActivity<#if (${BINDING_NAME} && ${BINDING_NA
 ```
 
 ## CommonFragment
-```
+```text
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
 import android.os.Bundle;
@@ -112,7 +112,7 @@ public class ${NAME} extends CommonFragment<#if (${BINDING_NAME} && ${BINDING_NA
     }
 
     @Override
-    protected void initViews(Bundle bundle) {
+    protected void initViews(Object data, int propertyId) {
 
     }
 
@@ -188,7 +188,7 @@ public class ${NAME} extends CommonDialog<#if (${BINDING_NAME} && ${BINDING_NAME
     }
 
     @Override
-    protected void initViews() {
+    protected void initViews(Object data, int propertyId) {
 
     }
 
@@ -287,7 +287,7 @@ public class ${NAME} extends CommonDialogFragment<#if (${BINDING_NAME} && ${BIND
     }
 
     @Override
-    protected void initViews(Bundle savedInstanceState) {
+    protected void initViews(Object data, int propertyId) {
 
     }
 
