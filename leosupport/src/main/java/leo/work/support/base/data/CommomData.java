@@ -8,7 +8,13 @@ import androidx.databinding.Observable;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
+
+import leo.work.support.base.activity.CommonActivity;
+import leo.work.support.base.dialog.CommonDialog;
+import leo.work.support.base.dialog.CommonDialogFragment;
+import leo.work.support.base.fragment.CommonFragment;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -28,23 +34,31 @@ public class CommomData<D extends BaseObservable> extends Observable.OnPropertyC
     // 回调方法
     private OnCommomDataCallBack callBack;
 
-    public CommomData(Lifecycle lifecycle) {
+    public CommomData(Object lifecycle) {
         this(lifecycle, null, null);
     }
 
-    public CommomData(Lifecycle lifecycle, D data) {
+    public CommomData(Object lifecycle, D data) {
         this(lifecycle, data, null);
     }
 
-    public CommomData(Lifecycle lifecycle, OnCommomDataCallBack callBack) {
+    public CommomData(Object lifecycle, OnCommomDataCallBack callBack) {
         this(lifecycle, null, callBack);
     }
 
-    public CommomData(Lifecycle lifecycle, D data, OnCommomDataCallBack callBack) {
+    public CommomData(Object user, D data, OnCommomDataCallBack callBack) {
         setData(data);
         setCallBack(callBack);
-        if (lifecycle != null) {
-            lifecycle.addObserver(this);
+        if (user instanceof CommonActivity) {
+            ((LifecycleOwner) user).getLifecycle().addObserver(this);
+        } else if (user instanceof CommonFragment) {
+            ((CommonFragment) user).getLifecycle().addObserver(this);
+        } else if (user instanceof CommonDialog) {
+            ((LifecycleOwner) ((CommonDialog) user).getContext()).getLifecycle().addObserver(this);
+        } else if (user instanceof CommonDialogFragment) {
+            ((CommonDialogFragment) user).getLifecycle().addObserver(this);
+        } else if (user instanceof Lifecycle) {
+            ((Lifecycle) user).addObserver(this);
         }
     }
 
