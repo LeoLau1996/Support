@@ -30,7 +30,7 @@ import leo.work.support.base.fragment.CommonFragment;
 public class CommomData<D extends BaseObservable> extends Observable.OnPropertyChangedCallback implements LifecycleObserver {
 
     // 数据主体
-    public D data;
+    private D data;
     // 回调方法
     private OnCommomDataCallBack callBack;
 
@@ -65,6 +65,10 @@ public class CommomData<D extends BaseObservable> extends Observable.OnPropertyC
         } else if (user instanceof Lifecycle) {
             ((Lifecycle) user).addObserver(this);
         }
+    }
+
+    public D data() {
+        return data;
     }
 
     // 设置数据

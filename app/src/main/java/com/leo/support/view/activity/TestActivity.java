@@ -65,13 +65,13 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
         // 设置姓名
         binding.btnName.setOnClickListener(v -> {
             String name = binding.etName.getText().toString();
-            testModel.data.setName(name);
+            testModel.data().setName(name);
         });
         // 设置年龄
         binding.btnAge.setOnClickListener(v -> {
             String ageStr = binding.etAge.getText().toString();
             int age = A2BSupport.String2int(ageStr);
-            testModel.data.setAge(age);
+            testModel.data().setAge(age);
         });
     }
 
