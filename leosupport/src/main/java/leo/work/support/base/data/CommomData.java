@@ -26,7 +26,7 @@ public class CommomData<D extends BaseObservable> extends Observable.OnPropertyC
     // 数据主体
     public D data;
     // 回调方法
-    private OnCommomDataCallBack<D> callBack;
+    private OnCommomDataCallBack callBack;
 
     public CommomData(Lifecycle lifecycle) {
         this(lifecycle, null, null);
@@ -36,11 +36,11 @@ public class CommomData<D extends BaseObservable> extends Observable.OnPropertyC
         this(lifecycle, data, null);
     }
 
-    public CommomData(Lifecycle lifecycle, OnCommomDataCallBack<D> callBack) {
+    public CommomData(Lifecycle lifecycle, OnCommomDataCallBack callBack) {
         this(lifecycle, null, callBack);
     }
 
-    public CommomData(Lifecycle lifecycle, D data, OnCommomDataCallBack<D> callBack) {
+    public CommomData(Lifecycle lifecycle, D data, OnCommomDataCallBack callBack) {
         setData(data);
         setCallBack(callBack);
         if (lifecycle != null) {
@@ -58,7 +58,7 @@ public class CommomData<D extends BaseObservable> extends Observable.OnPropertyC
     }
 
     // 设置监听
-    public void setCallBack(OnCommomDataCallBack<D> callBack) {
+    public void setCallBack(OnCommomDataCallBack callBack) {
         this.callBack = callBack;
     }
 
@@ -82,10 +82,10 @@ public class CommomData<D extends BaseObservable> extends Observable.OnPropertyC
         callBack.onDataPropertyChanged(data, propertyId);
     }
 
-    public interface OnCommomDataCallBack<D extends BaseObservable> {
+    public interface OnCommomDataCallBack {
 
         // 属性值修改
-        void onDataPropertyChanged(D data, int propertyId);
+        void onDataPropertyChanged(Object data, int propertyId);
 
     }
 

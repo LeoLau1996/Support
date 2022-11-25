@@ -26,7 +26,7 @@ import leo.work.support.util.JumpUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class TestActivity extends CommonActivity<ActivityTestBinding> implements CommomData.OnCommomDataCallBack<TestModel> {
+public class TestActivity extends CommonActivity<ActivityTestBinding> {
 
     public static void go(Activity activity) {
         JumpUtil.go(activity, TestActivity.class);
@@ -78,8 +78,10 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> implements
      *********************/
 
     @Override
-    public void onDataPropertyChanged(TestModel data, int propertyId) {
-        Log.e("liu1125", String.format("onPropertyChanged    data = %s    propertyId = %s", new Gson().toJson(data), propertyId));
+    public void onDataPropertyChanged(Object data, int propertyId) {
+        super.onDataPropertyChanged(data, propertyId);
+        String text = new Gson().toJson(data);
+        Log.e("liu1125", String.format("onPropertyChanged    data = %s    propertyId = %s", text, propertyId));
+        binding.tvContent.setText(text);
     }
-
 }
