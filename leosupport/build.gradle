@@ -1,5 +1,9 @@
 apply plugin: 'com.android.library'
 
+def getTime() {
+    return new Date().format("yyyyMMdd_HHmm", TimeZone.getDefault())
+}
+
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
 
@@ -8,6 +12,7 @@ android {
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
+        flavorDimensions "versionCode"
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
@@ -34,7 +39,7 @@ android {
         }
     }
     //为了解决部分第三方库重复打包了META-INF的问题
-    packagingOptions{
+    packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
@@ -45,6 +50,13 @@ android {
     dataBinding {
         enabled = true
     }
+
+    android.libraryVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "scalpel_${defaultConfig.versionCode}_${defaultConfig.versionName}_${variant.name}_${getTime()}.aar"
+        }
+    }
+
 }
 
 dependencies {
