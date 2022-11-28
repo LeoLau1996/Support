@@ -2,7 +2,11 @@ package com.leo.support.view.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+
+import androidx.databinding.BaseObservable;
 
 import com.google.gson.Gson;
 import com.leo.support.R;
@@ -32,10 +36,17 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
         JumpUtil.go(activity, TestActivity.class);
     }
 
+    private static class TestActivityModel extends BaseObservable {
+
+
+
+    }
+
     /*********************
      *     全 局 变 量    *
      *********************/
 
+    private CommomData<TestActivityModel> activityModel;
     private CommomData<TestModel> testModel;
 
     /*********************
@@ -62,6 +73,41 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
     @Override
     protected void initListener() {
         super.initListener();
+        binding.etName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String name = s.toString();
+                testModel.data().setName(name);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        binding.etAge.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String ageStr = s.toString();
+                int age = A2BSupport.String2int(ageStr);
+                testModel.data().setAge(age);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         // 设置姓名
         binding.btnName.setOnClickListener(v -> {
             String name = binding.etName.getText().toString();
@@ -78,5 +124,6 @@ public class TestActivity extends CommonActivity<ActivityTestBinding> {
     /*********************
      *     业 务 方 法    *
      *********************/
+
 
 }
