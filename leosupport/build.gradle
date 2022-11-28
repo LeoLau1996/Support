@@ -55,6 +55,29 @@ android {
         variant.outputs.all {
             outputFileName = "scalpel_${defaultConfig.versionCode}_${defaultConfig.versionName}_${variant.name}_${getTime()}.aar"
         }
+
+        // 打包完成后复制到的目录
+        def outputFileDir = "${rootDir}/aar/"
+        // 删除output目录
+        delete outputFileDir
+        // 打包完成后做的一些事,复制apk到指定文件夹
+        variant.assemble.doLast {
+            File out = new File(outputFileDir)
+            //判断文件夹是否存在
+            if (!out.exists()) {
+                out.mkdir()
+            }
+            variant.outputs.forEach { file ->
+                if (file.name.contains('release')) {
+                    //复制到指定文件夹
+                    copy {
+                        from file.outputFile
+                        into out
+                    }
+                }
+            }
+        }
+
     }
 
 }
