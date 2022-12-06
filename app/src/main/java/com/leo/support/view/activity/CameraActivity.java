@@ -8,6 +8,7 @@ import com.leo.support.databinding.ActivityCameraBinding;
 import com.leo.support.info.AppPath;
 
 import com.surgery.scalpel.base.activity.CommonActivity;
+import com.surgery.scalpel.model.CommonViewModel;
 import com.surgery.scalpel.support.file.FileSupport;
 import com.surgery.scalpel.util.CommonUtil;
 
@@ -23,7 +24,7 @@ import com.surgery.scalpel.util.CommonUtil;
  * Camera 显示到 SurfaceView
  * ---------------------------------------------------------------------------------------------
  **/
-public class CameraActivity extends CommonActivity<ActivityCameraBinding> {
+public class CameraActivity extends CommonActivity<ActivityCameraBinding, CommonViewModel> {
 
     private String path;
 

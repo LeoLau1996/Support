@@ -18,6 +18,7 @@ import com.surgery.scalpel.biz.AudioRecordBiz;
 import com.surgery.scalpel.biz.AudioTrackBiz;
 import com.surgery.scalpel.biz.MediaProjectionBiz;
 import com.surgery.scalpel.biz.MediaProjectionService;
+import com.surgery.scalpel.model.CommonViewModel;
 import com.surgery.scalpel.util.A2BSupport;
 import com.surgery.scalpel.util.JumpUtil;
 import com.surgery.scalpel.util.SocketUtils;
@@ -34,7 +35,7 @@ import com.surgery.scalpel.util.SocketUtils;
  * 代码备注: String.format("%srecord_%s.h264", AppPath.getAppCache(), System.currentTimeMillis())
  * ---------------------------------------------------------------------------------------------
  **/
-public class LiveActivity extends CommonActivity<ActivityLiveBinding> {
+public class LiveActivity extends CommonActivity<ActivityLiveBinding, CommonViewModel> {
 
     public static void go(Activity activity, int socketType) {
         Bundle bundle = new Bundle();

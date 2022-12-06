@@ -12,6 +12,7 @@ import com.leo.support.databinding.DialogTestBinding;
 
 
 import com.surgery.scalpel.base.dialog.CommonDialogFragment;
+import com.surgery.scalpel.model.CommonViewModel;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -24,7 +25,7 @@ import com.surgery.scalpel.base.dialog.CommonDialogFragment;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class TestDialog extends CommonDialogFragment<DialogTestBinding> {
+public class TestDialog extends CommonDialogFragment<DialogTestBinding, CommonViewModel> {
 
     private static TestDialog instance;
 

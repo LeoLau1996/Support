@@ -11,10 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.surgery.scalpel.BR;
 import com.surgery.scalpel.base.data.CommomData;
+import com.surgery.scalpel.model.CommonViewModel;
 import com.surgery.scalpel.util.LogUtil;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -27,7 +33,7 @@ import com.surgery.scalpel.util.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAbstractFragment implements CommomData.OnCommomDataCallBack {
+public abstract class CommonFragment<T extends ViewDataBinding, M extends ViewModel> extends CommonAbstractFragment implements CommomData.OnCommomDataCallBack {
 
     public Context context;
     public Activity activity;
@@ -37,6 +43,7 @@ public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAb
     public boolean hidden = false;//Fragment显示/隐藏状态
 
     public T binding;
+    public M viewModel;
 
     @Nullable
     @Override
@@ -51,7 +58,11 @@ public abstract class CommonFragment<T extends ViewDataBinding> extends CommonAb
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
         activity = getActivity();
-
+        Type type = getClass().getGenericSuperclass();
+        if (type instanceof ParameterizedType) {
+            Type[] types = ((ParameterizedType) type).getActualTypeArguments();
+            viewModel = (M) new ViewModelProvider(this).get((Class) types[1]);
+        }
         initData(savedInstanceState);
         initViews(savedInstanceState, BR._all);
         loadData();

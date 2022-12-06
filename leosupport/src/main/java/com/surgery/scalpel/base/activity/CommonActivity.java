@@ -4,12 +4,18 @@ import android.content.res.Configuration;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.surgery.scalpel.BR;
 import com.surgery.scalpel.base.data.CommomData;
 import com.surgery.scalpel.util.LogUtil;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -22,16 +28,16 @@ import com.surgery.scalpel.util.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonActivity<T extends ViewDataBinding> extends CommonAbstractActivity implements CommomData.OnCommomDataCallBack {
+public abstract class CommonActivity<T extends ViewDataBinding, M extends ViewModel> extends CommonAbstractActivity implements CommomData.OnCommomDataCallBack {
 
-    //Activity
+    // Activity
     public CommonActivity activity;
-    //ViewDataBinding
+    // ViewDataBinding
     public T binding;
-    //当前页面是否在前台
+    // ViewModel
+    public M viewModel;
+    // 当前页面是否在前台
     public boolean hasFront = false;
-    //
-    private Configuration config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,12 @@ public abstract class CommonActivity<T extends ViewDataBinding> extends CommonAb
         activity = this;
         //
         binding = DataBindingUtil.setContentView(activity, setLayout());
+        Type type = getClass().getGenericSuperclass();
+        if (type instanceof ParameterizedType) {
+            Type[] types = ((ParameterizedType) type).getActualTypeArguments();
+            viewModel = (M) new ViewModelProvider(this).get((Class) types[1]);
+        }
+
         //初始化数据
         initData(savedInstanceState);
         //加载View

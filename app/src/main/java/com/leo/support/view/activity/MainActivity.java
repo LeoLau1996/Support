@@ -14,6 +14,7 @@ import com.surgery.scalpel.base.activity.CommonActivity;
 import com.surgery.scalpel.biz.AudioRecordBiz;
 import com.surgery.scalpel.biz.MediaProjectionBiz;
 import com.surgery.scalpel.biz.MediaProjectionService;
+import com.surgery.scalpel.model.CommonViewModel;
 import com.surgery.scalpel.support.file.FileSupport;
 import com.surgery.scalpel.support.toolSupport.LeoSupport;
 import com.surgery.scalpel.util.A2BSupport;
@@ -21,7 +22,7 @@ import com.surgery.scalpel.util.CommonUtil;
 import com.surgery.scalpel.util.JumpUtil;
 import com.surgery.scalpel.util.SocketUtils;
 
-public class MainActivity extends CommonActivity<ActivityMainBinding> {
+public class MainActivity extends CommonActivity<ActivityMainBinding, CommonViewModel> {
 
     private MediaProjectionBiz mediaProjectionBiz;
     private SurfaceHolder holder;

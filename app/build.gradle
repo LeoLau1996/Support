@@ -47,5 +47,6 @@ dependencies {
     //Support
     implementation project(':leosupport')
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
+    // Gson
     implementation 'com.google.code.gson:gson:2.10'
 }

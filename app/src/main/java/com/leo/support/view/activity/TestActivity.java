@@ -15,6 +15,7 @@ import com.leo.support.model.TestModel;
 
 import com.surgery.scalpel.base.activity.CommonActivity;
 import com.surgery.scalpel.base.data.CommomData;
+import com.surgery.scalpel.model.CommonViewModel;
 import com.surgery.scalpel.util.A2BSupport;
 import com.surgery.scalpel.util.JumpUtil;
 
@@ -30,14 +31,13 @@ import com.surgery.scalpel.util.JumpUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class TestActivity extends CommonActivity<ActivityTestBinding> {
+public class TestActivity extends CommonActivity<ActivityTestBinding, CommonViewModel> {
 
     public static void go(Activity activity) {
         JumpUtil.go(activity, TestActivity.class);
     }
 
     private static class TestActivityModel extends BaseObservable {
-
 
 
     }

@@ -99,5 +99,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     // WebSocket
     implementation "org.java-websocket:Java-WebSocket:1.4.0"
+    // ViewModel
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
 }

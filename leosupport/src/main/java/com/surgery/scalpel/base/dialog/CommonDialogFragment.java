@@ -14,10 +14,15 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.surgery.scalpel.BR;
 import com.surgery.scalpel.R;
 import com.surgery.scalpel.base.data.CommomData;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -30,9 +35,10 @@ import com.surgery.scalpel.base.data.CommomData;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonDialogFragment<T extends ViewDataBinding> extends CommonAbstractDialogFragment implements LifecycleObserver, CommomData.OnCommomDataCallBack {
+public abstract class CommonDialogFragment<T extends ViewDataBinding, M extends ViewModel> extends CommonAbstractDialogFragment implements LifecycleObserver, CommomData.OnCommomDataCallBack {
 
     public T binding;
+    public M viewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +58,11 @@ public abstract class CommonDialogFragment<T extends ViewDataBinding> extends Co
         super.onViewCreated(view, savedInstanceState);
 
         getLifecycle().addObserver(this);
-
+        Type type = getClass().getGenericSuperclass();
+        if (type instanceof ParameterizedType) {
+            Type[] types = ((ParameterizedType) type).getActualTypeArguments();
+            viewModel = (M) new ViewModelProvider(this).get((Class) types[1]);
+        }
         initData(savedInstanceState);
         initViews(null, BR._all);
         loadData();
