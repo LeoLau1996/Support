@@ -5,9 +5,15 @@ import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.surgery.scalpel.model.MethodResult;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -22,6 +28,8 @@ import java.util.List;
  * ---------------------------------------------------------------------------------------------
  **/
 public class CommonUtil {
+
+    public static final String TAG = CommonUtil.class.getSimpleName();
 
     //复制
     public static void copy(Activity activity, String content) {
@@ -82,6 +90,86 @@ public class CommonUtil {
         for (View view : viewList) {
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
+    }
+
+
+    /**
+     * 获取字段
+     *
+     * @param mClass    目标类
+     * @param targetObj 目标对象
+     * @param fieldName 字段名
+     * @return
+     */
+    public static Object getField(Class mClass, Object targetObj, String fieldName) {
+        Object value = null;
+        try {
+            // 获取声明的字段
+            Field field = mClass.getDeclaredField(fieldName);
+            // 设置为可访问
+            field.setAccessible(true);
+            // 获取值
+            value = field.get(targetObj);
+        } catch (IllegalAccessException exception) {
+            Log.e(TAG, String.format("getField    IllegalAccessException = %s", exception.getMessage()));
+        } catch (NoSuchFieldException exception) {
+            Log.e(TAG, String.format("getField    NoSuchFieldException = %s", exception.getMessage()));
+        }
+        return value;
+    }
+
+
+    /**
+     * 设置字段
+     *
+     * @param mClass    目标类
+     * @param targetObj 目标对象
+     * @param fieldName 字段名
+     * @param newValue  值
+     * @return
+     */
+    public static boolean setField(Class mClass, Object targetObj, String fieldName, Object newValue) {
+        try {
+            // 获取声明的字段
+            Field field = mClass.getDeclaredField(fieldName);
+            // 设置为可访问
+            field.setAccessible(true);
+            // 设置值
+            field.set(targetObj, newValue);
+            return true;
+        } catch (IllegalAccessException exception) {
+            Log.e(TAG, String.format("getField    IllegalAccessException = %s", exception.getMessage()));
+        } catch (NoSuchFieldException exception) {
+            Log.e(TAG, String.format("getField    NoSuchFieldException = %s", exception.getMessage()));
+        }
+        return false;
+    }
+
+    // 调用方法
+    public static MethodResult invokeMethod(Class mClass, Object targetObj, String methodName, Object... args) {
+        try {
+            Class<?>[] parameterTypes = null;
+            if (args != null && args.length > 0) {
+                parameterTypes = new Class[args.length];
+                for (int i = 0; i < args.length; i++) {
+                    parameterTypes[i] = args[i].getClass();
+                }
+            }
+            // 获取方法
+            Method method = mClass.getDeclaredMethod(methodName, parameterTypes);
+            // 设置为可访问
+            method.setAccessible(true);
+            // 调用
+            Object returnResult = method.invoke(targetObj, args);
+            return new MethodResult(true, returnResult);
+        } catch (NoSuchMethodException exception) {
+            Log.e(TAG, String.format("invokeMethod    NoSuchMethodException = %s", exception.getMessage()));
+        } catch (IllegalAccessException exception) {
+            Log.e(TAG, String.format("invokeMethod    IllegalAccessException = %s", exception.getMessage()));
+        } catch (InvocationTargetException exception) {
+            Log.e(TAG, String.format("invokeMethod    InvocationTargetException = %s", exception.getMessage()));
+        }
+        return new MethodResult(false, null);
     }
 
 }
