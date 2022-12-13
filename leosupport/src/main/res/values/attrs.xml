@@ -11,15 +11,7 @@
         <attr name="y" format="integer" />
         <attr name="maxHeight" format="dimension" />
     </declare-styleable>
-
-    <!--    <declare-styleable name="TopBar">-->
-    <!--        <attr name="backPaddingDP" format="dimension" />-->
-
-    <!--        &lt;!&ndash;文字菜单&ndash;&gt;-->
-    <!--        <attr name="menuTextPaddingDP" format="dimension" />-->
-    <!--        &lt;!&ndash;图片菜单&ndash;&gt;-->
-    <!--        <attr name="menuImagePaddingDP" format="dimension" />-->
-    <!--    </declare-styleable>-->
+    、
 
     <declare-styleable name="TitleBar">
         <!--内容高度-->
@@ -59,6 +51,10 @@
         <attr name="menuTextColor" format="color" />
         <!--菜单：间距-->
         <attr name="menuPadding" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="View">
+        <attr name="groupName" format="string" />
     </declare-styleable>
 
 </resources>
