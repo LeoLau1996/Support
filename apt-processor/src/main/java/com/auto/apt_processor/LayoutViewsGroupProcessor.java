@@ -88,7 +88,7 @@ public class LayoutViewsGroupProcessor extends AbstractProcessor {
             System.out.println("layoutDirectoryPath = " + layoutDirectoryPath);
             File directoryPath = new File(layoutDirectoryPath);
             for (File file : Objects.requireNonNull(directoryPath.listFiles())) {
-                if (file.isDirectory()) {
+                if (file.isDirectory() || !file.getName().contains(".xml")) {
                     continue;
                 }
                 // xml内容
