@@ -38,32 +38,32 @@ public class CommomData<D extends BaseObservable> extends Observable.OnPropertyC
         this(null, null);
     }
 
-    public CommomData(Object user) {
-        this(null, user);
+    public CommomData(Object owner) {
+        this(null, owner);
     }
 
     public CommomData(D data) {
         this(data, null);
     }
 
-    public CommomData(D data, Object user) {
+    public CommomData(D data, Object owner) {
         setData(data);
-        if (user == null) {
+        if (owner == null) {
             return;
         }
-        if (user instanceof OnCommomDataCallBack) {
-            setCallBack((OnCommomDataCallBack) user);
+        if (owner instanceof OnCommomDataCallBack) {
+            setCallBack((OnCommomDataCallBack) owner);
         }
-        if (user instanceof CommonActivity) {
-            ((LifecycleOwner) user).getLifecycle().addObserver(this);
-        } else if (user instanceof CommonFragment) {
-            ((CommonFragment) user).getLifecycle().addObserver(this);
-        } else if (user instanceof CommonDialog) {
-            ((LifecycleOwner) ((CommonDialog) user).getContext()).getLifecycle().addObserver(this);
-        } else if (user instanceof CommonDialogFragment) {
-            ((CommonDialogFragment) user).getLifecycle().addObserver(this);
-        } else if (user instanceof Lifecycle) {
-            ((Lifecycle) user).addObserver(this);
+        if (owner instanceof CommonActivity) {
+            ((LifecycleOwner) owner).getLifecycle().addObserver(this);
+        } else if (owner instanceof CommonFragment) {
+            ((CommonFragment) owner).getLifecycle().addObserver(this);
+        } else if (owner instanceof CommonDialog) {
+            ((LifecycleOwner) ((CommonDialog) owner).getContext()).getLifecycle().addObserver(this);
+        } else if (owner instanceof CommonDialogFragment) {
+            ((CommonDialogFragment) owner).getLifecycle().addObserver(this);
+        } else if (owner instanceof Lifecycle) {
+            ((Lifecycle) owner).addObserver(this);
         }
     }
 
