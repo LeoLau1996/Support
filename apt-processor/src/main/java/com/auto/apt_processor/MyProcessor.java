@@ -151,11 +151,11 @@ public class MyProcessor extends AbstractProcessor {
     // 获取代码文本
     public String getCodeStr(String className, List<Node> nodeList) {
         StringBuilder codeStr = new StringBuilder();
-        codeStr.append("package com.surgery.scalpel;\n");
+        codeStr.append("package com.leo.support;\n");
         codeStr.append("import android.view.View;\n");
         codeStr.append("import android.widget.*;\n");
         codeStr.append("import android.util.Log;\n");
-        codeStr.append("import com.surgery.scalpel.R;\n");
+        codeStr.append("import com.leo.support.R;\n");
         codeStr.append(String.format("public class %s {\n", className));
         {
             for (Node node : nodeList) {
@@ -170,14 +170,14 @@ public class MyProcessor extends AbstractProcessor {
             {
                 codeStr.append(String.format("public %s(View rootView) {\n", className));
                 {
-                    //for (Node node : nodeList) {
-                    //    String id = Utils.getAttributeValue(node, "id");
-                    //    if (id == null) {
-                    //        continue;
-                    //    }
-                    //    id = id.replace("@+id/", "");
-                    //    codeStr.append(String.format("%s = rootView.findViewById(R.id.%s);\n", id, id));
-                    //}
+                    for (Node node : nodeList) {
+                        String id = Utils.getAttributeValue(node, "id");
+                        if (id == null) {
+                            continue;
+                        }
+                        id = id.replace("@+id/", "");
+                        codeStr.append(String.format("%s = rootView.findViewById(R.id.%s);\n", id, id));
+                    }
                 }
                 codeStr.append("}\n");
             }
