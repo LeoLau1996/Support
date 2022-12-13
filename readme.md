@@ -1,25 +1,122 @@
 # 导入
 
-```text
+> ```tex
+> android {
+> 
+>     // MVVM
+>     dataBinding {
+>         enabled = true
+>     }
+> }
+> 
+> dependencies {
+>     // 基础包（必须）
+>     implementation files('libs/leosupport-release.aar')
+>     // 注解（非必需）
+>     annotationProcessor files('libs/apt-processor.jar')
+>     // ViewModel
+>     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+> }
+> ```
+> 
+> 初始化apt-processor
+> 
+> ```java
+> // packageName为你项目的包名、layoutPaths是你项目的布局文件在电脑的路径
+> @LayoutViewsGroupConfig(packageName = BuildConfig.APPLICATION_ID, layoutPaths = {
+>         "/Users/leolau/Documents/LeoWork/Support/app/src/main/res/layout"
+> })
+> public class MyApp extends Application {
+> 
+> }
+> ```
+> 
+> ～
 
-android {
 
-    // MVVM
-    dataBinding {
-        enabled = true
-    }
-}
 
-dependencies {
-    // 基础包（必须）
-    implementation files('libs/leosupport-release.aar')
-    // 注解（非必需）
-    annotationProcessor files('libs/apt-processor.jar')
-    // ViewModel
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-}
+# apt-processor使用示范
 
-```
+> ### 使用场景。
+> 
+> 直播间页面是一个非常复杂的页面，有非常多的控件。
+> 
+> 有专管麦位的业务。也有专管上下麦的业务。
+> 
+> - 可能麦位业务涉及到A、B、C三个View
+> 
+> - 上下麦需要涉及到C、D、E、F四个View
+> 
+> 使用apt-processor，你只需要 给这些View都加上属性app:groupName=""
+> 
+> 比如app:groupName="menu"
+> 
+> 如果你的View即是A组 也是B组。那就加一个｜区分，比如app:groupName="A组 | B组"
+> 
+> 这样apt-processor就会帮你自动生成ViewGroup文件
+> 
+> 例如你有一个activity_main.xml 里面定义了groupName=“Test”,就会生成ActivityMainTestViewGroup.class(布局名 + 组名 + ViewGroup)
+> 
+> ```java
+> package com.leo.support;
+> 
+> import android.view.View;
+> import android.widget.*;
+> import android.util.Log;
+> 
+> import androidx.lifecycle.Lifecycle;
+> import androidx.lifecycle.LifecycleObserver;
+> import androidx.lifecycle.LifecycleOwner;
+> import androidx.lifecycle.OnLifecycleEvent;
+> 
+> import com.leo.support.R;
+> 
+> public class ActivityMainTestViewGroup implements LifecycleObserver {
+>     public Button btnMenu;
+> 
+>     public ActivityMainTestViewGroup(Object owner, View rootView) {
+>         if (owner instanceof LifecycleOwner)
+>             ((LifecycleOwner) owner).getLifecycle().addObserver(this);
+>         btnMenu = rootView.findViewById(R.id.btnMenu);
+>     }
+> 
+>     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+>     private void destroy() {
+>         btnMenu = null;
+>     }
+> }
+> 
+> ```
+> 
+> ## 使用ActivityMainTestViewGroup
+> 
+> ```java
+> package com.leo.support.biz;
+> 
+> import android.os.Bundle;
+> import android.view.View;
+> 
+> import com.leo.support.view.activity.ActivityMainTestViewGroup;
+> import com.surgery.scalpel.base.LifeControlInterface;
+> import com.surgery.scalpel.base.biz.CommonLifeBiz;
+> 
+> public class TestBiz extends CommonLifeBiz {
+> 
+>     private ActivityMainTestViewGroup testViewGroup;
+> 
+>     public TestBiz(LifeControlInterface lifeControlInterface, View rootView) {
+>         super(lifeControlInterface);
+>         testViewGroup = new ActivityMainTestViewGroup(this, rootView);
+>     }
+> 
+>     public void xxx() {
+>         testViewGroup.btnMenu.setText(String.valueOf(System.currentTimeMillis()));
+>     }
+> }
+> 
+> ```
+> 
+> ～
 
 # 代码模板
 
@@ -64,11 +161,11 @@ public class ${NAME} extends CommonActivity<#if (${BINDING_NAME} && ${BINDING_NA
      *     全 局 变 量    *
      *********************/
     //.....
-    
+
     /*********************
      *  生 命 周 期 方 法  *
      *********************/
-     
+
     @Override
     protected int setLayout() {
         return R.layout.#if (${LAYOUT_NAME} && ${LAYOUT_NAME} != "")${LAYOUT_NAME}#end#if (${LAYOUT_NAME} && ${LAYOUT_NAME} == "")activity_#end;
@@ -81,14 +178,14 @@ public class ${NAME} extends CommonActivity<#if (${BINDING_NAME} && ${BINDING_NA
 
     @Override
     protected void initViews(Object data, int propertyId) {
-        
+
     }
 
     /*********************
      *     业 务 方 法    *
      *********************/
     //.....
-     
+
 }
 ```
 
@@ -121,7 +218,7 @@ public class ${NAME} extends CommonFragment<#if (${BINDING_NAME} && ${BINDING_NA
      *     全 局 变 量    *
      *********************/
     //.....
-    
+
     /*********************
      *  生 命 周 期 方 法  *
      *********************/
@@ -249,9 +346,9 @@ public class ${NAME} extends CommonDialog<#if (${BINDING_NAME} && ${BINDING_NAME
 
 
     public interface On${NAME}CallBack {
-     
+
     }
-    
+
 }
 ```
 
