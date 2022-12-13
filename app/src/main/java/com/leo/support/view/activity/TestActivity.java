@@ -64,7 +64,7 @@ public class TestActivity extends CommonActivity<ActivityTestBinding, CommonView
     }
 
     @Override
-    protected void initViews(Object data, int propertyId) {
+    protected void refreshViews(Object data, int propertyId) {
         String text = new Gson().toJson(data);
         Log.e("liu1125", String.format("onPropertyChanged    data = %s    propertyId = %s", text, propertyId));
         binding.tvContent.setText(text);

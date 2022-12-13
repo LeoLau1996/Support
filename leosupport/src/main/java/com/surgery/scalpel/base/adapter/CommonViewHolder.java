@@ -30,7 +30,7 @@ public abstract class CommonViewHolder<M, B extends ViewDataBinding, C> {
         this.callBack = callBack;
     }
 
-    protected abstract void initView(final int position, final M bean);
+    protected abstract void refreshViews(final int position, final M bean);
 
     protected abstract void initListener(final int position, final M bean);
 

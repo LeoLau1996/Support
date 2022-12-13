@@ -56,7 +56,7 @@ public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbst
         //初始化数据
         initData();
         //加载View
-        initViews(null, BR._all);
+        refreshViews(null, BR._all);
         //加载数据
         loadData();
         //初始化监听器
@@ -70,7 +70,7 @@ public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbst
     protected abstract void initData();
 
     // 加载View
-    protected abstract void initViews(Object data, int propertyId);
+    protected abstract void refreshViews(Object data, int propertyId);
 
     // 加载数据，如：网络请求
     protected void loadData() {
@@ -84,7 +84,7 @@ public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbst
 
     @Override
     public void onDataPropertyChanged(Object data, int propertyId) {
-        initViews(data, propertyId);
+        refreshViews(data, propertyId);
     }
 
 }

@@ -57,7 +57,7 @@ public abstract class CommonActivity<T extends ViewDataBinding, M extends ViewMo
         //初始化数据
         initData(savedInstanceState);
         //加载View
-        initViews(null, BR._all);
+        refreshViews(null, BR._all);
         //加载数据
         loadData();
         //初始化监听器
@@ -71,7 +71,7 @@ public abstract class CommonActivity<T extends ViewDataBinding, M extends ViewMo
     protected abstract void initData(Bundle savedInstanceState);
 
     // 加载View
-    protected abstract void initViews(Object data, int propertyId);
+    protected abstract void refreshViews(Object data, int propertyId);
 
     // 加载数据，如：网络请求
     protected void loadData() {
@@ -103,7 +103,7 @@ public abstract class CommonActivity<T extends ViewDataBinding, M extends ViewMo
 
     @Override
     public void onDataPropertyChanged(Object data, int propertyId) {
-        initViews(data, propertyId);
+        refreshViews(data, propertyId);
     }
 
 }

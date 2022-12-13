@@ -38,7 +38,7 @@ public class CommonLifeBiz {
         // 初始化数据
         initData(savedInstanceState);
         // 加载View
-        initViews(savedInstanceState);
+        refreshViews(savedInstanceState);
         // 加载数据
         loadData();
         // 初始化监听器
@@ -65,7 +65,7 @@ public class CommonLifeBiz {
 
     }
 
-    private void initViews(Bundle savedInstanceState) {
+    private void refreshViews(Bundle savedInstanceState) {
 
     }
 

@@ -47,7 +47,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     // Support
-    implementation files('libs/scalpel_10027_1.0.7_release_20221213_1456.aar')
+    implementation files('libs/scalpel_10027_1.0.7_release_20221213_1835.aar')
     annotationProcessor files('libs/apt-processor.jar')
 //    implementation project(':leosupport')
 //    annotationProcessor project(path: ':apt-processor')

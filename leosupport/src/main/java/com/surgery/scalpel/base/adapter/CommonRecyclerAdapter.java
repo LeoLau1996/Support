@@ -62,7 +62,7 @@ public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         H viewHolder = (H) holder;
         viewHolder.setList(mList);
-        viewHolder.initView(position, mList.get(position));
+        viewHolder.refreshViews(position, mList.get(position));
         viewHolder.initListener(position, mList.get(position));
     }
 

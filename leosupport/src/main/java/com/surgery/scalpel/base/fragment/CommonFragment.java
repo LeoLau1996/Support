@@ -64,7 +64,7 @@ public abstract class CommonFragment<T extends ViewDataBinding, M extends ViewMo
             viewModel = (M) new ViewModelProvider(this).get((Class) types[1]);
         }
         initData(savedInstanceState);
-        initViews(savedInstanceState, BR._all);
+        refreshViews(savedInstanceState, BR._all);
         loadData();
         initListener();
     }
@@ -75,7 +75,7 @@ public abstract class CommonFragment<T extends ViewDataBinding, M extends ViewMo
     protected abstract void initData(Bundle savedInstanceState);
 
     // 加载View
-    protected abstract void initViews(Object data, int propertyId);
+    protected abstract void refreshViews(Object data, int propertyId);
 
     // 加载数据，如：网络请求
     protected void loadData() {
@@ -121,7 +121,7 @@ public abstract class CommonFragment<T extends ViewDataBinding, M extends ViewMo
 
     @Override
     public void onDataPropertyChanged(Object data, int propertyId) {
-        initViews(data, propertyId);
+        refreshViews(data, propertyId);
     }
 
 }

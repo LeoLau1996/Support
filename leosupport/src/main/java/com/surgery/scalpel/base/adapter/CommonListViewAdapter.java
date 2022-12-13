@@ -75,7 +75,7 @@ public abstract class CommonListViewAdapter<M, H extends CommonViewHolder, B ext
             viewHolder = (H) convertView.getTag();
         }
         viewHolder.setList(mList);
-        viewHolder.initView(position, mList.get(position));
+        viewHolder.refreshViews(position, mList.get(position));
         viewHolder.initListener(position, mList.get(position));
         return convertView;
     }

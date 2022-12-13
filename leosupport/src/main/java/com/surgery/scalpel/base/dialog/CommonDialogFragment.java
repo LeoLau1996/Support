@@ -64,7 +64,7 @@ public abstract class CommonDialogFragment<T extends ViewDataBinding, M extends 
             viewModel = (M) new ViewModelProvider(this).get((Class) types[1]);
         }
         initData(savedInstanceState);
-        initViews(null, BR._all);
+        refreshViews(null, BR._all);
         loadData();
         initListener();
     }
@@ -76,7 +76,7 @@ public abstract class CommonDialogFragment<T extends ViewDataBinding, M extends 
     protected abstract void initData(Bundle savedInstanceState);
 
     // 加载View
-    protected abstract void initViews(Object data, int propertyId);
+    protected abstract void refreshViews(Object data, int propertyId);
 
     // 加载数据，如：网络请求
     protected void loadData() {
@@ -90,7 +90,7 @@ public abstract class CommonDialogFragment<T extends ViewDataBinding, M extends 
 
     @Override
     public void onDataPropertyChanged(Object data, int propertyId) {
-        initViews(data, propertyId);
+        refreshViews(data, propertyId);
     }
 
     // 设置背景颜色

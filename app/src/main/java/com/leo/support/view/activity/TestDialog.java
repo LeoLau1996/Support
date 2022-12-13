@@ -75,7 +75,7 @@ public class TestDialog extends CommonDialogFragment<DialogTestBinding, CommonVi
     }
 
     @Override
-    protected void initViews(Object data, int propertyId) {
+    protected void refreshViews(Object data, int propertyId) {
 
     }
 

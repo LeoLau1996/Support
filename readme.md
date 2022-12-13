@@ -177,7 +177,7 @@ public class ${NAME} extends CommonActivity<#if (${BINDING_NAME} && ${BINDING_NA
     }
 
     @Override
-    protected void initViews(Object data, int propertyId) {
+    protected void refreshViews(Object data, int propertyId) {
 
     }
 
@@ -234,7 +234,7 @@ public class ${NAME} extends CommonFragment<#if (${BINDING_NAME} && ${BINDING_NA
     }
 
     @Override
-    protected void initViews(Object data, int propertyId) {
+    protected void refreshViews(Object data, int propertyId) {
 
     }
 
@@ -311,7 +311,7 @@ public class ${NAME} extends CommonDialog<#if (${BINDING_NAME} && ${BINDING_NAME
     }
 
     @Override
-    protected void initViews(Object data, int propertyId) {
+    protected void refreshViews(Object data, int propertyId) {
 
     }
 
@@ -411,7 +411,7 @@ public class ${NAME} extends CommonDialogFragment<#if (${BINDING_NAME} && ${BIND
     }
 
     @Override
-    protected void initViews(Object data, int propertyId) {
+    protected void refreshViews(Object data, int propertyId) {
 
     }
 
@@ -473,7 +473,7 @@ public class ${NAME} extends CommonRecyclerAdapter<Object, ${NAME}.${NAME}Holder
         }
 
         @Override
-        protected void initView(int position, Object model) {
+        protected void refreshViews(int position, Object model) {
 
         }
 
@@ -550,7 +550,7 @@ public class ${NAME} extends CommonMultiRecyclerAdapter<Object, ${NAME}.On${NAME
         }
 
         @Override
-        protected void initView(int position, Object model) {
+        protected void refreshViews(int position, Object model) {
 
         }
 
@@ -567,7 +567,7 @@ public class ${NAME} extends CommonMultiRecyclerAdapter<Object, ${NAME}.On${NAME
         }
 
         @Override
-        protected void initView(int position, Object model) {
+        protected void refreshViews(int position, Object model) {
 
         }
 
@@ -618,7 +618,7 @@ public class ${NAME} extends CommonListViewAdapter<Object, ${NAME}.${NAME}Holder
         }
 
         @Override
-        protected void initView(int position, Object model) {
+        protected void refreshViews(int position, Object model) {
 
         }
 

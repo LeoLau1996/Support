@@ -135,7 +135,7 @@ public class LiveActivity extends CommonActivity<ActivityLiveBinding, CommonView
     }
 
     @Override
-    protected void initViews(Object data, int propertyId) {
+    protected void refreshViews(Object data, int propertyId) {
         binding.mSurfaceView1.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {

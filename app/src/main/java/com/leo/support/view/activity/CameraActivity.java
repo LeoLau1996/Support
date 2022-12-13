@@ -39,7 +39,7 @@ public class CameraActivity extends CommonActivity<ActivityCameraBinding, Common
     }
 
     @Override
-    protected void initViews(Object data, int propertyId) {
+    protected void refreshViews(Object data, int propertyId) {
 
     }
 

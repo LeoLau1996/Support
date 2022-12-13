@@ -63,7 +63,7 @@ public abstract class CommonMultiRecyclerAdapter<M, C> extends RecyclerView.Adap
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder != null && holder instanceof CommonRecyclerViewHolder) {
             ((CommonRecyclerViewHolder) holder).setList(mList);
-            ((CommonRecyclerViewHolder) holder).initView(position, mList.get(position));
+            ((CommonRecyclerViewHolder) holder).refreshViews(position, mList.get(position));
             ((CommonRecyclerViewHolder) holder).initListener(position, mList.get(position));
         }
     }

@@ -43,7 +43,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding, CommonView
     }
 
     @Override
-    protected void initViews(Object data, int propertyId) {
+    protected void refreshViews(Object data, int propertyId) {
         initSurface();
         binding.etPath.setText(AppPath.getAppCache());
         binding.etPort.setText("9007");

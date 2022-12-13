@@ -32,7 +32,7 @@ public abstract class CommonRecyclerViewHolder<M, B extends ViewDataBinding, C> 
         this.callBack = callBack;
     }
 
-    protected abstract void initView(int position, M model);
+    protected abstract void refreshViews(int position, M model);
 
     protected abstract void initListener(int position, M model);
 
