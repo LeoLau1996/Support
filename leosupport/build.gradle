@@ -101,5 +101,6 @@ dependencies {
     implementation "org.java-websocket:Java-WebSocket:1.4.0"
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-
+    // apt
+    implementation project(path: ':apt-processor')
 }

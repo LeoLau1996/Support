@@ -1,1 +1,2 @@
 include ':app', ':leosupport'
+include ':apt-processor'
