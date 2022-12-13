@@ -162,20 +162,21 @@ public class LayoutViewsGroupProcessor extends AbstractProcessor {
         codeStr.append(String.format("import %s.R;\n", packageName));
         codeStr.append(String.format("public class %s implements LifecycleObserver {\n", className));
         {
+            codeStr.append("\n");
             for (Node node : nodeList) {
                 String id = Utils.getAttributeValue(node, "id");
                 if (id == null) {
                     continue;
                 }
                 id = id.replace("@+id/", "");
-                codeStr.append(String.format("public %s %s;\n", node.getNodeName(), id));
+                codeStr.append(String.format("    public %s %s;\n", node.getNodeName(), id));
             }
-
+            codeStr.append("\n");
             {
-                codeStr.append(String.format("public %s(Object owner, View rootView) {\n", className));
+                codeStr.append(String.format("    public %s(Object owner, View rootView) {\n", className));
                 {
-                    codeStr.append("if (owner instanceof LifecycleOwner)\n");
-                    codeStr.append("((LifecycleOwner) owner).getLifecycle().addObserver(this);\n");
+                    codeStr.append("        if (owner instanceof LifecycleOwner)\n");
+                    codeStr.append("            ((LifecycleOwner) owner).getLifecycle().addObserver(this);\n");
 
                     for (Node node : nodeList) {
                         String id = Utils.getAttributeValue(node, "id");
@@ -183,14 +184,13 @@ public class LayoutViewsGroupProcessor extends AbstractProcessor {
                             continue;
                         }
                         id = id.replace("@+id/", "");
-                        codeStr.append(String.format("%s = rootView.findViewById(R.id.%s);\n", id, id));
+                        codeStr.append(String.format("        %s = rootView.findViewById(R.id.%s);\n", id, id));
                     }
                 }
-                codeStr.append("}\n");
-
-
-                codeStr.append("@OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)\n");
-                codeStr.append("public void destroy() {\n");
+                codeStr.append("    }\n");
+                codeStr.append("\n");
+                codeStr.append("    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)\n");
+                codeStr.append("    public void destroy() {\n");
                 {
                     for (Node node : nodeList) {
                         String id = Utils.getAttributeValue(node, "id");
@@ -198,10 +198,10 @@ public class LayoutViewsGroupProcessor extends AbstractProcessor {
                             continue;
                         }
                         id = id.replace("@+id/", "");
-                        codeStr.append(String.format("%s = null;\n", id));
+                        codeStr.append(String.format("    %s = null;\n", id));
                     }
                 }
-                codeStr.append("}\n");
+                codeStr.append("    }\n");
             }
         }
         codeStr.append("}\n");
