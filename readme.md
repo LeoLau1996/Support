@@ -11,7 +11,12 @@ android {
 }
 
 dependencies {
+    // 基础包（必须）
     implementation files('libs/leosupport-release.aar')
+    // 注解（非必需）
+    annotationProcessor files('libs/apt-processor.jar')
+    // ViewModel
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 }
 
 ```
