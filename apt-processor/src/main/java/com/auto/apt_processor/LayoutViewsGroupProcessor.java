@@ -20,13 +20,15 @@ import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 
 /**
  * ---------------------------------------------------------------------------------------------
- * 功能描述: 生成 布局名 + 组名 + ViewGroup类
+ * 功能描述: 布局中的View分组 生成 布局名 + 组名 + ViewGroup类
  * ---------------------------------------------------------------------------------------------
  * 时　　间: 2022/12/12
  * ---------------------------------------------------------------------------------------------
@@ -37,20 +39,21 @@ import javax.tools.JavaFileObject;
  **/
 @AutoService(Processor.class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-public class MyProcessor extends AbstractProcessor {
+public class LayoutViewsGroupProcessor extends AbstractProcessor {
+
+    private String packageName;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         // 注解处理器提供的API输出
         processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "Halo APT");
-        todo();
     }
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         HashSet<String> hashSet = new HashSet<>();
-        hashSet.add(Print.class.getCanonicalName());
+        hashSet.add(LayoutViewsGroupConfig.class.getCanonicalName());
         return hashSet;
     }
 
@@ -62,13 +65,21 @@ public class MyProcessor extends AbstractProcessor {
     // 处理
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
+        //拿到所有添加Print注解的成员变量
+        Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(LayoutViewsGroupConfig.class);
+        for (Element element : elements) {
+            LayoutViewsGroupConfig config = element.getAnnotation(LayoutViewsGroupConfig.class);
+            packageName = config.packageName();
+            processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "packageName = " + packageName);
+            break;
+        }
         todo();
         return true;
     }
 
     private void todo() {
         long currentTimeMillis = System.currentTimeMillis();
-        processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "todo start " + currentTimeMillis);
+        processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "todo start " + currentTimeMillis + "    packageName = " + packageName);
 
         try {
             String layoutDirectoryPath = getLayoutPath();
@@ -105,8 +116,8 @@ public class MyProcessor extends AbstractProcessor {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "todo end " + currentTimeMillis);
     }
 
-    // 获取Layout文件夹路径
-    private String getLayoutPath() {
+    // 获取根目录
+    private String getRootPath() {
         URL url = getClass().getResource("");
         if (url == null) {
             return "";
@@ -116,19 +127,23 @@ public class MyProcessor extends AbstractProcessor {
              * MacOS示例值：file:/Users/leolau/Documents/LeoWork/AptDemo/apt-processor/build/libs/apt-processor.jar!/com/auto/apt_processor/
              */
             String path = url.getFile();
-            System.out.println("getLayoutPath    getFile = " + path);
+            System.out.println("getRootPath    getFile = " + path);
             // 去除前段
             path = path.substring(path.indexOf("file:") + 5);
             // 文件夹后退
             path = new File(path, "../../../../../../../").getCanonicalPath();
-            // 拼接
-            path = path + "/app/src/main/res/layout";
             return path;
         } catch (IOException e) {
             System.out.println("getLayoutPath    IOException:" + e.getMessage());
         }
         return "";
     }
+
+    // 获取Layout文件夹路径
+    private String getLayoutPath() {
+        return getRootPath() + "/app/src/main/res/layout";
+    }
+
 
     // 获取布局规范名称（示例：activity_main ----> ActivityMain）
     private String getLayoutName(File file) {
@@ -151,11 +166,11 @@ public class MyProcessor extends AbstractProcessor {
     // 获取代码文本
     public String getCodeStr(String className, List<Node> nodeList) {
         StringBuilder codeStr = new StringBuilder();
-        codeStr.append("package com.leo.support;\n");
+        codeStr.append(String.format("package %s;\n", packageName));
         codeStr.append("import android.view.View;\n");
         codeStr.append("import android.widget.*;\n");
         codeStr.append("import android.util.Log;\n");
-        codeStr.append("import com.leo.support.R;\n");
+        codeStr.append(String.format("import %s.R;\n", packageName));
         codeStr.append(String.format("public class %s {\n", className));
         {
             for (Node node : nodeList) {

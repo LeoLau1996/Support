@@ -19,6 +19,7 @@ import java.lang.annotation.Target;
 // 标记的注解在编译时由编译器保留，但 Java 虚拟机(JVM)会忽略
 @Retention(RetentionPolicy.CLASS)
 // 修饰变量
-@Target(ElementType.FIELD)
-public @interface Print {
+@Target(ElementType.TYPE)
+public @interface LayoutViewsGroupConfig {
+    String packageName() default "";
 }

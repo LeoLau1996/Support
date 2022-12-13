@@ -1,5 +1,7 @@
 package com.leo.support.app;
 
+import com.auto.apt_processor.LayoutViewsGroupConfig;
+import com.leo.support.BuildConfig;
 import com.leo.support.R;
 
 import com.surgery.scalpel.base.application.BaseApplication;
@@ -17,6 +19,7 @@ import com.surgery.scalpel.widget.bar.TitleBarDefaultInfo;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
+@LayoutViewsGroupConfig(packageName = BuildConfig.APPLICATION_ID)
 public class MyApp extends BaseApplication {
 
     @Override
