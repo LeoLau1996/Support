@@ -190,7 +190,7 @@ public class LayoutViewsGroupProcessor extends AbstractProcessor {
 
 
                 codeStr.append("@OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)\n");
-                codeStr.append("private void destroy() {\n");
+                codeStr.append("public void destroy() {\n");
                 {
                     for (Node node : nodeList) {
                         String id = Utils.getAttributeValue(node, "id");
