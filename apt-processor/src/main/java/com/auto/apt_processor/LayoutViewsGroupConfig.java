@@ -21,5 +21,11 @@ import java.lang.annotation.Target;
 // 修饰变量
 @Target(ElementType.TYPE)
 public @interface LayoutViewsGroupConfig {
+
+    // 包名
     String packageName() default "";
+
+    // 你项目的布局文件的绝对路径（例如：/Users/leolau/Documents/LeoWork/liveroom/app/src/main/res）
+    String[] layoutPaths() default {};
+
 }

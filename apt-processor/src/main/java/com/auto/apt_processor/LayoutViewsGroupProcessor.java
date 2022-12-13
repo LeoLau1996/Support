@@ -42,6 +42,7 @@ import javax.tools.JavaFileObject;
 public class LayoutViewsGroupProcessor extends AbstractProcessor {
 
     private String packageName;
+    private String[] layoutPaths;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -71,6 +72,7 @@ public class LayoutViewsGroupProcessor extends AbstractProcessor {
             LayoutViewsGroupConfig config = element.getAnnotation(LayoutViewsGroupConfig.class);
             packageName = config.packageName();
             processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "packageName = " + packageName);
+            layoutPaths = config.layoutPaths();
             break;
         }
         todo();
@@ -116,32 +118,15 @@ public class LayoutViewsGroupProcessor extends AbstractProcessor {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "todo end " + currentTimeMillis);
     }
 
-    // 获取根目录
-    private String getRootPath() {
-        URL url = getClass().getResource("");
-        if (url == null) {
-            return "";
-        }
-        try {
-            /**
-             * MacOS示例值：file:/Users/leolau/Documents/LeoWork/AptDemo/apt-processor/build/libs/apt-processor.jar!/com/auto/apt_processor/
-             */
-            String path = url.getFile();
-            System.out.println("getRootPath    getFile = " + path);
-            // 去除前段
-            path = path.substring(path.indexOf("file:") + 5);
-            // 文件夹后退
-            path = new File(path, "../../../../../../../").getCanonicalPath();
-            return path;
-        } catch (IOException e) {
-            System.out.println("getLayoutPath    IOException:" + e.getMessage());
-        }
-        return "";
-    }
-
-    // 获取Layout文件夹路径
     private String getLayoutPath() {
-        return getRootPath() + "/app/src/main/res/layout";
+        if (layoutPaths != null) {
+            for (String path : layoutPaths) {
+                if (new File(path).exists()) {
+                    return path;
+                }
+            }
+        }
+        return null;
     }
 
 
@@ -170,8 +155,12 @@ public class LayoutViewsGroupProcessor extends AbstractProcessor {
         codeStr.append("import android.view.View;\n");
         codeStr.append("import android.widget.*;\n");
         codeStr.append("import android.util.Log;\n");
+        codeStr.append("import androidx.lifecycle.Lifecycle;\n");
+        codeStr.append("import androidx.lifecycle.LifecycleObserver;\n");
+        codeStr.append("import androidx.lifecycle.LifecycleOwner;\n");
+        codeStr.append("import androidx.lifecycle.OnLifecycleEvent;\n");
         codeStr.append(String.format("import %s.R;\n", packageName));
-        codeStr.append(String.format("public class %s {\n", className));
+        codeStr.append(String.format("public class %s implements LifecycleObserver {\n", className));
         {
             for (Node node : nodeList) {
                 String id = Utils.getAttributeValue(node, "id");
@@ -183,8 +172,11 @@ public class LayoutViewsGroupProcessor extends AbstractProcessor {
             }
 
             {
-                codeStr.append(String.format("public %s(View rootView) {\n", className));
+                codeStr.append(String.format("public %s(Object owner, View rootView) {\n", className));
                 {
+                    codeStr.append("if (owner instanceof LifecycleOwner)\n");
+                    codeStr.append("((LifecycleOwner) owner).getLifecycle().addObserver(this);\n");
+
                     for (Node node : nodeList) {
                         String id = Utils.getAttributeValue(node, "id");
                         if (id == null) {
@@ -192,6 +184,21 @@ public class LayoutViewsGroupProcessor extends AbstractProcessor {
                         }
                         id = id.replace("@+id/", "");
                         codeStr.append(String.format("%s = rootView.findViewById(R.id.%s);\n", id, id));
+                    }
+                }
+                codeStr.append("}\n");
+
+
+                codeStr.append("@OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)\n");
+                codeStr.append("private void destroy() {\n");
+                {
+                    for (Node node : nodeList) {
+                        String id = Utils.getAttributeValue(node, "id");
+                        if (id == null) {
+                            continue;
+                        }
+                        id = id.replace("@+id/", "");
+                        codeStr.append(String.format("%s = null;\n", id));
                     }
                 }
                 codeStr.append("}\n");
