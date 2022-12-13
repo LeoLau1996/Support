@@ -7,6 +7,7 @@ import android.view.SurfaceHolder;
 import androidx.annotation.NonNull;
 
 import com.leo.support.R;
+import com.leo.support.biz.TestBiz;
 import com.leo.support.databinding.ActivityMainBinding;
 import com.leo.support.info.AppPath;
 
@@ -28,6 +29,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding, CommonView
     private SurfaceHolder holder;
     private Media264Play media264Play;
     private AudioRecordBiz audioRecordBiz;
+    private TestBiz testBiz;
 
     @Override
     protected int setLayout() {
@@ -37,6 +39,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding, CommonView
     @Override
     protected void initData(Bundle savedInstanceState) {
         LeoSupport.fullScreen(this, false);
+        testBiz = new TestBiz(this, binding.getRoot());
     }
 
     @Override
@@ -62,6 +65,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding, CommonView
         });
         binding.btnPlay.setOnClickListener(v -> {
             binding.mMarqueeTextview.start(2);
+            //testBiz.xxx();
             //String path = binding.etPath.getText().toString();
             //media264Play = new Media264Play(path, holder.getSurface(), 1080, 1920);
             //media264Play.play();

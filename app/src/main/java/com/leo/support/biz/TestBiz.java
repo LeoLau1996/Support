@@ -1,7 +1,9 @@
 package com.leo.support.biz;
 
 import android.os.Bundle;
+import android.view.View;
 
+import com.leo.support.view.activity.ActivityMainTestViewGroup;
 import com.surgery.scalpel.base.LifeControlInterface;
 import com.surgery.scalpel.base.biz.CommonLifeBiz;
 
@@ -18,11 +20,14 @@ import com.surgery.scalpel.base.biz.CommonLifeBiz;
  **/
 public class TestBiz extends CommonLifeBiz {
 
-    public TestBiz(LifeControlInterface lifeControlInterface) {
+    private ActivityMainTestViewGroup testViewGroup;
+
+    public TestBiz(LifeControlInterface lifeControlInterface, View rootView) {
         super(lifeControlInterface);
+        testViewGroup = new ActivityMainTestViewGroup(this, rootView);
     }
 
-    public TestBiz(LifeControlInterface lifeControlInterface, Bundle savedInstanceState) {
-        super(lifeControlInterface, savedInstanceState);
+    public void xxx() {
+        testViewGroup.btnMenu.setText(String.valueOf(System.currentTimeMillis()));
     }
 }
