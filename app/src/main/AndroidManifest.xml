@@ -22,6 +22,26 @@
         <activity android:name=".view.activity.CameraActivity" />
         <activity android:name=".view.activity.LiveActivity" />
         <activity android:name=".view.activity.TestActivity" />
+        <activity android:name=".view.AccessibilityActivity" />
+
+        <!--无障碍功能-->
+        <service
+            android:name=".service.NewAccessibilityService"
+            android:enabled="true"
+            android:exported="true"
+            android:label="小刘测试无障碍"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibilityservice_config" />
+
+        </service>
+
     </application>
 
 

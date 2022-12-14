@@ -29,6 +29,7 @@ import com.surgery.scalpel.base.fragment.CommonFragment;
  **/
 public class CommomData<D extends BaseObservable> extends Observable.OnPropertyChangedCallback implements LifecycleObserver {
 
+
     // 数据主体
     private D data;
     // 回调方法

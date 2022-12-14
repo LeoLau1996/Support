@@ -11,6 +11,7 @@ import com.leo.support.biz.TestBiz;
 import com.leo.support.databinding.ActivityMainBinding;
 import com.leo.support.info.AppPath;
 
+import com.leo.support.view.AccessibilityActivity;
 import com.surgery.scalpel.base.activity.CommonActivity;
 import com.surgery.scalpel.biz.AudioRecordBiz;
 import com.surgery.scalpel.biz.MediaProjectionBiz;
@@ -40,6 +41,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding, CommonView
     protected void initData(Bundle savedInstanceState) {
         LeoSupport.fullScreen(this, false);
         testBiz = new TestBiz(this, binding.getRoot());
+        AccessibilityActivity.open(activity);
     }
 
     @Override
