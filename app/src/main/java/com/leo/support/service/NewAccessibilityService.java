@@ -3,11 +3,14 @@ package com.leo.support.service;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.google.gson.Gson;
+import com.leo.support.model.MultiText;
 import com.surgery.scalpel.util.Is;
 
 import java.util.List;
@@ -29,6 +32,11 @@ public class NewAccessibilityService extends AccessibilityService {
 
     private static String TAG = NewAccessibilityService.class.getSimpleName();
 
+    public static final int EQUALS_TEXT = 0;
+    public static final int CONTAINS_TEXT = 1;
+    public static final int EQUALS_ID = 2;
+    public static final int CONTAINS_ID = 3;
+
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
@@ -48,7 +56,12 @@ public class NewAccessibilityService extends AccessibilityService {
         if (nodeInfo == null) {
             nodeInfo = getRootInActiveWindow();
         }
-        analysisNode(nodeInfo);
+        if (packageName != null && packageName.toString().equals("com.leo.support")) {
+            analysisNode(nodeInfo, new MultiText("你点我一下试试"), null, null, new MultiText("btnTest"), 0, (type, text, count, nodeInfo1) -> {
+                click(nodeInfo1);
+                return false;
+            });
+        }
 
 
         Object contentDescription = null;
@@ -158,7 +171,7 @@ public class NewAccessibilityService extends AccessibilityService {
     }
 
     // 解析
-    public static void analysisNode(AccessibilityNodeInfo nodeInfo) {
+    public static void analysisNode(AccessibilityNodeInfo nodeInfo, MultiText equalsText, MultiText containsText, MultiText equalsId, MultiText containsId, int count, OnMatchCallBack callBack) {
         if (nodeInfo == null) {
             return;
         }
@@ -166,14 +179,63 @@ public class NewAccessibilityService extends AccessibilityService {
         String id = nodeInfo.getViewIdResourceName();
         CharSequence nodeText = nodeInfo.getText();
         int childCount = nodeInfo.getChildCount();
-        if (nodeText != null && nodeText.toString().equals("你点我一下试试")) {
-            click(nodeInfo);
+
+        // 文字相等
+        for (int index = 0; equalsText != null && index < equalsText.texts.length; index++) {
+            String content = equalsText.texts[index];
+            if (content != null && nodeText != null && nodeText.toString().equals(content)) {
+                boolean result = callBack.match(EQUALS_TEXT, content, count++, nodeInfo);
+                if (result) {
+                    return;
+                }
+            }
         }
+
+        // 包含文字
+        for (int index = 0; containsText != null && index < containsText.texts.length; index++) {
+            String content = containsText.texts[index];
+            if (content != null && nodeText != null && nodeText.toString().contains(content)) {
+                boolean result = callBack.match(CONTAINS_TEXT, content, count++, nodeInfo);
+                if (result) {
+                    return;
+                }
+            }
+        }
+
+        // ID相等
+        for (int index = 0; equalsId != null && index < equalsId.texts.length; index++) {
+            String content = equalsId.texts[index];
+            if (content != null && Is.isEquals(id, content)) {
+                boolean result = callBack.match(EQUALS_ID, content, count++, nodeInfo);
+                if (result) {
+                    return;
+                }
+            }
+        }
+
+        // 包含Id
+        for (int index = 0; containsId != null && index < containsId.texts.length; index++) {
+            String content = containsId.texts[index];
+            if (content != null && id != null && id.contains(content)) {
+                boolean result = callBack.match(CONTAINS_ID, content, count++, nodeInfo);
+                if (result) {
+                    return;
+                }
+            }
+        }
+
         Log.i(TAG, String.format("nodeClassName = %s    id = %s    nodeText = %s    childCount = %s", nodeClassName, id, nodeText, childCount));
         for (int index = 0; index < childCount; index++) {
             AccessibilityNodeInfo childNode = nodeInfo.getChild(index);
-            analysisNode(childNode);
+            analysisNode(childNode, equalsText, containsText, equalsId, containsId, count, callBack);
         }
+    }
+
+    // 匹配
+    public interface OnMatchCallBack {
+
+        boolean match(int type, String text, int count, AccessibilityNodeInfo nodeInfo);
+
     }
 
     // 点击
@@ -184,4 +246,32 @@ public class NewAccessibilityService extends AccessibilityService {
         nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
     }
 
+    // 设置文本
+    private static void setText(AccessibilityNodeInfo nodeInfo, String text) {
+        Bundle bundle = new Bundle();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            bundle.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, text);
+            nodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, bundle);
+        }
+    }
+
+    // 返回键
+    public void clickBack() {
+        performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+    }
+
+    // Home键
+    private void clickHome() {
+        performGlobalAction(GLOBAL_ACTION_HOME);
+    }
+
+    // 导航键
+    private void clickNotifications() {
+        performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS);
+    }
+
+    // 拉出通知栏
+    private void recents() {
+        performGlobalAction(GLOBAL_ACTION_RECENTS);
+    }
 }
