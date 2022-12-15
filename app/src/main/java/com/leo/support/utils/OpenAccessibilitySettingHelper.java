@@ -162,19 +162,19 @@ public class OpenAccessibilitySettingHelper {
     }
 
 
-    public static void analysisNode(int eventType, AccessibilityNodeInfo nodeInfo, OnMatchCallBack callBack) {
-        analysisNode(eventType, nodeInfo, null, null, null, null, callBack);
+    public static void analysisNode(AccessibilityNodeInfo nodeInfo, OnMatchCallBack callBack) {
+        analysisNode(nodeInfo, null, null, null, null, callBack);
     }
 
     // 解析
-    public static void analysisNode(int eventType, AccessibilityNodeInfo nodeInfo, MultiText equalsText, MultiText containsText, MultiText equalsId, MultiText containsId, OnMatchCallBack callBack) {
-        analysis(eventType, nodeInfo, equalsText, containsText, equalsId, containsId, 0, callBack);
+    public static void analysisNode(AccessibilityNodeInfo nodeInfo, MultiText equalsText, MultiText containsText, MultiText equalsId, MultiText containsId, OnMatchCallBack callBack) {
+        analysis(nodeInfo, equalsText, containsText, equalsId, containsId, 0, callBack);
         if (callBack != null) {
             callBack.matchEnd();
         }
     }
 
-    private static void analysis(int eventType, AccessibilityNodeInfo nodeInfo, MultiText equalsText, MultiText containsText, MultiText equalsId, MultiText containsId, int count, OnMatchCallBack callBack) {
+    private static void analysis(AccessibilityNodeInfo nodeInfo, MultiText equalsText, MultiText containsText, MultiText equalsId, MultiText containsId, int count, OnMatchCallBack callBack) {
         if (nodeInfo == null) {
             return;
         }
@@ -241,10 +241,9 @@ public class OpenAccessibilitySettingHelper {
         //}
         for (int index = 0; index < childCount; index++) {
             AccessibilityNodeInfo childNode = nodeInfo.getChild(index);
-            analysis(eventType, childNode, equalsText, containsText, equalsId, containsId, count, callBack);
+            analysis(childNode, equalsText, containsText, equalsId, containsId, count, callBack);
         }
     }
-
 
 
 }

@@ -9,11 +9,14 @@ import android.view.View;
 import com.leo.support.BR;
 import com.leo.support.R;
 import com.leo.support.databinding.ActivityAccessibilityBinding;
+import com.leo.support.model.AccessibillityEvent;
 import com.leo.support.service.NewAccessibilityService;
 import com.leo.support.utils.OpenAccessibilitySettingHelper;
 import com.surgery.scalpel.base.activity.CommonActivity;
 import com.surgery.scalpel.model.CommonViewModel;
 import com.surgery.scalpel.util.JumpUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -63,13 +66,13 @@ public class AccessibilityActivity extends CommonActivity<ActivityAccessibilityB
         binding.btnTest.setOnClickListener(v -> {
             binding.btnTest.setText(String.valueOf(System.currentTimeMillis()));
         });
-        binding.btnTest.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.e("liu", event.getAction() + "?");
-                return false;
-            }
-        });
+        //binding.btnTest.setOnTouchListener(new View.OnTouchListener() {
+        //    @Override
+        //    public boolean onTouch(View v, MotionEvent event) {
+        //        Log.e("liu", event.getAction() + "?");
+        //        return false;
+        //    }
+        //});
     }
 
     @Override
