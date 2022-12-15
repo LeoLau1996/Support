@@ -88,7 +88,7 @@ public class MainActivity extends CommonActivity<ActivityMainBinding, CommonView
             JumpUtil.go(activity, CameraActivity.class);
         });
         binding.btnOpenSocket.setOnClickListener(v -> {
-            SocketUtils.getInstance().openWebSocket(A2BSupport.String2int(binding.etPort.getText().toString()), byteBuffer -> {
+            SocketUtils.getInstance().openWebSocket(A2BSupport.toInt(binding.etPort.getText().toString()), byteBuffer -> {
                 if (media264Play == null) {
                     media264Play = new Media264Play(holder.getSurface());
                 }

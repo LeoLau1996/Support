@@ -33,10 +33,17 @@ import sun.misc.BASE64Encoder;
 public class A2BSupport extends BaseUtil {
 
 
+    public static String toString(CharSequence charSequence) {
+        if (charSequence == null) {
+            return null;
+        }
+        return charSequence.toString();
+    }
+
     /**
      * 字符串与数字之间转换
      */
-    public static int String2int(String s) {
+    public static int toInt(String s) {
         int i;
         try {
             i = Integer.parseInt(s);
@@ -46,7 +53,7 @@ public class A2BSupport extends BaseUtil {
         return i;
     }
 
-    public static String int2String(int i) {
+    public static String toString(int i) {
         String s;
         try {
             s = String.valueOf(i);
@@ -56,7 +63,7 @@ public class A2BSupport extends BaseUtil {
         return s;
     }
 
-    public static String long2String(long l) {
+    public static String toString(long l) {
         String s;
         try {
             s = String.valueOf(l);
@@ -66,7 +73,7 @@ public class A2BSupport extends BaseUtil {
         return s;
     }
 
-    public static long String2Long(String s) {
+    public static long toLong(String s) {
         long l;
         try {
             l = Long.parseLong(s);
@@ -77,7 +84,7 @@ public class A2BSupport extends BaseUtil {
     }
 
 
-    public static float String2float(String s) {
+    public static float toFloat(String s) {
         float f;
         try {
             f = Float.parseFloat(s);
@@ -87,7 +94,7 @@ public class A2BSupport extends BaseUtil {
         return f;
     }
 
-    public static String float2String(float f) {
+    public static String toString(float f) {
         String s;
         try {
             s = String.valueOf(f);
@@ -98,7 +105,7 @@ public class A2BSupport extends BaseUtil {
     }
 
 
-    public static double String2Double(String s) {
+    public static double toDouble(String s) {
         double d;
         try {
             d = Double.parseDouble(s);
@@ -108,7 +115,7 @@ public class A2BSupport extends BaseUtil {
         return d;
     }
 
-    public static String Double2String(double d) {
+    public static String toString(double d) {
         String s;
         try {
             s = String.valueOf(d);

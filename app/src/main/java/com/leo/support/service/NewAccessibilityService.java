@@ -2,7 +2,10 @@ package com.leo.support.service;
 
 
 import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.GestureDescription;
 import android.content.Intent;
+import android.graphics.Path;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +14,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.google.gson.Gson;
 import com.leo.support.model.MultiText;
+import com.surgery.scalpel.util.A2BSupport;
 import com.surgery.scalpel.util.Is;
 
 import java.util.List;
@@ -47,8 +51,8 @@ public class NewAccessibilityService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         int eventType = event.getEventType();
-        CharSequence packageName = event.getPackageName();
-        CharSequence className = event.getClassName();
+        String packageName = A2BSupport.toString(event.getPackageName());
+        String className = A2BSupport.toString(event.getClassName());
         List<CharSequence> textList = event.getText();
 
         // 资源信息
@@ -56,11 +60,24 @@ public class NewAccessibilityService extends AccessibilityService {
         if (nodeInfo == null) {
             nodeInfo = getRootInActiveWindow();
         }
-        if (packageName != null && packageName.toString().equals("com.leo.support")) {
+        analysisNode(nodeInfo);
+
+
+        // 点击测试1
+
+        if (Is.isEquals(packageName, "com.leo.support")) {
             analysisNode(nodeInfo, new MultiText("你点我一下试试"), null, null, new MultiText("btnTest"), 0, (type, text, count, nodeInfo1) -> {
                 click(nodeInfo1);
                 return false;
             });
+        }
+
+        // boss滑动测试
+        if (Is.isEquals(packageName, "com.hpbr.bosszhipin") &&
+                eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED &&
+                Is.isEquals(className, "com.hpbr.bosszhipin.module.main.activity.MainActivity")
+        ) {
+            move();
         }
 
 
@@ -100,6 +117,9 @@ public class NewAccessibilityService extends AccessibilityService {
             }
             case AccessibilityEvent.TYPE_VIEW_SELECTED: {
                 return String.format("eventType = %s(%s)", eventType, "选中-TYPE_VIEW_SELECTED");
+            }
+            case AccessibilityEvent.TYPE_VIEW_FOCUSED: {
+                return String.format("eventType = %s(%s)", eventType, "获得焦点-TYPE_VIEW_FOCUSED");
             }
             case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED: {
                 return String.format("eventType = %s(%s)", eventType, "文本变化-TYPE_VIEW_TEXT_CHANGED");
@@ -170,20 +190,26 @@ public class NewAccessibilityService extends AccessibilityService {
         }
     }
 
+    public static void analysisNode(AccessibilityNodeInfo nodeInfo) {
+        analysisNode(nodeInfo, null, null, null, null, 0, null);
+    }
+
     // 解析
     public static void analysisNode(AccessibilityNodeInfo nodeInfo, MultiText equalsText, MultiText containsText, MultiText equalsId, MultiText containsId, int count, OnMatchCallBack callBack) {
         if (nodeInfo == null) {
             return;
         }
-        CharSequence nodeClassName = nodeInfo.getClassName();
+        String nodeClassName = A2BSupport.toString(nodeInfo.getClassName());
         String id = nodeInfo.getViewIdResourceName();
-        CharSequence nodeText = nodeInfo.getText();
+        String nodeText = A2BSupport.toString(nodeInfo.getText());
         int childCount = nodeInfo.getChildCount();
+        Rect rect = new Rect();
+        nodeInfo.getBoundsInScreen(rect);
 
         // 文字相等
-        for (int index = 0; equalsText != null && index < equalsText.texts.length; index++) {
+        for (int index = 0; callBack != null && equalsText != null && index < equalsText.texts.length; index++) {
             String content = equalsText.texts[index];
-            if (content != null && nodeText != null && nodeText.toString().equals(content)) {
+            if (Is.isEquals(nodeText, content)) {
                 boolean result = callBack.match(EQUALS_TEXT, content, count++, nodeInfo);
                 if (result) {
                     return;
@@ -192,9 +218,9 @@ public class NewAccessibilityService extends AccessibilityService {
         }
 
         // 包含文字
-        for (int index = 0; containsText != null && index < containsText.texts.length; index++) {
+        for (int index = 0; callBack != null && containsText != null && index < containsText.texts.length; index++) {
             String content = containsText.texts[index];
-            if (content != null && nodeText != null && nodeText.toString().contains(content)) {
+            if (content != null && nodeText != null && nodeText.contains(content)) {
                 boolean result = callBack.match(CONTAINS_TEXT, content, count++, nodeInfo);
                 if (result) {
                     return;
@@ -203,9 +229,9 @@ public class NewAccessibilityService extends AccessibilityService {
         }
 
         // ID相等
-        for (int index = 0; equalsId != null && index < equalsId.texts.length; index++) {
+        for (int index = 0; callBack != null && equalsId != null && index < equalsId.texts.length; index++) {
             String content = equalsId.texts[index];
-            if (content != null && Is.isEquals(id, content)) {
+            if (Is.isEquals(id, content)) {
                 boolean result = callBack.match(EQUALS_ID, content, count++, nodeInfo);
                 if (result) {
                     return;
@@ -214,7 +240,7 @@ public class NewAccessibilityService extends AccessibilityService {
         }
 
         // 包含Id
-        for (int index = 0; containsId != null && index < containsId.texts.length; index++) {
+        for (int index = 0; callBack != null && containsId != null && index < containsId.texts.length; index++) {
             String content = containsId.texts[index];
             if (content != null && id != null && id.contains(content)) {
                 boolean result = callBack.match(CONTAINS_ID, content, count++, nodeInfo);
@@ -224,7 +250,7 @@ public class NewAccessibilityService extends AccessibilityService {
             }
         }
 
-        Log.i(TAG, String.format("nodeClassName = %s    id = %s    nodeText = %s    childCount = %s", nodeClassName, id, nodeText, childCount));
+        Log.i(TAG, String.format("nodeClassName = %s    id = %s    nodeText = %s    childCount = %s    Rect = %s", nodeClassName, id, nodeText, childCount, rect));
         for (int index = 0; index < childCount; index++) {
             AccessibilityNodeInfo childNode = nodeInfo.getChild(index);
             analysisNode(childNode, equalsText, containsText, equalsId, containsId, count, callBack);
@@ -273,5 +299,38 @@ public class NewAccessibilityService extends AccessibilityService {
     // 拉出通知栏
     private void recents() {
         performGlobalAction(GLOBAL_ACTION_RECENTS);
+    }
+
+    // 移动
+    public void move() {
+        Log.e(TAG, "移动");
+        //发送一个点击事件
+        Path path = new Path();//线性的path代表手势路径,点代表按下,封闭的没用
+        // 起点
+        path.moveTo(1000, 2000);
+        // 终点
+        path.lineTo(1000, 1400);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // addStroke是模拟的多指触摸，add一次表示一个手指，add多次表示多个手指。
+            GestureDescription gesture = new GestureDescription.Builder()
+                    .addStroke(new GestureDescription.StrokeDescription(path, 100, 500))
+                    .build();
+            dispatchGesture(gesture, new GestureResultCallback() {
+
+                // 完成
+                @Override
+                public void onCompleted(GestureDescription gestureDescription) {
+                    super.onCompleted(gestureDescription);
+                    Log.e(TAG, "移动完成");
+                }
+
+                // 取消
+                @Override
+                public void onCancelled(GestureDescription gestureDescription) {
+                    super.onCancelled(gestureDescription);
+                    Log.e(TAG, "移动取消");
+                }
+            }, null);
+        }
     }
 }

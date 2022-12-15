@@ -99,7 +99,7 @@ public class TestActivity extends CommonActivity<ActivityTestBinding, CommonView
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String ageStr = s.toString();
-                int age = A2BSupport.String2int(ageStr);
+                int age = A2BSupport.toInt(ageStr);
                 testModel.data().setAge(age);
             }
 
@@ -116,7 +116,7 @@ public class TestActivity extends CommonActivity<ActivityTestBinding, CommonView
         // 设置年龄
         binding.btnAge.setOnClickListener(v -> {
             String ageStr = binding.etAge.getText().toString();
-            int age = A2BSupport.String2int(ageStr);
+            int age = A2BSupport.toInt(ageStr);
             testModel.data().setAge(age);
         });
     }

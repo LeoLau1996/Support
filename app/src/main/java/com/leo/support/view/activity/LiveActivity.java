@@ -94,7 +94,7 @@ public class LiveActivity extends CommonActivity<ActivityLiveBinding, CommonView
         });
         // 初始化Socket
         if (socketType == SOCKE_TYPE_SERVICE) {
-            SocketUtils.getInstance().openWebSocket(A2BSupport.String2int("8081"), byteBuffer -> {
+            SocketUtils.getInstance().openWebSocket(A2BSupport.toInt("8081"), byteBuffer -> {
                 int type = byteBuffer.get(0);
                 // 视频
                 if (type == MediaProjectionService.TYPE_VIDEO) {
