@@ -2,6 +2,8 @@ package com.leo.support.view;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.leo.support.BR;
@@ -60,6 +62,13 @@ public class AccessibilityActivity extends CommonActivity<ActivityAccessibilityB
         });
         binding.btnTest.setOnClickListener(v -> {
             binding.btnTest.setText(String.valueOf(System.currentTimeMillis()));
+        });
+        binding.btnTest.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.e("liu", event.getAction() + "?");
+                return false;
+            }
         });
     }
 

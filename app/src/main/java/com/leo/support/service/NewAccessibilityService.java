@@ -67,7 +67,7 @@ public class NewAccessibilityService extends AccessibilityService {
 
         if (Is.isEquals(packageName, "com.leo.support")) {
             analysisNode(nodeInfo, new MultiText("你点我一下试试"), null, null, new MultiText("btnTest"), 0, (type, text, count, nodeInfo1) -> {
-                click(nodeInfo1);
+                click(nodeInfo1, true);
                 return false;
             });
         }
@@ -264,12 +264,46 @@ public class NewAccessibilityService extends AccessibilityService {
 
     }
 
-    // 点击
-    private static void click(AccessibilityNodeInfo nodeInfo) {
+    // 点击 递归
+    private static void click(AccessibilityNodeInfo nodeInfo, boolean recursive) {
         if (nodeInfo == null) {
             return;
         }
+        // 如果当前View不可点击，则点击他的父布局
+        if (!nodeInfo.isClickable()) {
+            if (recursive) click(nodeInfo.getParent(), true);
+            return;
+        }
         nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+    }
+
+    // 点击
+    private void click(float x, float y) {
+        Path path = new Path();
+        path.moveTo(x, y);
+        path.lineTo(x, y);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // addStroke是模拟的多指触摸，add一次表示一个手指，add多次表示多个手指。
+            GestureDescription gesture = new GestureDescription.Builder()
+                    .addStroke(new GestureDescription.StrokeDescription(path, 0, 48))
+                    .build();
+            dispatchGesture(gesture, new GestureResultCallback() {
+
+                // 完成
+                @Override
+                public void onCompleted(GestureDescription gestureDescription) {
+                    super.onCompleted(gestureDescription);
+                    Log.e(TAG, "点击完成");
+                }
+
+                // 取消
+                @Override
+                public void onCancelled(GestureDescription gestureDescription) {
+                    super.onCancelled(gestureDescription);
+                    Log.e(TAG, "点击取消");
+                }
+            }, null);
+        }
     }
 
     // 设置文本
