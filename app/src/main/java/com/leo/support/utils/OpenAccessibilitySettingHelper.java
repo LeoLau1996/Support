@@ -1,5 +1,7 @@
 package com.leo.support.utils;
 
+import static com.leo.support.service.NewAccessibilityService.currentActivityClassName;
+
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.GestureDescription;
 import android.app.ActivityManager;
@@ -21,7 +23,9 @@ import com.leo.support.service.NewAccessibilityService;
 import com.surgery.scalpel.util.A2BSupport;
 import com.surgery.scalpel.util.Is;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -36,7 +40,7 @@ import java.util.List;
  **/
 public class OpenAccessibilitySettingHelper {
 
-    private static String TAG = NewAccessibilityService.class.getSimpleName();
+    private static String TAG = OpenAccessibilitySettingHelper.class.getSimpleName();
 
     public static final int EQUALS_TEXT = 0;
     public static final int CONTAINS_TEXT = 1;
@@ -230,116 +234,17 @@ public class OpenAccessibilitySettingHelper {
             }
         }
 
-        if (eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
-
-        } else {
-            Log.i(TAG, String.format("nodeClassName = %s    id = %s    nodeText = %s    childCount = %s    Rect = %s", nodeClassName, id, nodeText, childCount, rect));
-        }
+        //if (eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
+        //
+        //} else {
+        Log.i(TAG, String.format("nodeClassName = %s    id = %s    nodeText = %s    childCount = %s    Rect = %s", nodeClassName, id, nodeText, childCount, rect));
+        //}
         for (int index = 0; index < childCount; index++) {
             AccessibilityNodeInfo childNode = nodeInfo.getChild(index);
             analysis(eventType, childNode, equalsText, containsText, equalsId, containsId, count, callBack);
         }
     }
 
-    // 点击 递归
-    public static void click(AccessibilityNodeInfo nodeInfo, boolean recursive) {
-        if (nodeInfo == null) {
-            return;
-        }
-        // 如果当前View不可点击，则点击他的父布局
-        if (!nodeInfo.isClickable()) {
-            if (recursive) click(nodeInfo.getParent(), true);
-            return;
-        }
-        nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-    }
 
-    // 点击
-    public static void click(AccessibilityService service, float x, float y) {
-        Path path = new Path();
-        path.moveTo(x, y);
-        path.lineTo(x, y);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            // addStroke是模拟的多指触摸，add一次表示一个手指，add多次表示多个手指。
-            GestureDescription gesture = new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path, 0, 48)).build();
-            service.dispatchGesture(gesture, new AccessibilityService.GestureResultCallback() {
-
-                // 完成
-                @Override
-                public void onCompleted(GestureDescription gestureDescription) {
-                    super.onCompleted(gestureDescription);
-                    Log.e(TAG, "点击完成");
-                }
-
-                // 取消
-                @Override
-                public void onCancelled(GestureDescription gestureDescription) {
-                    super.onCancelled(gestureDescription);
-                    Log.e(TAG, "点击取消");
-                }
-            }, null);
-        }
-    }
-
-    // 移动
-    public static void move(AccessibilityService service) {
-        Log.e(TAG, "移动");
-        //发送一个点击事件
-        Path path = new Path();//线性的path代表手势路径,点代表按下,封闭的没用
-        // 起点
-        path.moveTo(1000, 2000);
-        // 终点
-        path.lineTo(1000, 1400);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            // addStroke是模拟的多指触摸，add一次表示一个手指，add多次表示多个手指。
-            GestureDescription gesture = new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path, 100, 500)).build();
-            service.dispatchGesture(gesture, new AccessibilityService.GestureResultCallback() {
-
-                // 完成
-                @Override
-                public void onCompleted(GestureDescription gestureDescription) {
-                    super.onCompleted(gestureDescription);
-                    Log.e(TAG, "移动完成");
-                }
-
-                // 取消
-                @Override
-                public void onCancelled(GestureDescription gestureDescription) {
-                    super.onCancelled(gestureDescription);
-                    Log.e(TAG, "移动取消");
-                }
-            }, null);
-        }
-    }
-
-    // 设置文本
-    private static void setText(AccessibilityNodeInfo nodeInfo, String text) {
-        Bundle bundle = new Bundle();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            bundle.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, text);
-            nodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, bundle);
-        }
-    }
-
-
-    // 返回键
-    public static void clickBack(AccessibilityService service) {
-        service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-    }
-
-    // Home键
-    public static void clickHome(AccessibilityService service) {
-        service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME);
-    }
-
-    // 导航键
-    public static void clickNotifications(AccessibilityService service) {
-        service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
-    }
-
-    // 拉出通知栏
-    public static void recents(AccessibilityService service) {
-        service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
-    }
 
 }

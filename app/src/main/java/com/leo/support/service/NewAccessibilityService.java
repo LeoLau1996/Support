@@ -4,12 +4,7 @@ package com.leo.support.service;
 import static com.leo.support.utils.OpenAccessibilitySettingHelper.*;
 
 import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.GestureDescription;
 import android.content.Intent;
-import android.graphics.Path;
-import android.graphics.Rect;
-import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -18,8 +13,7 @@ import com.google.gson.Gson;
 import com.leo.support.biz.BossBiz;
 import com.leo.support.info.AppInfo;
 import com.leo.support.model.MultiText;
-import com.leo.support.utils.OpenAccessibilitySettingHelper;
-import com.leo.support.utils.OpenAccessibilitySettingHelper.*;
+import com.leo.support.utils.ActionUtils;
 import com.surgery.scalpel.util.A2BSupport;
 import com.surgery.scalpel.util.Is;
 
@@ -42,7 +36,7 @@ public class NewAccessibilityService extends AccessibilityService {
 
     private static String TAG = NewAccessibilityService.class.getSimpleName();
     // 当前ClassName
-    private String currentClassName;
+    public static String currentActivityClassName;
 
     @Override
     protected void onServiceConnected() {
@@ -62,14 +56,15 @@ public class NewAccessibilityService extends AccessibilityService {
         if (nodeInfo == null) {
             nodeInfo = getRootInActiveWindow();
         }
-        if (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            currentClassName = className;
+        if (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED && !Is.isEquals(currentActivityClassName, className)) {
+            currentActivityClassName = className;
+            ActionUtils.remove();
         }
-        if (eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
-            // Log.i(TAG, String.format("onAccessibilityEvent    %s\npackageName = %s    className = %s\ntextList = %s", getEventTypeText(eventType), packageName, className, new Gson().toJson(textList)));
-        } else {
-            Log.e(TAG, String.format("onAccessibilityEvent    %s\npackageName = %s    className = %s\ntextList = %s", getEventTypeText(eventType), packageName, className, new Gson().toJson(textList)));
-        }
+        //if (eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
+        //    // Log.i(TAG, String.format("onAccessibilityEvent    %s\npackageName = %s    className = %s\ntextList = %s", getEventTypeText(eventType), packageName, className, new Gson().toJson(textList)));
+        //} else {
+        Log.e(TAG, String.format("onAccessibilityEvent    %s\npackageName = %s    className = %s\ntextList = %s", getEventTypeText(eventType), packageName, className, new Gson().toJson(textList)));
+        //}
 
 
         //analysisNode(nodeInfo);
@@ -85,8 +80,8 @@ public class NewAccessibilityService extends AccessibilityService {
         // 解析节点
         analysisNode(eventType, nodeInfo,
                 new MultiText(), new MultiText(),
-                new MultiText(AppInfo.ID.BOSS.首页_职位列表_职位名称, AppInfo.ID.BOSS.首页_职位列表_价格Id), new MultiText(),
-                new BossBiz(packageName, currentClassName));
+                new MultiText(AppInfo.ID.BOSS.首页_职位列表_职位名称, AppInfo.ID.BOSS.首页_职位列表_价格, AppInfo.ID.BOSS.职位详情_沟通), new MultiText(),
+                new BossBiz(this, packageName));
 
     }
 

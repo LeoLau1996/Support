@@ -25,7 +25,9 @@ public class AppInfo {
 
             public static final String 首页_职位列表_职位名称 = "com.hpbr.bosszhipin:id/tv_position_name";
 
-            public static final String 首页_职位列表_价格Id = "com.hpbr.bosszhipin:id/tv_salary_statue";
+            public static final String 首页_职位列表_价格 = "com.hpbr.bosszhipin:id/tv_salary_statue";
+
+            public static final String 职位详情_沟通 = "com.hpbr.bosszhipin:id/btn_chat";
 
         }
 
@@ -36,6 +38,8 @@ public class AppInfo {
         public static class BOSS {
 
             public static final String 首页 = "com.hpbr.bosszhipin.module.main.activity.MainActivity";
+
+            public static final String 职位详情 = "com.hpbr.bosszhipin.module.position.BossJobPagerActivity";
 
         }
 
