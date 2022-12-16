@@ -18,6 +18,7 @@ import com.leo.support.model.AccessibillityEvent;
 import com.leo.support.model.MultiText;
 import com.leo.support.utils.ActionUtils;
 import com.surgery.scalpel.util.A2BSupport;
+import com.surgery.scalpel.util.Get;
 import com.surgery.scalpel.util.Is;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,12 +45,18 @@ public class NewAccessibilityService extends AccessibilityService {
     private static String TAG = NewAccessibilityService.class.getSimpleName();
     // 当前ClassName
     public static String currentActivityClassName;
+    // xxx
+    public static AccessibilityService service;
+    public static int windowWidth, windowHeight;
 
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
         Log.e(TAG, "onServiceConnected");
+        service = this;
         EventBus.getDefault().register(this);
+        windowWidth = Get.getWindowWidth(this);
+        windowHeight = Get.getWindowHeight(this);
     }
 
     // 事件回调
@@ -99,6 +106,7 @@ public class NewAccessibilityService extends AccessibilityService {
     public boolean onUnbind(Intent intent) {
         Log.e(TAG, "onUnbind");
         EventBus.getDefault().unregister(this);
+        service = null;
         return super.onUnbind(intent);
     }
 
@@ -133,9 +141,9 @@ public class NewAccessibilityService extends AccessibilityService {
 
         // 解析节点
         analysisNode(nodeInfo,
-                new MultiText(), new MultiText(),
+                new MultiText("新消息", BossBiz.sendText), new MultiText(),
                 new MultiText(AppInfo.ID.BOSS.首页_职位列表_职位名称, AppInfo.ID.BOSS.首页_职位列表_价格, AppInfo.ID.BOSS.职位详情_沟通), new MultiText(),
-                new BossBiz(this, packageName));
+                new BossBiz(packageName));
     }
 
 }

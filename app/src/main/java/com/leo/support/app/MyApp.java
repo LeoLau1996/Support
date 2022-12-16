@@ -46,7 +46,7 @@ public class MyApp extends BaseApplication {
             public void run() {
                 EventBus.getDefault().post(new AccessibillityEvent());
             }
-        }, 1000, 1000);
+        }, 1000, 2 * 1000);
     }
 
 }

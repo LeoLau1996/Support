@@ -41,6 +41,8 @@ public class AppInfo {
 
             public static final String 职位详情 = "com.hpbr.bosszhipin.module.position.BossJobPagerActivity";
 
+            public static final String 聊天 = "com.hpbr.bosszhipin.chat.single.activity.ChatNewActivity";
+
         }
 
     }
