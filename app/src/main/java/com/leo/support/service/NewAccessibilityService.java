@@ -56,22 +56,25 @@ public class NewAccessibilityService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         int eventType = event.getEventType();
-        //String packageName = A2BSupport.toString(event.getPackageName());
+        String packageName = A2BSupport.toString(event.getPackageName());
         String className = A2BSupport.toString(event.getClassName());
-        //List<CharSequence> textList = event.getText();
-        //// 资源信息
-        //AccessibilityNodeInfo nodeInfo = event.getSource();
-        //if (nodeInfo == null) {
-        //    nodeInfo = getRootInActiveWindow();
-        //}
-        if (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED && !Is.isEquals(currentActivityClassName, className)) {
+        List<CharSequence> textList = event.getText();
+        String nodeInfoPackageName = null;
+        // 资源信息
+        AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
+        if (nodeInfo != null) {
+            nodeInfoPackageName = A2BSupport.toString(nodeInfo.getPackageName());
+        }
+        //Log.e(TAG, "nodeInfoPackageName:" + nodeInfoPackageName);
+        if (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED && !Is.isEquals(currentActivityClassName, className) && nodeInfoPackageName != null && className.contains(nodeInfoPackageName)) {
             currentActivityClassName = className;
             ActionUtils.remove();
+            Log.e(TAG, String.format("currentActivityClassName = %s", currentActivityClassName));
         }
         //if (eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
         //    // Log.i(TAG, String.format("onAccessibilityEvent    %s\npackageName = %s    className = %s\ntextList = %s", getEventTypeText(eventType), packageName, className, new Gson().toJson(textList)));
         //} else {
-        //Log.e(TAG, String.format("onAccessibilityEvent    %s\npackageName = %s    className = %s\ntextList = %s", getEventTypeText(eventType), packageName, className, new Gson().toJson(textList)));
+        Log.e(TAG, String.format("onAccessibilityEvent    %s\npackageName = %s    className = %s\ntextList = %s", getEventTypeText(eventType), packageName, className, new Gson().toJson(textList)));
         //}
 
 
@@ -108,6 +111,7 @@ public class NewAccessibilityService extends AccessibilityService {
             return;
         }
         String packageName = A2BSupport.toString(nodeInfo.getPackageName());
+        Log.e(TAG, String.format("packageName = %s    currentActivityClassName = %s", packageName, currentActivityClassName));
 
         //analysisNode(nodeInfo, new MultiText(), new MultiText(), new MultiText("com.leo.support:id/btnTest"), new MultiText(), new OnMatchCallBack() {
         //    @Override
