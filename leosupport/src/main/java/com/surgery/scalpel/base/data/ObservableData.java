@@ -76,7 +76,7 @@ public class ObservableData<D> extends Observable.OnPropertyChangedCallback impl
     private void onDestroy() {
         Log.e("liu1125", "onDestroy");
         if (data != null && data instanceof BaseObservable) {
-            ((BaseObservable) data).addOnPropertyChangedCallback(this);
+            ((BaseObservable) data).removeOnPropertyChangedCallback(this);
         }
         callBack = null;
         data = null;
