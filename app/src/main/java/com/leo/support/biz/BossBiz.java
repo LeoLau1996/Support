@@ -43,7 +43,7 @@ public class BossBiz implements OnMatchCallBack {
     // 包名
     private String packageName;
 
-    public static final String sendText = "本人安卓开发工作经验五年，担任安卓技术组长。在硬件，蓝牙，金融，等方面都有丰富的经验。";
+    public static String sendText = "本人安卓开发工作经验五年，担任安卓技术组长。在硬件，蓝牙，金融，等方面都有丰富的经验。";
     private static final Handler handler = new Handler();
     private boolean clickJob = false;
 
