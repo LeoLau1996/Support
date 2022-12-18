@@ -14,7 +14,7 @@ import com.leo.support.databinding.ActivityTestBinding;
 import com.leo.support.model.TestModel;
 
 import com.surgery.scalpel.base.activity.CommonActivity;
-import com.surgery.scalpel.base.data.CommomData;
+import com.surgery.scalpel.base.data.ObservableData;
 import com.surgery.scalpel.model.CommonViewModel;
 import com.surgery.scalpel.util.A2BSupport;
 import com.surgery.scalpel.util.JumpUtil;
@@ -46,8 +46,8 @@ public class TestActivity extends CommonActivity<ActivityTestBinding, CommonView
      *     全 局 变 量    *
      *********************/
 
-    private CommomData<TestActivityModel> activityModel;
-    private CommomData<TestModel> testModel;
+    private ObservableData<TestActivityModel> activityModel;
+    private ObservableData<TestModel> testModel;
 
     /*********************
      *  生 命 周 期 方 法  *
@@ -60,7 +60,7 @@ public class TestActivity extends CommonActivity<ActivityTestBinding, CommonView
 
     @Override
     protected void initData(Bundle bundle) {
-        testModel = new CommomData<>(new TestModel(), this);
+        testModel = new ObservableData<>(new TestModel(), this);
     }
 
     @Override

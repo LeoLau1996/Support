@@ -19,7 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.surgery.scalpel.BR;
 import com.surgery.scalpel.R;
-import com.surgery.scalpel.base.data.CommomData;
+import com.surgery.scalpel.base.data.ObservableData;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -35,7 +35,7 @@ import java.lang.reflect.Type;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonDialogFragment<T extends ViewDataBinding, M extends ViewModel> extends CommonAbstractDialogFragment implements LifecycleObserver, CommomData.OnCommomDataCallBack {
+public abstract class CommonDialogFragment<T extends ViewDataBinding, M extends ViewModel> extends CommonAbstractDialogFragment implements LifecycleObserver, ObservableData.OnCommomDataCallBack {
 
     public T binding;
     public M viewModel;

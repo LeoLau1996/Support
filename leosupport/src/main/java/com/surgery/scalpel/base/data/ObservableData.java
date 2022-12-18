@@ -11,11 +11,6 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
 
-import com.surgery.scalpel.base.activity.CommonActivity;
-import com.surgery.scalpel.base.dialog.CommonDialog;
-import com.surgery.scalpel.base.dialog.CommonDialogFragment;
-import com.surgery.scalpel.base.fragment.CommonFragment;
-
 /**
  * ---------------------------------------------------------------------------------------------
  * 功能描述: 一个可以监听属性的数据对象
@@ -27,7 +22,7 @@ import com.surgery.scalpel.base.fragment.CommonFragment;
  * 代码备注: 设置数据
  * ---------------------------------------------------------------------------------------------
  **/
-public class CommomData<D extends BaseObservable> extends Observable.OnPropertyChangedCallback implements LifecycleObserver {
+public class ObservableData<D> extends Observable.OnPropertyChangedCallback implements LifecycleObserver {
 
 
     // 数据主体
@@ -35,37 +30,20 @@ public class CommomData<D extends BaseObservable> extends Observable.OnPropertyC
     // 回调方法
     private OnCommomDataCallBack callBack;
 
-    public CommomData() {
-        this(null, null);
-    }
-
-    public CommomData(Object owner) {
-        this(null, owner);
-    }
-
-    public CommomData(D data) {
-        this(data, null);
-    }
-
-    public CommomData(D data, Object owner) {
+    public ObservableData(D data, Object owner) {
+        if (owner != null) {
+            // 设置数据修改监听
+            if (owner instanceof OnCommomDataCallBack) {
+                setCallBack((OnCommomDataCallBack) owner);
+            }
+            // 生命周期监听
+            if (owner instanceof LifecycleOwner) {
+                ((LifecycleOwner) owner).getLifecycle().addObserver(this);
+            } else if (owner instanceof Lifecycle) {
+                ((Lifecycle) owner).addObserver(this);
+            }
+        }
         setData(data);
-        if (owner == null) {
-            return;
-        }
-        if (owner instanceof OnCommomDataCallBack) {
-            setCallBack((OnCommomDataCallBack) owner);
-        }
-        if (owner instanceof CommonActivity) {
-            ((LifecycleOwner) owner).getLifecycle().addObserver(this);
-        } else if (owner instanceof CommonFragment) {
-            ((CommonFragment) owner).getLifecycle().addObserver(this);
-        } else if (owner instanceof CommonDialog) {
-            ((LifecycleOwner) ((CommonDialog) owner).getContext()).getLifecycle().addObserver(this);
-        } else if (owner instanceof CommonDialogFragment) {
-            ((CommonDialogFragment) owner).getLifecycle().addObserver(this);
-        } else if (owner instanceof Lifecycle) {
-            ((Lifecycle) owner).addObserver(this);
-        }
     }
 
     public D data() {
@@ -75,8 +53,8 @@ public class CommomData<D extends BaseObservable> extends Observable.OnPropertyC
     // 设置数据
     public void setData(D newData) {
         data = newData;
-        if (data != null) {
-            data.addOnPropertyChangedCallback(this);
+        if (data != null && data instanceof BaseObservable) {
+            ((BaseObservable) data).addOnPropertyChangedCallback(this);
         }
         onPropertyChanged(null, BR._all);
     }
@@ -90,8 +68,8 @@ public class CommomData<D extends BaseObservable> extends Observable.OnPropertyC
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     private void onDestroy() {
         Log.e("liu1125", "onDestroy");
-        if (data != null) {
-            data.removeOnPropertyChangedCallback(this);
+        if (data != null && data instanceof BaseObservable) {
+            ((BaseObservable) data).addOnPropertyChangedCallback(this);
         }
         callBack = null;
         data = null;

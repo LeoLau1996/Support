@@ -1,17 +1,14 @@
 package com.surgery.scalpel.base.activity;
 
-import android.content.res.Configuration;
-
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.surgery.scalpel.BR;
-import com.surgery.scalpel.base.data.CommomData;
+import com.surgery.scalpel.base.data.ObservableData;
 import com.surgery.scalpel.util.LogUtil;
 
 import java.lang.reflect.ParameterizedType;
@@ -28,7 +25,7 @@ import java.lang.reflect.Type;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonActivity<T extends ViewDataBinding, M extends ViewModel> extends CommonAbstractActivity implements CommomData.OnCommomDataCallBack {
+public abstract class CommonActivity<T extends ViewDataBinding, M extends ViewModel> extends CommonAbstractActivity implements ObservableData.OnCommomDataCallBack {
 
     // Activity
     public CommonActivity activity;

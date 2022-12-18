@@ -11,8 +11,7 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.surgery.scalpel.BR;
-import com.surgery.scalpel.R;
-import com.surgery.scalpel.base.data.CommomData;
+import com.surgery.scalpel.base.data.ObservableData;
 import com.surgery.scalpel.util.LogUtil;
 
 /**
@@ -26,7 +25,7 @@ import com.surgery.scalpel.util.LogUtil;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbstractDialog implements LifecycleObserver, CommomData.OnCommomDataCallBack {
+public abstract class CommonDialog<T extends ViewDataBinding> extends CommonAbstractDialog implements LifecycleObserver, ObservableData.OnCommomDataCallBack {
 
     public T binding;
     public Context context;
