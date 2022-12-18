@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.surgery.scalpel.BR;
 import com.surgery.scalpel.base.data.ObservableData;
+import com.surgery.scalpel.model.CommonViewModel;
 import com.surgery.scalpel.util.LogUtil;
 
 import java.lang.reflect.ParameterizedType;
@@ -32,7 +33,7 @@ import java.lang.reflect.Type;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonFragment<T extends ViewDataBinding, M extends ViewModel> extends CommonAbstractFragment implements ObservableData.OnCommomDataCallBack {
+public abstract class CommonFragment<T extends ViewDataBinding, M extends CommonViewModel> extends CommonAbstractFragment implements ObservableData.OnCommomDataCallBack {
 
     public Context context;
     public Activity activity;
@@ -61,6 +62,7 @@ public abstract class CommonFragment<T extends ViewDataBinding, M extends ViewMo
         if (type instanceof ParameterizedType) {
             Type[] types = ((ParameterizedType) type).getActualTypeArguments();
             viewModel = (M) new ViewModelProvider(this).get((Class) types[1]);
+            viewModel.setOwner(this);
         }
         initData(savedInstanceState);
         refreshViews(savedInstanceState, BR._all);

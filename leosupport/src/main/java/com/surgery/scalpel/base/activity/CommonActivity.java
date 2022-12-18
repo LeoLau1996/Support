@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.surgery.scalpel.BR;
 import com.surgery.scalpel.base.data.ObservableData;
+import com.surgery.scalpel.model.CommonViewModel;
 import com.surgery.scalpel.util.LogUtil;
 
 import java.lang.reflect.ParameterizedType;
@@ -25,7 +26,7 @@ import java.lang.reflect.Type;
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public abstract class CommonActivity<T extends ViewDataBinding, M extends ViewModel> extends CommonAbstractActivity implements ObservableData.OnCommomDataCallBack {
+public abstract class CommonActivity<T extends ViewDataBinding, M extends CommonViewModel> extends CommonAbstractActivity implements ObservableData.OnCommomDataCallBack {
 
     // Activity
     public CommonActivity activity;
@@ -45,10 +46,12 @@ public abstract class CommonActivity<T extends ViewDataBinding, M extends ViewMo
         activity = this;
         //
         binding = DataBindingUtil.setContentView(activity, setLayout());
+
         Type type = getClass().getGenericSuperclass();
         if (type instanceof ParameterizedType) {
             Type[] types = ((ParameterizedType) type).getActualTypeArguments();
             viewModel = (M) new ViewModelProvider(this).get((Class) types[1]);
+            viewModel.setOwner(this);
         }
 
         //初始化数据

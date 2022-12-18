@@ -1,33 +1,32 @@
-package com.surgery.scalpel.model;
+package com.leo.support.view;
 
-import androidx.lifecycle.ViewModel;
+import com.surgery.scalpel.base.data.ObservableData;
+import com.surgery.scalpel.model.CommonViewModel;
 
 /**
  * ---------------------------------------------------------------------------------------------
  * 功能描述:
  * ---------------------------------------------------------------------------------------------
- * 时　　间: 2022/12/6
+ * 时　　间: 2022/12/18
  * ---------------------------------------------------------------------------------------------
  * 代码创建: Leo
  * ---------------------------------------------------------------------------------------------
  * 代码备注:
  * ---------------------------------------------------------------------------------------------
  **/
-public class CommonViewModel extends ViewModel {
+public class MainViewModel extends CommonViewModel {
 
-    private Object owner;
+    private ObservableData<String> name;
 
-    public void setOwner(Object owner) {
-        this.owner = owner;
+    public ObservableData<String> getName() {
+        return name;
     }
 
-    public Object getOwner() {
-        return owner;
+    public void setName(String name) {
+        if (this.name == null) {
+            this.name = new ObservableData<>(getOwner());
+        }
+        this.name.setData(name);
     }
 
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-        setOwner(null);
-    }
 }

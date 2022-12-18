@@ -12,6 +12,7 @@ import com.leo.support.databinding.ActivityMainBinding;
 import com.leo.support.info.AppPath;
 
 import com.leo.support.view.AccessibilityActivity;
+import com.leo.support.view.MainViewModel;
 import com.surgery.scalpel.base.activity.CommonActivity;
 import com.surgery.scalpel.biz.AudioRecordBiz;
 import com.surgery.scalpel.biz.MediaProjectionBiz;
@@ -24,7 +25,7 @@ import com.surgery.scalpel.util.CommonUtil;
 import com.surgery.scalpel.util.JumpUtil;
 import com.surgery.scalpel.util.SocketUtils;
 
-public class MainActivity extends CommonActivity<ActivityMainBinding, CommonViewModel> {
+public class MainActivity extends CommonActivity<ActivityMainBinding, MainViewModel> {
 
     private MediaProjectionBiz mediaProjectionBiz;
     private SurfaceHolder holder;

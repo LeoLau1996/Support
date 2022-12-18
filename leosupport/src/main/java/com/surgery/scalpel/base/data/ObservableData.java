@@ -30,6 +30,10 @@ public class ObservableData<D> extends Observable.OnPropertyChangedCallback impl
     // 回调方法
     private OnCommomDataCallBack callBack;
 
+    public ObservableData(Object owner) {
+        this(null, owner);
+    }
+
     public ObservableData(D data, Object owner) {
         //
         setData(data);
