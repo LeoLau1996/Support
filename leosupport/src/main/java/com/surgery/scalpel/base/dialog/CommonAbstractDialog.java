@@ -26,7 +26,7 @@ import com.surgery.scalpel.base.biz.CommonLifeBiz;
  **/
 public class CommonAbstractDialog extends Dialog implements LifeControlInterface{
 
-    private List<CommonLifeBiz> bizList;
+    protected List<CommonLifeBiz> bizList;
 
     public CommonAbstractDialog(@NonNull Context context) {
         super(context);

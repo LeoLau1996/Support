@@ -31,19 +31,22 @@ public class ObservableData<D> extends Observable.OnPropertyChangedCallback impl
     private OnCommomDataCallBack callBack;
 
     public ObservableData(D data, Object owner) {
-        if (owner != null) {
-            // 设置数据修改监听
-            if (owner instanceof OnCommomDataCallBack) {
-                setCallBack((OnCommomDataCallBack) owner);
-            }
-            // 生命周期监听
-            if (owner instanceof LifecycleOwner) {
-                ((LifecycleOwner) owner).getLifecycle().addObserver(this);
-            } else if (owner instanceof Lifecycle) {
-                ((Lifecycle) owner).addObserver(this);
-            }
-        }
+        //
         setData(data);
+
+        if (owner == null) {
+            return;
+        }
+        // 设置数据修改监听
+        if (owner instanceof OnCommomDataCallBack) {
+            setCallBack((OnCommomDataCallBack) owner);
+        }
+        // 生命周期监听
+        if (owner instanceof LifecycleOwner) {
+            ((LifecycleOwner) owner).getLifecycle().addObserver(this);
+        } else if (owner instanceof Lifecycle) {
+            ((Lifecycle) owner).addObserver(this);
+        }
     }
 
     public D data() {

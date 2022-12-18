@@ -27,7 +27,7 @@ import com.surgery.scalpel.base.biz.CommonLifeBiz;
  **/
 public abstract class CommonAbstractFragment extends Fragment implements LifeControlInterface {
 
-    private List<CommonLifeBiz> bizList;
+    protected List<CommonLifeBiz> bizList;
 
     @Override
     public void addLifeCallBackList(CommonLifeBiz biz) {

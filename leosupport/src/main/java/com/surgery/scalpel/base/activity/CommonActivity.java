@@ -101,6 +101,10 @@ public abstract class CommonActivity<T extends ViewDataBinding, M extends ViewMo
     @Override
     public void onDataPropertyChanged(Object data, int propertyId) {
         refreshViews(data, propertyId);
+        // 驱动Biz的refreshViews
+        for (int i = 0; bizList != null && i < bizList.size(); i++) {
+            bizList.get(i).refreshViews(data, propertyId);
+        }
     }
 
 }

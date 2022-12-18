@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.surgery.scalpel.BR;
 import com.surgery.scalpel.base.LifeControlInterface;
 
 /**
@@ -38,7 +39,7 @@ public class CommonLifeBiz {
         // 初始化数据
         initData(savedInstanceState);
         // 加载View
-        refreshViews(savedInstanceState);
+        refreshViews(null, BR._all);
         // 加载数据
         loadData();
         // 初始化监听器
@@ -65,7 +66,7 @@ public class CommonLifeBiz {
 
     }
 
-    private void refreshViews(Bundle savedInstanceState) {
+    public void refreshViews(Object data, int propertyId) {
 
     }
 

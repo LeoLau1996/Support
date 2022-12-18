@@ -19,7 +19,7 @@ import com.surgery.scalpel.base.biz.CommonLifeBiz;
 
 public abstract class CommonAbstractActivity extends AppCompatActivity implements LifeControlInterface {
 
-    private List<CommonLifeBiz> bizList;
+    protected List<CommonLifeBiz> bizList;
 
     @Override
     public void addLifeCallBackList(CommonLifeBiz biz) {
