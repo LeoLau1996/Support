@@ -47,13 +47,17 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     // Support
-    implementation files('libs/scalpel_10027_1.0.7_release_20221213_1835.aar')
-    annotationProcessor files('libs/apt-processor.jar')
-//    implementation project(':leosupport')
-//    annotationProcessor project(path: ':apt-processor')
+//    implementation files('libs/scalpel_10027_1.0.7_release_20221213_1835.aar')
+//    annotationProcessor files('libs/apt-processor.jar')
+    implementation project(':leosupport')
+    annotationProcessor project(path: ':apt-processor')
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
     // Gson
     implementation 'com.google.code.gson:gson:2.10'
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    // EventBus
+    implementation("org.greenrobot:eventbus:3.3.1")
+    // WorkManger
+//    implementation "android.arch.work:work-runtime:1.0.0-alpha07"
 }

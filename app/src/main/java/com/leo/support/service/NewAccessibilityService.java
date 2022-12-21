@@ -75,7 +75,6 @@ public class NewAccessibilityService extends AccessibilityService {
         //Log.e(TAG, "nodeInfoPackageName:" + nodeInfoPackageName);
         if (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED && !Is.isEquals(currentActivityClassName, className) && nodeInfoPackageName != null && className.contains(nodeInfoPackageName)) {
             currentActivityClassName = className;
-            ActionUtils.remove();
             Log.e(TAG, String.format("currentActivityClassName = %s", currentActivityClassName));
         }
         //if (eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
@@ -141,7 +140,7 @@ public class NewAccessibilityService extends AccessibilityService {
 
         // 解析节点
         analysisNode(nodeInfo,
-                new MultiText("新消息", BossBiz.sendText), new MultiText(),
+                new MultiText("新消息", "同意"), new MultiText(BossBiz.sendText),
                 new MultiText(AppInfo.ID.BOSS.首页_职位列表_职位名称, AppInfo.ID.BOSS.首页_职位列表_价格, AppInfo.ID.BOSS.职位详情_沟通), new MultiText(),
                 new BossBiz(packageName));
     }

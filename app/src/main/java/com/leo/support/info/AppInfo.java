@@ -43,6 +43,8 @@ public class AppInfo {
 
             public static final String 聊天 = "com.hpbr.bosszhipin.chat.single.activity.ChatNewActivity";
 
+            public static final String 登陆 = "com.hpbr.bosszhipin.login.activity.GetStartedActivity2";
+
         }
 
     }

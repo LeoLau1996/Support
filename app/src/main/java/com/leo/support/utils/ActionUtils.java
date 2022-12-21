@@ -5,6 +5,7 @@ import static com.leo.support.service.NewAccessibilityService.currentActivityCla
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.GestureDescription;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,8 +16,11 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.leo.support.service.NewAccessibilityService;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -33,27 +37,6 @@ public class ActionUtils {
 
     private static final String TAG = ActionUtils.class.getSimpleName();
 
-    //public static final Map<String, Long> map = new HashMap<>();
-    //private static final long delayMillis = 1000;
-    //private static final Handler handler = new Handler();
-
-    //public static boolean canDo(String id) {
-    //    String key = String.format("%s_%s", currentActivityClassName, id);
-    //    Long timeMillis = map.get(key);
-    //    long currentTimeMillis = System.currentTimeMillis();
-    //    boolean result = timeMillis == null || currentTimeMillis - timeMillis >= delayMillis;
-    //    if (result) {
-    //        map.put(key, currentTimeMillis);
-    //    }
-    //    return result;
-    //}
-
-    public static void remove() {
-        //map.clear();
-        //handler.removeCallbacksAndMessages(null);
-    }
-
-
     // 点击 递归
     public static void click(AccessibilityNodeInfo nodeInfo, boolean recursive) {
         if (nodeInfo == null) {
@@ -66,14 +49,17 @@ public class ActionUtils {
             }
             return;
         }
-        // 延迟点击
-        //handler.postDelayed(() -> {
-        //if (!canDo(id)) {
-        //    return;
-        //}
         Log.e(TAG, "点击成功");
-        nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-        //}, delayMillis);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Rect rect = new Rect();
+            nodeInfo.getBoundsInScreen(rect);
+            Random random = new Random();
+            int x = rect.left + random.nextInt(rect.right - rect.left);
+            int y = rect.top + random.nextInt(rect.bottom - rect.top);
+            click(NewAccessibilityService.service, x, y);
+        } else {
+            nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+        }
     }
 
     // 点击
@@ -85,10 +71,6 @@ public class ActionUtils {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             return;
         }
-        //handler.postDelayed(() -> {
-        //if (!canDo(id)) {
-        //    return;
-        //}
         Log.e(TAG, "点击成功");
         // addStroke是模拟的多指触摸，add一次表示一个手指，add多次表示多个手指。
         GestureDescription gesture = new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path, 0, 48)).build();
@@ -108,14 +90,13 @@ public class ActionUtils {
                 Log.e(TAG, "点击取消");
             }
         }, null);
-        //}, delayMillis);
     }
 
     // 移动
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static void move(AccessibilityService service, float x1, float y1, float x2, float y2) {
-        //发送一个点击事件
-        Path path = new Path();//线性的path代表手势路径,点代表按下,封闭的没用
+        // 发送一个点击事件
+        Path path = new Path();// 线性的path代表手势路径,点代表按下,封闭的没用
         // 起点
         path.moveTo(x1, y1);
         // 终点
@@ -123,10 +104,6 @@ public class ActionUtils {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             return;
         }
-        //handler.postDelayed(() -> {
-        //if (!canDo(id)) {
-        //    return;
-        //}
         Log.e(TAG, "移动成功");
         // addStroke是模拟的多指触摸，add一次表示一个手指，add多次表示多个手指。
         GestureDescription gesture = new GestureDescription.Builder().addStroke(new GestureDescription.StrokeDescription(path, 100, 500)).build();
@@ -146,59 +123,36 @@ public class ActionUtils {
                 Log.e(TAG, "移动取消");
             }
         }, null);
-        //}, delayMillis);
     }
 
     // 设置文本
     public static void setText(AccessibilityNodeInfo nodeInfo, String text) {
-        //handler.postDelayed(() -> {
         Bundle bundle = new Bundle();
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return;
         }
         bundle.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, text);
         nodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, bundle);
-        //}, delayMillis);
     }
 
     // 返回键
     public static void clickBack(AccessibilityService service) {
-        //handler.postDelayed(() -> {
-        //if (!canDo(id)) {
-        //    return;
-        //}
         Log.e(TAG, "返回键成功");
         service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
-        //}, delayMillis);
     }
 
     // Home键
     public static void clickHome(AccessibilityService service) {
-        //handler.postDelayed(() -> {
-        //if (!canDo(id)) {
-        //    return;
-        //}
         service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME);
-        //}, delayMillis);
     }
 
     // 导航键
     public static void clickNotifications(AccessibilityService service) {
-        //handler.postDelayed(() -> {
-        //if (!canDo(id)) {
-        //    return;
-        //}
         service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
-        //}, delayMillis);
     }
 
     // 拉出通知栏
     public static void recents(AccessibilityService service) {
-        //handler.postDelayed(() -> {
-        //if (!canDo(id)) {
-        //    return;
-        //}
         service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
-        //}, delayMillis);
     }
 }
