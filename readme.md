@@ -33,8 +33,6 @@
 > 
 > ～
 
-
-
 # apt-processor使用示范
 
 > ### 使用场景。
@@ -85,7 +83,6 @@
 >         btnMenu = null;
 >     }
 > }
-> 
 > ```
 > 
 > ## 使用ActivityMainTestViewGroup
@@ -113,7 +110,6 @@
 >         testViewGroup.btnMenu.setText(String.valueOf(System.currentTimeMillis()));
 >     }
 > }
-> 
 > ```
 > 
 > ～
@@ -145,12 +141,13 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.surgery.scalpel.base.activity.CommonActivity;
+import com.surgery.scalpel.model.CommonViewModel;
 import com.surgery.scalpel.util.JumpUtil;
 
 
 
 #parse("File Header.java")
-public class ${NAME} extends CommonActivity<#if (${BINDING_NAME} && ${BINDING_NAME} != "")${BINDING_NAME}#end#if (${BINDING_NAME} && ${BINDING_NAME} == "")Activity(xxxBinding)#end> {
+public class ${NAME} extends CommonActivity<#if (${BINDING_NAME} && ${BINDING_NAME} != "")${BINDING_NAME}#end#if (${BINDING_NAME} && ${BINDING_NAME} == "")Activity(xxxBinding)#end, CommonViewModel> {
 
     public static void go(Activity activity) {
         Bundle bundle = new Bundle();
@@ -198,10 +195,11 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentManager;
 import com.surgery.scalpel.base.fragment.CommonFragment;
+import com.surgery.scalpel.model.CommonViewModel;
 
 
 #parse("File Header.java")
-public class ${NAME} extends CommonFragment<#if (${BINDING_NAME} && ${BINDING_NAME} != "") ${BINDING_NAME} #else Fragment(xxxBinding)#end> {
+public class ${NAME} extends CommonFragment<#if (${BINDING_NAME} && ${BINDING_NAME} != "") ${BINDING_NAME} #else Fragment(xxxBinding)#end, CommonViewModel> {
 
     public static ${NAME} newInstance(FragmentManager mFragmentManager, String TAG) {
         ${NAME} fragment = null;
