@@ -8,11 +8,14 @@ import android.view.View;
 
 import com.leo.support.BR;
 import com.leo.support.R;
+import com.leo.support.biz.LoginBiz;
+import com.leo.support.biz.TestBiz;
 import com.leo.support.databinding.ActivityAccessibilityBinding;
 import com.leo.support.model.AccessibillityEvent;
 import com.leo.support.service.NewAccessibilityService;
 import com.leo.support.utils.OpenAccessibilitySettingHelper;
 import com.surgery.scalpel.base.activity.CommonActivity;
+import com.surgery.scalpel.base.biz.CommonLifeBiz;
 import com.surgery.scalpel.model.CommonViewModel;
 import com.surgery.scalpel.util.JumpUtil;
 
@@ -50,6 +53,9 @@ public class AccessibilityActivity extends CommonActivity<ActivityAccessibilityB
         boolean isAccessibility = OpenAccessibilitySettingHelper.isAccessibilitySettingsOn(activity, NewAccessibilityService.class.getName());
         binding.tvPermissionSwitchStatus.setText(String.format("权限开关状态：%s", isAccessibility));
         binding.btnApply.setVisibility(!isAccessibility ? View.VISIBLE : View.GONE);
+
+        obtainBiz(TestBiz.class).xxx();
+        obtainBiz(LoginBiz.class);
     }
 
     @Override

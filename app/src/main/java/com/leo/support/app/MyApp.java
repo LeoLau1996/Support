@@ -21,6 +21,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +41,8 @@ import java.util.TimerTask;
         "/Users/leolau/Documents/LeoWork/Support/app/src/main/res/layout"
 })
 public class MyApp extends BaseApplication {
+
+    private Map<String, String> map;
 
     private final Random random = new Random();
     private final Handler handler = new Handler(msg -> {
