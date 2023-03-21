@@ -28,13 +28,20 @@ public class CommonLifeBiz {
 
     // 生命周期控制接口
     private LifeControlInterface lifeControlInterface;
+    // 标记 请保证在宿主的唯一性（例如在Activity、Fragment、Dialog中是唯一的）
+    private String bizTag;
 
-    public CommonLifeBiz(LifeControlInterface lifeControlInterface) {
-        this(lifeControlInterface, null);
+    public CommonLifeBiz(LifeControlInterface lifeControlInterface, String bizTag) {
+        this(lifeControlInterface, null, bizTag);
     }
 
-    public CommonLifeBiz(LifeControlInterface lifeControlInterface, Bundle savedInstanceState) {
+    public CommonLifeBiz(LifeControlInterface lifeControlInterface) {
+        this(lifeControlInterface, null, "");
+    }
+
+    public CommonLifeBiz(LifeControlInterface lifeControlInterface, Bundle savedInstanceState, String bizTag) {
         this.lifeControlInterface = lifeControlInterface;
+        this.bizTag = bizTag;
         addCommonLifeCallBack();
         // 初始化数据
         initData(savedInstanceState);
@@ -194,5 +201,9 @@ public class CommonLifeBiz {
 
     public LifeControlInterface getLifeControlInterface() {
         return lifeControlInterface;
+    }
+
+    public String getBizTag() {
+        return bizTag;
     }
 }

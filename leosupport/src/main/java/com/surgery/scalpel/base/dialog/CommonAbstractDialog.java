@@ -2,16 +2,19 @@ package com.surgery.scalpel.base.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import com.surgery.scalpel.base.LifeControlInterface;
 import com.surgery.scalpel.base.biz.CommonLifeBiz;
+import com.surgery.scalpel.util.Is;
 
 /**
  * ---------------------------------------------------------------------------------------------
@@ -58,6 +61,33 @@ public class CommonAbstractDialog extends Dialog implements LifeControlInterface
         Log.e("liu0708", "Dialog    准备删除生命周期对象    lifeBizList = " + bizList.size());
         bizList.remove(biz);
         Log.e("liu0708", "Dialog    删除完成生命周期对象    lifeBizList = " + bizList.size());
+    }
+
+    @Override
+    public <B extends CommonLifeBiz> B obtainBiz(Class<B> bizClass) {
+        return obtainBiz("", bizClass);
+    }
+
+    @Override
+    public <B extends CommonLifeBiz> B obtainBiz(String bizTag, Class<B> bizClass) {
+        for (int i = 0; bizList != null && i < bizList.size(); i++) {
+            CommonLifeBiz biz = bizList.get(i);
+            if (biz.getClass() == bizClass) {
+                continue;
+            }
+            if (!Is.isEquals(biz.getBizTag(), bizTag)) {
+                continue;
+            }
+            return (B) biz;
+        }
+        try {
+            Constructor constructor = bizClass.getConstructor(LifeControlInterface.class, Bundle.class, String.class);
+            B biz = (B) constructor.newInstance(this, null, bizTag);
+            addLifeCallBackList(biz);
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 
     @Override

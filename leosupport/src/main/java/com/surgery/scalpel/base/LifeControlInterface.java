@@ -21,4 +21,8 @@ public interface LifeControlInterface {
     //删除生命周期监听(不要在for循环中使用这个删除)
     void removeLifeCallBackList(CommonLifeBiz biz);
 
+    <B extends CommonLifeBiz> B obtainBiz(Class<B> bizClass);
+
+    <B extends CommonLifeBiz> B obtainBiz(String bizTag, Class<B> bizClass);
+
 }
