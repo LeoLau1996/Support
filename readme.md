@@ -443,6 +443,7 @@ public class ${NAME} extends CommonDialogFragment<#if (${BINDING_NAME} && ${BIND
 import android.content.Context;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import com.surgery.scalpel.base.adapter.CommonRecyclerAdapter;
 
 #parse("File Header.java")
@@ -471,12 +472,12 @@ public class ${NAME} extends CommonRecyclerAdapter<Object, ${NAME}.${NAME}Holder
         }
 
         @Override
-        protected void refreshViews(int position, Object model) {
+        protected void refreshViews(int position, Object model, @NonNull List payloads) {
 
         }
 
         @Override
-        protected void initListener(int position, Object model) {
+        protected void initListener(int position, Object model, @NonNull List payloads) {
 
         }
     }
@@ -495,6 +496,7 @@ public class ${NAME} extends CommonRecyclerAdapter<Object, ${NAME}.${NAME}Holder
 import android.content.Context;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
 import java.util.List;
@@ -548,12 +550,12 @@ public class ${NAME} extends CommonMultiRecyclerAdapter<Object, ${NAME}.On${NAME
         }
 
         @Override
-        protected void refreshViews(int position, Object model) {
+        protected void refreshViews(int position, Object model, @NonNull List payloads) {
 
         }
 
         @Override
-        protected void initListener(int position, Object model) {
+        protected void initListener(int position, Object model, @NonNull List payloads) {
 
         }
     }
@@ -565,12 +567,12 @@ public class ${NAME} extends CommonMultiRecyclerAdapter<Object, ${NAME}.On${NAME
         }
 
         @Override
-        protected void refreshViews(int position, Object model) {
+        protected void refreshViews(int position, Object model, @NonNull List payloads) {
 
         }
 
         @Override
-        protected void initListener(int position, Object model) {
+        protected void initListener(int position, Object model, @NonNull List payloads) {
 
         }
     }

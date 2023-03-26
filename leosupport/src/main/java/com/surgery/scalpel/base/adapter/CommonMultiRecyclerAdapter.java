@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -61,10 +62,16 @@ public abstract class CommonMultiRecyclerAdapter<M, C> extends RecyclerView.Adap
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List payloads) {
+        super.onBindViewHolder(holder, position, payloads);
         if (holder != null && holder instanceof CommonRecyclerViewHolder) {
             ((CommonRecyclerViewHolder) holder).setList(mList);
-            ((CommonRecyclerViewHolder) holder).refreshViews(position, mList.get(position));
-            ((CommonRecyclerViewHolder) holder).initListener(position, mList.get(position));
+            ((CommonRecyclerViewHolder) holder).refreshViews(position, mList.get(position), payloads);
+            ((CommonRecyclerViewHolder) holder).initListener(position, mList.get(position), payloads);
         }
     }
 

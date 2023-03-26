@@ -60,10 +60,16 @@ public abstract class CommonRecyclerAdapter<M, H extends CommonRecyclerViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List payloads) {
+        super.onBindViewHolder(holder, position, payloads);
         H viewHolder = (H) holder;
         viewHolder.setList(mList);
-        viewHolder.refreshViews(position, mList.get(position));
-        viewHolder.initListener(position, mList.get(position));
+        viewHolder.refreshViews(position, mList.get(position), payloads);
+        viewHolder.initListener(position, mList.get(position), payloads);
     }
 
     protected abstract int setLayout();

@@ -2,6 +2,7 @@ package com.surgery.scalpel.base.adapter;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,9 +33,9 @@ public abstract class CommonRecyclerViewHolder<M, B extends ViewDataBinding, C> 
         this.callBack = callBack;
     }
 
-    protected abstract void refreshViews(int position, M model);
+    protected abstract void refreshViews(int position, M model, @NonNull List payloads);
 
-    protected abstract void initListener(int position, M model);
+    protected abstract void initListener(int position, M model, @NonNull List payloads);
 
     public List<M> getList() {
         return mList;
